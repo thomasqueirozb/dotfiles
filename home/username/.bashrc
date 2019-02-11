@@ -55,7 +55,6 @@ alias sl='ls'
 # General
 alias c='clear'
 alias k='kill'
-alias null='/dev/null'
 alias mem='free -th --si'
 alias ls='ls --color=auto --group-directories-first'
 alias grep="grep --color='auto'"
@@ -131,7 +130,8 @@ alias pacrcdns='sudo pacman -Rcdns'
 
 # ping
 alias pingg='ping -c 5 www.google.com'
-
+alias ping8='ping -c 5 8.8.8.8'
+alias pingd='ping -c 5 www.duckduckgo.com'
 
 
 neofetch
