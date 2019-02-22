@@ -16,6 +16,8 @@ HISTCONTROL=ignoreboth
 # Fancier
 export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][\[$(tput setaf 3)\]\u\[$(tput setaf 2)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 5)\]\W\[$(tput setaf 1)\]]\[$(tput sgr0)\]\\$ \[$(tput setaf 7)\]\[$(tput bold)\]"
 
+#export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][\u@\h \W]\\$ \[$(tput sgr0)\]"
+
 # Fancy Structure
 # [\u@\h \W] \\$
 
@@ -35,7 +37,7 @@ export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][\[$(tput setaf 3)\]\u\[$(tput se
 # [  #\[$(tput bold)\]\[$(tput setaf 1)\]\[$(tput blink)\][
 # \u #\[$(tput setaf 3)\]\u
 # @  #\[$(tput setaf 2)\]@
-# \h #\[$(tput setaf 4)\]\h 
+# \h #\[$(tput setaf 4)\]\h
 # \W #\[$(tput setaf 5)\]\W
 # ]  #\[$(tput setaf 1)\]\[$(tput blink)\]]
 # $  #\[$(tput setaf 7)\]\\$
@@ -92,7 +94,7 @@ alias ....='cd ..; cd ..; cd ..'
 alias u='git add -u'
 alias com='git commit -m'
 alias all='git add .'
-alias st='git status'
+alias status='git status'
 
 
 # Pacman
@@ -111,6 +113,10 @@ alias pacSyu='sudo pacman -Syu'
 alias pacsyu='sudo pacman -Syu'
 alias update='sudo pacman -Syu'
 
+alias pacSu='sudo pacman -Su'
+alias pacsu='sudo pacman -Su'
+
+
 alias pacSyyu='sudo pacman -Syyu'
 alias pacsyyu='sudo pacman -Syyu'
 alias update-force='sudo pacman -Syyu'
@@ -126,6 +132,10 @@ alias pacr='sudo pacman -R'
 alias remove-all='sudo pacman -Rcdns'
 alias pacRcdns='sudo pacman -Rcdns'
 alias pacrcdns='sudo pacman -Rcdns'
+
+alias pacsi='pacman -Si'
+alias pacSi='pacman -Si'
+alias pacinfo='pacman -Si'
 
 
 # ping
