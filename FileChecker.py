@@ -16,11 +16,23 @@ def parse_dir(path):
 				s.append(path+i)
 	return s
 
+
 files = parse_dir('./')
+
+
+to_change = []
 
 for path in files:
 	sys_path = path[1:]
-
-	result = os.system('cp ' + sys_path + ' ' + path)
+	result = os.system('cmp --silent ' + sys_path + ' ' + path)
 	if result!=0:
-		print(f'Failed to copy ' + sys_path)
+		to_change.append([path, sys_path])
+
+if to_change:
+	print("Files that need to be updated")
+	for file in to_change:
+		print(file[0])
+
+
+else:
+	print("All up to date")
