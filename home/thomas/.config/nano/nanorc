@@ -24,7 +24,7 @@
 ## Automatically indent a newly created line to the same number of
 ## tabs and/or spaces as the preceding line -- or as the next line
 ## if the preceding line is the beginning of a paragraph.
-# set autoindent
+set autoindent
 
 ## Back up files to the current filename plus a tilde.
 # set backup
@@ -99,7 +99,7 @@
 # set nopauses
 
 ## Do not automatically hard-wrap text.
-# set nowrap
+set nowrap
 
 ## Set operating directory.  nano will not read or write files outside
 ## this directory and its subdirectories.  Also, the current directory
@@ -162,7 +162,7 @@
 # set suspend
 
 ## Use this tab size instead of the default; it must be greater than 0.
-# set tabsize 8
+set tabsize 4
 
 ## Convert typed tabs to spaces.
 # set tabstospaces
@@ -200,13 +200,13 @@
 
 ## Paint the interface elements of nano.  These are examples;
 ## by default there are no colors, except for errorcolor.
-# set titlecolor brightwhite,blue
-# set statuscolor brightwhite,green
-# set errorcolor brightwhite,red
-# set selectedcolor brightwhite,magenta
-# set numbercolor cyan
-# set keycolor cyan
-# set functioncolor green
+set titlecolor green
+set statuscolor brightwhite,green
+set errorcolor brightwhite,red
+set selectedcolor brightwhite,magenta
+set numbercolor cyan
+set keycolor brightgreen
+set functioncolor green
 ## In root's .nanorc you might want to use:
 # set titlecolor brightwhite,magenta
 # set statuscolor brightwhite,magenta
@@ -259,7 +259,7 @@
 ## them easier to remember and faster to type using nano's -Y option.
 
 ## To include all existing syntax definitions, you can do:
-# include "/usr/share/nano/*.nanorc"
+include "/usr/share/nano/*.nanorc"
 
 
 ## Key bindings.
@@ -280,7 +280,7 @@
 #bind ^Q exit all
 #bind ^H help all
 #bind ^H exit help
-#bind ^F whereis all
+bind ^F whereis all
 #bind ^G findnext all
 #bind ^B wherewas all
 #bind ^D findprevious all
@@ -291,9 +291,9 @@
 #unbind ^Y all
 #bind M-X flipnewbuffer all
 #bind ^X cut all
-#bind ^C copy all
-#bind ^V paste all
-#bind ^P curpos main
+bind ^C copy all
+bind ^V paste all
+bind ^P curpos main
 #bind ^T gotoline main
 #bind ^T gotodir browser
 #bind ^Y speller main
@@ -305,3 +305,5 @@
 #unbind M-J main
 #unbind M-T main
 #set multibuffer
+
+include "~/.config/nano/nanorc_files/*.nanorc"

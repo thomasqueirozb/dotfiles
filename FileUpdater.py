@@ -2,7 +2,7 @@ import os
 #from filecmp import cmp
 
 ignore_dirs = frozenset(['.git', '.gitignore'])
-ignore_files = frozenset(['update_files_v2.py', 'update_files.py'])
+ignore_files = frozenset(['FileUpdater.py'])
 
 
 def parse_dir(path):
