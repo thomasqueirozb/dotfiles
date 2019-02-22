@@ -1,7 +1,7 @@
 import os
 
 ignore_dirs = frozenset(['.git', '.gitignore'])
-ignore_files = frozenset(['FileUpdater.py', 'FileChecker.py'])
+ignore_files = frozenset(['FileUpdater.py', 'FileChecker.py', 'update_and_commit.sh'])
 
 
 def parse_dir(path):
