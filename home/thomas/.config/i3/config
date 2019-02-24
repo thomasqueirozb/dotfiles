@@ -109,10 +109,10 @@ bindsym $mod+a focus parent
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "Main"
-set $ws2 "Dev"
-set $ws3 "Browsing"
-set $ws4 "4"
-set $ws5 "5"
+set $ws2 "Browsing"
+set $ws3 "Dev"
+set $ws4 "Editor"
+set $ws5 "Video"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
@@ -224,7 +224,8 @@ mode "$mode_system" {
 
 bindsym $mod+Pause mode "$mode_system"
 
-bindsym XF86PowerOff exec --no-startup-id $Locker && systemctl suspend
+bindsym XF86PowerOff mode "$mode_system"
+#exec --no-startup-id $Locker && systemctl suspend
 
 
 
