@@ -40,8 +40,35 @@ if to_change:
 		if not need_root:
 			if not file[1].startswith('/home'):
 				need_root=True
-		print(file[0])
+		print(file[1])
 
+
+	print('''Do you want to:
+o: OVERWRITE ALL these system files?
+h: overwrite all the listed files in /home
+e: exit
+''')
+
+	option = input('> ')
+	#do = input('Do you want to OVERWRITE ALL these system files? [Y/n]')
+	if option=='o':
+		if need_root and os.geteuid()!=0:
+			print('You must rerun this as root')
+		else:
+			for file in to_change:
+				path, sys_path = file
+				result = os.system('cp ' + path + ' ' + sys_path)
+				if result!=0:
+					print(f'Failed to overwrite {sys_path}')
+
+	elif option=='h':
+		print("Overwriting...")
+		for file in to_change:
+			path, sys_path = file
+			if sys_path.startswith('/home')
+				result = os.system('cp ' + path + ' ' + sys_path)
+				if result!=0:
+					print(f'Failed to overwrite {sys_path}')
 
 else:
 	print("All up to date")
