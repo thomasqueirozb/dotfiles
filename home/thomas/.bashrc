@@ -56,6 +56,7 @@ alias sl='ls'
 
 # General
 alias c='clear'
+alias e='exit'
 alias k='kill'
 alias mem='free -th --si'
 alias ls='ls --color=auto --group-directories-first'

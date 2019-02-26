@@ -1,9 +1,7 @@
 import os
 
-with open('.ignore_dirs', 'r') as ig_d:
+with open('.ignore_dirs', 'r') as ig_d, open('.ignore_files', 'r') as ig_f:
 	ignore_dirs = frozenset(ig_d.read().splitlines())
-
-with open('.ignore_files', 'r') as ig_f:
 	ignore_files = frozenset(ig_f.read().splitlines())
 
 
@@ -55,6 +53,7 @@ e: exit
 		if need_root and os.geteuid()!=0:
 			print('You must rerun this as root')
 		else:
+			print('Overwriting...')
 			for file in to_change:
 				path, sys_path = file
 				result = os.system('cp ' + path + ' ' + sys_path)
@@ -62,7 +61,7 @@ e: exit
 					print(f'Failed to overwrite {sys_path}')
 
 	elif option=='h':
-		print("Overwriting...")
+		print('Overwriting...')
 		for file in to_change:
 			path, sys_path = file
 			if sys_path.startswith('/home')
