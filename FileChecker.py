@@ -64,7 +64,7 @@ e: exit
 		print('Overwriting...')
 		for file in to_change:
 			path, sys_path = file
-			if sys_path.startswith('/home')
+			if sys_path.startswith('/home'):
 				result = os.system('cp ' + path + ' ' + sys_path)
 				if result!=0:
 					print(f'Failed to overwrite {sys_path}')
