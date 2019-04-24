@@ -8,22 +8,23 @@ with open('.ignore_files', 'r') as ig_f:
 
 
 def parse_dir(path):
-	s = []
+    s = []
 
-	for i in os.listdir(path):
-		if os.path.isdir(path+i):
-			if i not in ignore_dirs:
-				s+=parse_dir(path + i + '/')
-		else:
-			if i not in ignore_files:
-				s.append(path+i)
-	return s
+    for i in os.listdir(path):
+        if os.path.isdir(path+i):
+            if i not in ignore_dirs:
+                s += parse_dir(path + i + '/')
+        else:
+            if i not in ignore_files:
+                s.append(path+i)
+    return s
+
 
 files = parse_dir('./')
 
 for path in files:
-	sys_path = path[1:]
+    sys_path = path[1:]
 
-	result = os.system('cp ' + sys_path + ' ' + path)
-	if result!=0:
-		print(f'Failed to copy ' + sys_path)
+    result = os.system('cp ' + sys_path + ' ' + path)
+    if result != 0:
+        print(f'Failed to copy ' + sys_path)
