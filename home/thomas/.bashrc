@@ -1,148 +1,58 @@
-#
-# ~/.bashrc
-#
+#!/bin/bash
 
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-HISTSIZE= HISTFILESIZE=
-HISTCONTROL=ignoreboth
+# catch non-bash and non-interactive shells
+[[ $- == *i* && $BASH_VERSION ]] && SHELL=/bin/bash || return 0
 
-# Orginal
-#PS1='[\u@\h \W]\$ '
+# set some defaults
+export MANWIDTH=90
+# export HISTSIZE=10000
+export HISTSIZE= export HISTFILESIZE=
+export HISTCONTROL=ignoreboth
+export HISTIGNORE="q:f:v"
 
-# Fancy
-#export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][\[$(tput setaf 3)\]\u\[$(tput setaf 2)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 5)\]\W\[$(tput setaf 1)\]]\[$(tput setaf 7)\]\\$ \[$(tput sgr0)\]"
+# colors in less (manpager)
+export LESS_TERMCAP_mb=$'\e[01;31m'
+export LESS_TERMCAP_md=$'\e[01;31m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;44;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[01;32m'
 
-# Fancier
-export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][\[$(tput setaf 3)\]\u\[$(tput setaf 2)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 5)\]\W\[$(tput setaf 1)\]]\[$(tput sgr0)\]\\$ \[$(tput setaf 7)\]\[$(tput bold)\]"
+# ensure ~/bin is on the path
+[[ $PATH =~ ~/bin ]] || PATH=~/bin:$PATH
 
-#export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][\u@\h \W]\\$ \[$(tput sgr0)\]"
+set -o vi
+set -o notify
 
-# Fancy Structure
-# [\u@\h \W] \\$
+shopt -s direxpand
+shopt -s checkhash
+shopt -s sourcepath
+shopt -s expand_aliases
+shopt -s autocd cdspell
+shopt -s extglob dotglob
+shopt -s no_empty_cmd_completion
+shopt -s autocd cdable_vars cdspell
+shopt -s cmdhist histappend histreedit histverify
+[[ $DISPLAY ]] && shopt -s checkwinsize
 
-# [  #\[$(tput bold)\]\[$(tput setaf 1)\][
-# \u #\[$(tput setaf 3)\]\u
-# @  #\[$(tput setaf 2)\]@
-# \h #\[$(tput setaf 4)\]\h 
-# \W #\[$(tput setaf 5)\]\W
-# ]  #\[$(tput setaf 1)\]]
-# $  #\[$(tput setaf 7)\]\\$
-#    #\[$(tput sgr0)\]"
+# prompt if file sourcing below fails
+PS1='[\u@\h \W]\$ '
 
-# New
-#export PS1="[\u@ \W] \\$ "
+# uncomment these lines to disable the multi-line prompt
+# add user@host, and remove the unicode line-wrap characters
 
-# New Fancy Structure
-# [  #\[$(tput bold)\]\[$(tput setaf 1)\]\[$(tput blink)\][
-# \u #\[$(tput setaf 3)\]\u
-# @  #\[$(tput setaf 2)\]@
-# \h #\[$(tput setaf 4)\]\h
-# \W #\[$(tput setaf 5)\]\W
-# ]  #\[$(tput setaf 1)\]\[$(tput blink)\]]
-# $  #\[$(tput setaf 7)\]\\$
-#    #\[$(tput sgr0)\]"
+# export PROMPT_LNBR1=''
+# export PROMPT_MULTILINE=''
+# export PROMPT_USERFMT='\u\[\e[0m\]@\[\e[31m\]\h '
 
+# source shell configs
+for f in "$HOME/.bash/"*?.bash; do
+    . "$f"
+done
 
-
-# New Fancy
-#export PS1="\[$(tput bold)\]\[$(tput setaf 1)\]\[$(tput blink)\][\[$(tput sgr0)\]\[$(tput bold)\]\[$(tput setaf 3)\]\u\[$(tput setaf 2)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 5)\]\W\[$(tput setaf 1)\]\[$(tput blink)\]]\[$(tput setaf 7)\]\$\[$(tput sgr0)\]"
-
-
-# Typos
-alias cta='cat'
-alias gerp='grep'
-alias sl='ls'
-
-# General
-alias c='clear'
-alias e='exit'
-alias k='kill'
-alias mem='free -th --si'
-alias ls='ls --color=auto --group-directories-first'
-alias grep="grep --color='auto'"
-alias ka='killall'
-
-# Python
-alias py='python'
-alias pyi='python -i'
-
-# 2
-alias py2='python2'
-alias py2.7='python2.7'
-alias py27='python2.7'
-
-# 3
-alias py3='python3'
-alias py3.6='python3.6'
-alias py36='python3.6'
-alias py3.7='python3.7'
-alias py37='python3.7'
-
-
-# Directories
-alias home='cd ~'
-alias dtop='cd ~/Desktop'
-alias dload='cd ~/Downloads'
-alias docs='cd ~/Documents'
-
-alias cd..='cd ..'
-alias ..='cd ..'
-alias ...='cd ..; cd ..'
-alias ....='cd ..; cd ..; cd ..'
-
-# Github
-alias u='git add -u'
-alias com='git commit -m'
-alias all='git add .'
-alias status='git status'
-
-
-# Pacman
-alias spac='sudo pacman'
-alias pac='pacman'
-
-alias pacs='sudo pacman -S'
-alias pacS='sudo pacman -S'
-
-alias pacss='pacman -Ss'
-alias pacSs='pacman -Ss'
-alias search='pacman -Ss'
-
-
-alias pacSyu='sudo pacman -Syu'
-alias pacsyu='sudo pacman -Syu'
-alias update='sudo pacman -Syu'
-
-alias pacSu='sudo pacman -Su'
-alias pacsu='sudo pacman -Su'
-
-
-alias pacSyyu='sudo pacman -Syyu'
-alias pacsyyu='sudo pacman -Syyu'
-alias update-force='sudo pacman -Syyu'
-
-
-alias pacsy='sudo pacman -Sy'
-alias pacSy='sudo pacman -Sy'
-
-alias remove='sudo pacman -R'
-alias pacR='sudo pacman -R'
-alias pacr='sudo pacman -R'
-
-alias remove-all='sudo pacman -Rcdns'
-alias pacRcdns='sudo pacman -Rcdns'
-alias pacrcdns='sudo pacman -Rcdns'
-
-alias pacsi='pacman -Si'
-alias pacSi='pacman -Si'
-alias pacinfo='pacman -Si'
-
-
-# ping
-alias pingg='ping -c 5 www.google.com'
-alias ping8='ping -c 5 8.8.8.8'
-alias pingd='ping -c 5 www.duckduckgo.com'
-
-
+#al-info
 neofetch
+
+eval "$(thefuck --alias)"
+ls

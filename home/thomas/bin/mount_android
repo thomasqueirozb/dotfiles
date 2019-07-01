@@ -1,0 +1,11 @@
+#!/bin/bash
+
+list=$(simple-mtpfs -l 2>/dev/null)
+
+if [[ -z "$list" ]]; then
+    echo Device not found
+    exit 1
+fi
+
+simple-mtpfs --device $(echo $list | head -1 | cut -d":" -f1) ~/Android && echo "Mounted!" || echo "Failed"
+
