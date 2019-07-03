@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 
 with open('.ignore_dirs', 'r') as ig_d, open('.ignore_files', 'r') as ig_f:
