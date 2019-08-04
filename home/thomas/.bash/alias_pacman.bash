@@ -52,4 +52,4 @@ alias pacinfo='pacman -Si'
 alias pcc='sudo pacman -Scc'  # clear cache
 # alias pls='pacman -Ql'        # list files
 # alias prm='sudo pacman -Rnsc' # really remove, configs and all
-
+alias remove-orphans='sudo pacman -Rcdns $(pacman -Qtdq)'

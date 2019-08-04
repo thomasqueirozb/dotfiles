@@ -1,0 +1,12 @@
+# Flameshot
+@Print
+    flameshot gui
+
+# dmenu
+{super + d}
+    dmenu_run -fn 'UbuntuMono Nerd Font Regular-17'
+
+# Terminator
+super + Return
+    terminator
+

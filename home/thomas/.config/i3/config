@@ -1,6 +1,8 @@
 # ArchLabs i3 config
-# set $Mod Mod4
-# bindsym $Mod+Return     exec xterm
+
+
+# Monitor Setup
+exec_always --no-startup-id ~/.screenlayout/default.sh
 
 # Xresources      var      value       fallback
 set_from_resource $bg      background  #19043C
@@ -34,7 +36,7 @@ gaps outer 4
 # font
 # font pango:Lucida Sans Unicode Regular 13
 # DEPEND
-font pango:UbuntuMono Nerd Font Regular 15
+font pango:UbuntuMono Nerd Font Regular 17
 
 # $Mod = Super or Alt?
 set $Mod Mod4
@@ -46,16 +48,26 @@ set $down j
 set $left h
 set $right l
 
-set $WS1 "1: "
-set $WS2 "2: "
-set $WS3 "3: "
-set $WS4 "4: "
-set $WS5 "5: "
-set $WS6 "6: "
-set $WS7 "7: "
-set $WS8 "8: "
-set $WS9 "9: "
+# set $WS1 "1: "
+# set $WS2 "2: "
+# set $WS3 "3: "
+# set $WS4 "4: "
+# set $WS5 "5: "
+# set $WS6 "6: "
+# set $WS7 "7: "
+# set $WS8 "8: "
+# set $WS9 "9: "
 
+set $WS1 "1: Main"
+set $WS2 "2: Browser"
+set $WS3 "3: Dev"
+set $WS4 "4: Discord"
+set $WS5 "5: Game"
+set $WS6 "6"
+set $WS7 "7"
+set $WS8 "8"
+set $WS9 "9:"
+set $WS10 "10: Random"
 
 # Monitors
 set $Mon1 HDMI1
@@ -66,9 +78,23 @@ exec --no-startup-id xrandr --output HDMI2 --right-of HDMI1
 ###############     Autostart      ##################
 #####################################################
 
+bar {
+        position top
+        status_command SCRIPT_DIR=/usr/lib/i3blocks i3blocks
+        colors {
+            background #3c3b37
+            statusline #dcdccc
+
+            focused_workspace #93b3a3 #3c3b37 #93b3a3
+            active_workspace #ffcfaf #3c3b37 #ffcfaf
+            inactive_workspace #636363 #3c3b37 #dcdccc
+            urgent_workspace #dca3a3 #3c3b37 #dca3a3
+        }
+}
+
 # run with reload
 # DEPEND
-exec_always --no-startup-id al-polybar-session
+exec_always --no-startup-id albert
 exec_always --no-startup-id nitrogen --restore
 exec_always --no-startup-id xrdb -load ~/.Xresources
 
@@ -77,13 +103,16 @@ exec_always --no-startup-id xrdb -load ~/.Xresources
 
 # run once
 # DEPEND
-exec --no-startup-id xfsettingsd
-exec --no-startup-id light-locker --lock-on-suspend
-exec --no-startup-id al-compositor --start
+# exec --no-startup-id xfsettingsd
+# exec --no-startup-id light-locker --lock-on-suspend
+# exec --no-startup-id al-compositor --start
+exec --no-startup-id flameshot
+exec --no-startup-id dunst
+exec --no-startup-id sxhkd
 
 # needed for super to launch rofi through ksuperkey, see ~/.xprofile
 # DEPEND
-bindsym Mod1+F1 exec --no-startup-id rofi_run -r
+# bindsym Mod1+F1 exec --no-startup-id rofi_run -r
 
 ###########################################################
 #############         Bindings           ##################
@@ -97,29 +126,29 @@ bindsym Mod1+F4 kill
 # launchers
 # bindsym Control+space exec --no-startup-id rofi_run -r
 
-# core
-bindsym $Mod+w          exec --no-startup-id exo-open --launch WebBrowser
-bindsym $Mod+f          exec --no-startup-id exo-open --launch FileManager
-#bindsym $Mod+t          exec --no-startup-id exo-open --launch TerminalEmulator
-bindsym $Mod+Return     exec --no-startup-id exo-open --launch TerminalEmulator
-#bindsym Control+Shift+t exec --no-startup-id exo-open --launch TerminalEmulator
+# # core
+# bindsym $Mod+w          exec --no-startup-id exo-open --launch WebBrowser
+# bindsym $Mod+f          exec --no-startup-id exo-open --launch FileManager
+# #bindsym $Mod+t          exec --no-startup-id exo-open --launch TerminalEmulator
+# bindsym $Mod+Return     exec --no-startup-id exo-open --launch TerminalEmulator
+# #bindsym Control+Shift+t exec --no-startup-id exo-open --launch TerminalEmulator
 
 # logout script
 # DEPEND
-bindsym $Mod+x exec --no-startup-id rofi_run -l
+# bindsym $Mod+x exec --no-startup-id rofi_run -l
 
 # Screenshot
 # DEPEND
-bindsym Print exec --no-startup-id "scrot '%S.png' -e 'mv $f $$(xdg-user-dir PICTURES)/ArchLabs-%S-$wx$h.png ; feh $$(xdg-user-dir PICTURES)/ArchLabs-%S-$wx$h.png'"
+# bindsym Print exec --no-startup-id "scrot '%S.png' -e 'mv $f $$(xdg-user-dir PICTURES)/ArchLabs-%S-$wx$h.png ; feh $$(xdg-user-dir PICTURES)/ArchLabs-%S-$wx$h.png'"
 
 # audio
 bindsym XF86AudioPlay        exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext        exec --no-startup-id playerctl next
 bindsym XF86AudioPrev        exec --no-startup-id playerctl previous
 bindsym XF86AudioStop        exec --no-startup-id playerctl stop
-bindsym XF86AudioMute        exec --no-startup-id pamixer -t
-bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 1
-bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 1
+bindsym XF86AudioMute        exec --no-startup-id pamixer -t   && pkill -RTMIN+13 i3blocks
+bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 1 && pkill -RTMIN+13 i3blocks
+bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 1 && pkill -RTMIN+13 i3blocks
 
 # backlight
 bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 10
@@ -139,6 +168,7 @@ workspace $WS6 output $Mon2
 workspace $WS7 output $Mon2
 workspace $WS8 output $Mon2
 workspace $WS9 output $Mon2
+workspace $WS10 output $Mon2
 
 # switch to workspace
 bindsym $Mod+1 workspace $WS1
@@ -150,6 +180,7 @@ bindsym $Mod+6 workspace $WS6
 bindsym $Mod+7 workspace $WS7
 bindsym $Mod+8 workspace $WS8
 bindsym $Mod+9 workspace $WS9
+bindsym $Mod+0 workspace $WS10
 
 # switch to workspace - numpad alternatives
 bindsym $mod+Mod2+KP_1 workspace $WS1
@@ -161,6 +192,7 @@ bindsym $mod+Mod2+KP_6 workspace $WS6
 bindsym $mod+Mod2+KP_7 workspace $WS7
 bindsym $mod+Mod2+KP_8 workspace $WS8
 bindsym $mod+Mod2+KP_9 workspace $WS9
+bindsym $mod+Mod2+KP_0 workspace $WS10
 
 # switch to next or previous workspace
 bindsym $mod+Mod1+Left workspace prev
@@ -178,6 +210,7 @@ bindsym $Mod+Shift+6 move container to workspace $WS6
 bindsym $Mod+Shift+7 move container to workspace $WS7
 bindsym $Mod+Shift+8 move container to workspace $WS8
 bindsym $Mod+Shift+9 move container to workspace $WS9
+bindsym $Mod+Shift+0 move container to workspace $WS10
 
 # move focused container to workspace - numpad alternatives
 bindsym $Mod+Shift+Mod2+KP_End move container to workspace $WS1
@@ -295,11 +328,11 @@ for_window [class="(?i)(?:qt5ct|pinentry)"] floating enable, focus
 for_window [class="(?i)(?:termite|thunar)"] focus
 for_window [class="(?i)(?:geany|firefox)"]  focus
 
-# Assign Applications to specific workspace
-# get class with xprop
-assign [class="(?i)(?:firefox)"] → $WS1
-assign [class="(?i)(?:geany)"]   → $WS2
-assign [class="(?i)(?:thunar)"]  → $WS3
+# # Assign Applications to specific workspace
+# # get class with xprop
+# assign [class="(?i)(?:firefox)"] → $WS1
+# assign [class="(?i)(?:geany)"]   → $WS2
+# assign [class="(?i)(?:thunar)"]  → $WS3
 
 # focus, floating, & sticky
 for_window [title="(?i)(?:copying|deleting|moving)"] floating enable
@@ -316,7 +349,7 @@ exec --no-startup-id i3-msg workspace $WS1
 smart_borders on
 # Get PowerOff to run `rofi_run -l`
 # DEPEND
-bindsym XF86PowerOff exec --no-startup-id rofi_run -l
+# bindsym XF86PowerOff exec --no-startup-id rofi_run -l
 
 # Auto screen lock and suspend (lock after 3, suspend after 5 (2+3))
 # exec --no-startup-id xautolock -time 3 -locker "i3lock-fancy"
@@ -327,7 +360,7 @@ bindsym XF86PowerOff exec --no-startup-id rofi_run -l
 
 # Lock Screen
 # DEPEND
-bindsym Control+Mod1+l exec --no-startup-id i3lock-fancy
+# bindsym Control+Mod1+l exec --no-startup-id i3lock-fancy
 # bindsym $Mod+Mod1+l exec --no-startup-id i3lock-fancy
 
 # exec_always --no-startup-id xfce4-power-manager
@@ -344,18 +377,15 @@ bindsym $mod+Shift+f fullscreen toggle
 bindsym $mod+Mod1+h workspace prev
 bindsym $mod+Mod1+l workspace next
 
-# dmenu
-bindsym $Mod+d exec dmenu_run
-
 # # ARandR layout
 # exec_always --no-startup-id /home/thomas/.screenlayout/default_layout.sh
 
 # Flameshot
 # DEPEND
-bindsym Control+Print exec --no-startup-id flameshot gui
+# bindsym Print exec --no-startup-id flameshot gui
 
 # Low battery
 # DEPEND
-exec --no-startup-id i3-battery-popup -n
+# exec --no-startup-id i3-battery-popup -n
 
 for_window [instance="Immortal"] floating enable
