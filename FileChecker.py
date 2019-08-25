@@ -56,9 +56,9 @@ e: exit
             print('Overwriting...')
             for file in to_change:
                 path, sys_path = file
-                result = os.system('cp ' + path + ' ' + sys_path + '2>/dev/null')
+                result = os.system('cp ' + path + ' ' + sys_path + ' 2>/dev/null')
                 if result != 0:
-                    result = os.system('mkdir -p ' + sys_path[:sys_path.rfind('/')] + '2>/dev/null')
+                    result = os.system('mkdir -p ' + sys_path[:sys_path.rfind('/')] + ' 2>/dev/null')
                     result = os.system('cp ' + path + ' ' + sys_path)
                     if result != 0:
                         print(f'Failed to overwrite {sys_path}')

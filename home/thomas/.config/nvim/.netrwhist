@@ -1,4 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_cnt =6
 let g:netrw_dirhist_1='/home/thomas/tmp/tarbs/helper_files'
 let g:netrw_dirhist_2='/home/thomas/.config/nitrogen'
+let g:netrw_dirhist_3='/home/thomas/tmp/tarbs/scripts'
+let g:netrw_dirhist_4='/home/thomas/.bash'
+let g:netrw_dirhist_5='/home/thomas/server/public'
+let g:netrw_dirhist_6='/home/thomas/server/public/handle'

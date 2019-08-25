@@ -324,6 +324,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'tell-k/vim-autopep8'
 Plug 'rhysd/vim-clang-format'
 Plug 'vim-syntastic/syntastic'
+Plug 'maksimr/vim-jsbeautify'
 call plug#end()
 
 let g:clang_format#style_options = {

@@ -107,6 +107,7 @@ exec_always --no-startup-id xrdb -load ~/.Xresources
 # exec --no-startup-id light-locker --lock-on-suspend
 # exec --no-startup-id al-compositor --start
 exec --no-startup-id flameshot
+exec --no-startup-id nm-applet
 exec --no-startup-id dunst
 exec --no-startup-id sxhkd
 
