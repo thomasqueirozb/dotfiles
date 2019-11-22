@@ -36,7 +36,7 @@ gaps outer 4
 # font
 # font pango:Lucida Sans Unicode Regular 13
 # DEPEND
-font pango:UbuntuMono Nerd Font Regular 17
+font pango:UbuntuMono Nerd Font Regular 13
 
 # $Mod = Super or Alt?
 set $Mod Mod4
@@ -58,16 +58,16 @@ set $right l
 # set $WS8 "8: "
 # set $WS9 "9: "
 
-set $WS1 "1: Main"
-set $WS2 "2: Browser"
-set $WS3 "3: Dev"
-set $WS4 "4: Discord"
-set $WS5 "5: Game"
+set $WS1 "1"
+set $WS2 "2"
+set $WS3 "3"
+set $WS4 "4"
+set $WS5 "5"
 set $WS6 "6"
 set $WS7 "7"
 set $WS8 "8"
-set $WS9 "9:"
-set $WS10 "10: Random"
+set $WS9 "9"
+set $WS10 "10"
 
 # Monitors
 set $Mon1 HDMI1
@@ -78,19 +78,21 @@ exec --no-startup-id xrandr --output HDMI2 --right-of HDMI1
 ###############     Autostart      ##################
 #####################################################
 
-bar {
-        position top
-        status_command SCRIPT_DIR=/usr/lib/i3blocks i3blocks
-        colors {
-            background #3c3b37
-            statusline #dcdccc
+exec --no-startup-id ~/.config/polybar/launch.sh
 
-            focused_workspace #93b3a3 #3c3b37 #93b3a3
-            active_workspace #ffcfaf #3c3b37 #ffcfaf
-            inactive_workspace #636363 #3c3b37 #dcdccc
-            urgent_workspace #dca3a3 #3c3b37 #dca3a3
-        }
-}
+# bar {
+#         position top
+#         status_command SCRIPT_DIR=/usr/lib/i3blocks i3blocks
+#         colors {
+#             background #3c3b37
+#             statusline #dcdccc
+# 
+#             focused_workspace #93b3a3 #3c3b37 #93b3a3
+#             active_workspace #ffcfaf #3c3b37 #ffcfaf
+#             inactive_workspace #636363 #3c3b37 #dcdccc
+#             urgent_workspace #dca3a3 #3c3b37 #dca3a3
+#         }
+# }
 
 # run with reload
 # DEPEND
