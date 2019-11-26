@@ -7,5 +7,5 @@ if [[ -z "$list" ]]; then
     exit 1
 fi
 
-simple-mtpfs --device $(echo $list | head -1 | cut -d":" -f1) ~/Android && echo "Mounted!" || echo "Failed"
+simple-mtpfs --device $(echo $list | head -1 | cut -d":" -f1) ~/tmp/phone && echo "Mounted!" || echo "Failed"
 

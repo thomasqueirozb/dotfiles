@@ -1,3 +1,3 @@
 #!/bin/bash
-fusermount -u ~/Android && echo "Unmounted!" || echo "Failed"
+fusermount -u ~/tmp/phone && echo "Unmounted!" || echo "Failed"
 

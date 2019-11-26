@@ -8,6 +8,8 @@ alias gerp='grep'
 alias sl='ls'
 alias l='ls'
 alias la='ls'
+alias ll='ls -l'
+alias lal='ls -al'
 
 # ..'s
 alias ..='cd ..'
@@ -28,6 +30,7 @@ alias mem='free -th --si'
 alias ls='ls --color=auto --group-directories-first'
 alias grep="grep --color='auto'"
 alias ka='killall'
+alias poff='systemctl poweroff'
 
 # ping
 alias pingg='ping -c 5 www.google.com'

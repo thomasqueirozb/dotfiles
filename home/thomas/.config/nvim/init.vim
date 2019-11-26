@@ -13,6 +13,7 @@ set modeline           " enable vim modelines
 set hlsearch           " highlight search items
 set incsearch          " searches are performed as you type
 set number             " enable line numbers
+set relativenumber     " enable relative line number
 set confirm            " ask confirmation like save before quit.
 set wildmenu           " Tab completion menu when using command mode
 set expandtab          " Tab key inserts spaces not tabs
@@ -361,8 +362,8 @@ tnoremap <Esc> <C-\><C-n>
 " execute python
 autocmd FileType python noremap <buffer> <F5> :!python %<CR>
 
-" save with C-s
-nnoremap <C-s> :w<CR>
+" " save with C-s
+" nnoremap <C-s> :w<CR>
 
 
 

@@ -52,7 +52,8 @@ for f in "$HOME/.bash/"*?.bash; do
 done
 
 #al-info
+eval "$(thefuck --alias)"
 neofetch
 
-eval "$(thefuck --alias)"
 ls
+
