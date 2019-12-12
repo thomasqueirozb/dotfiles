@@ -8,6 +8,7 @@
 
 #unset -v HOME # Force bash to obtain its value for HOME from getpwent(3) on first use, so tilde-expansion is sane.
 
+export PATH="$(echo $PATH | sed 's/:\/usr\/local\/sbin//;s/:\/usr\/local\/bin//')"
 if shopt -q login_shell; then
     export TERM=xterm-256color
     if [[ -t 0 && $(tty) == /dev/tty7 && ! $DISPLAY ]]; then
