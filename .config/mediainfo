@@ -1,0 +1,6 @@
+File_Begin;┌───────────────┐\n
+General;│Name:		│ %CompleteName%\n├───────────────┤\n
+Video;│Length:	│ %Duration/String%\n├───────────────┤\n│Resolution:	│ %Width%x%Height% = %DisplayAspectRatio/String%\n
+Image;│Resolution:	│ %Width%x%Height%\n
+File_End;└───────────────┘\n
+

@@ -1,0 +1,8 @@
+set selection-clipboard clipboard
+
+#map <Left> feedkeys "<PageUp>"
+#map <Right> feedkeys "<PageDown>"
+map <Space> feedkeys "<PageDown>"
+map <Return> feedkeys "<PageDown>"
+
+set pages-per-row 1

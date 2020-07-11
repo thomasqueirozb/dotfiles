@@ -1,0 +1,8 @@
+#!/bin/sh
+cmd=$(xinput list --short "AT Translated Set 2 keyboard" | awk 'BEGIN {FS="\t"}; {print $NF}')
+
+if [ "$cmd" = "[slave  keyboard (3)]" ]; then
+    xinput float "AT Translated Set 2 keyboard"
+else
+    xinput reattach "AT Translated Set 2 keyboard"  3
+fi

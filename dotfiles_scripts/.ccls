@@ -1,0 +1,4 @@
+%compile_commands.json
+%c %h -std=c11
+%hpp %cpp -std=c++20
+-Iinc

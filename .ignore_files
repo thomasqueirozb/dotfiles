@@ -1,5 +1,0 @@
-.ignore_files
-.ignore_dirs
-FileUpdater.py
-FileChecker.py
-update_and_commit.sh

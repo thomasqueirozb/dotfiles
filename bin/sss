@@ -1,0 +1,7 @@
+#!/bin/bash
+slock &
+sleep 1
+systemctl suspend
+# suspend_pid=$!
+# ps aux | grep $suspend_pid
+# kill $!

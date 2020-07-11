@@ -1,0 +1,407 @@
+; vim:ft=dosini
+;=====================================================
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;   The README contains alot of information
+;
+;=====================================================
+
+[settings]
+pseudo-transparency = true
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+
+[colors]
+background = #000000
+background-alt = #ffffff
+foreground = #3299a8
+foreground-alt = #ffffff
+primary = #ffb52a
+secondary = #e60053
+alert = #bf0000
+
+[bar/bar]
+width = 100%
+radius = 0
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 2
+
+border-size = 0
+border-color = #00000000
+
+module-margin-left = 1
+module-margin-right = 1
+
+
+font-0 = "monospace:pixelsize=12;2"
+font-1 = "Material Icons:size=13;4"
+font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=11;1"
+
+modules-left = i3 memory temperature cpu
+modules-center = clock date kbd
+modules-right = pkg pulseaudio backlight battery powermenu
+tray-position = right
+tray-padding = 4
+
+tray-detached = false
+
+wm-restack = i3
+# override-redirect = false
+
+;scroll-up = bspwm-desknext
+;scroll-down = bspwm-deskprev
+
+;scroll-up = i3wm-wsnext
+;scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/logout]
+type = custom/text
+click-left = $(echo -n "systemctl suspend & slock\nslock\nsystemctl suspend\nsystemctl hibernate\ni3-msg exit\nsystemctl poweroff" | dmenu -l 6)
+content = 
+content-foreground = #ff0000
+
+[module/avg-battery]
+type = custom/script
+exec = $HOME/.config/polybar/avg-battery.sh
+interval = 5
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-underline = ${colors.secondary}
+
+label-layout = %layout%
+label-layout-underline = ${colors.secondary}
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-background = ${colors.secondary}
+label-indicator-underline = ${colors.secondary}
+
+mount-0 = /
+
+label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+
+[module/i3]
+type = internal/i3
+
+; ws-icon-[0-9]+ = label;icon
+; NOTE: The label needs to match the name of the i3 workspace
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-default = 
+
+format = <label-state> <label-mode>
+
+label-mode = %mode%
+label-mode-padding = 2
+label-mode-background = #e60053
+
+; Only show workspaces on the same output as the bar
+; pin-workspaces = true
+
+; focused = Active workspace on focused monitor
+label-focused = %index% %icon% 
+label-focused-background = #2f332f
+label-focused-foreground = #ff0000
+label-focused-underline = #c2220a
+label-focused-padding = 2
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %index% %icon% 
+label-unfocused-foreground = #ffffff
+label-unfocused-padding = 2
+label-unfocused-background = #2f332f
+
+; visible = Active workspace on unfocused monitor
+label-visible = %index%
+label-visible-background = #2f332f
+label-visible-foreground = #ffffff
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = 2
+
+; urgent = Workspace with urgency hint set
+label-urgent = %index%
+label-urgent-background = #2f332f
+label-urgent-padding = 2
+
+[module/backlight]
+type = internal/backlight
+
+; Use the following command to list available cards:
+; $ ls -1 /sys/class/backlight/
+card = amdgpu_bl0
+
+; Available tags:
+;   <label> (default)
+;   <ramp>
+;   <bar>
+format = <ramp> <label>
+format-foreground = #ffffff
+; Available tokens:
+;   %percentage% (default)
+label = %percentage%%
+
+; Only applies if <ramp> is used
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-3 = 
+ramp-4 = 
+ramp-5 = 
+ramp-6 = 
+
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+format-prefix = " "
+format-prefix-foreground = #7a7171
+;format-underline = #f90000
+; Available tags:
+;   <label> (default)
+;   <bar-load>
+;   <ramp-load>
+;   <ramp-coreload>
+format = <label> <ramp-coreload>
+
+; Available tokens:
+;   %percentage% (default) - total cpu load averaged over all cores
+;   %percentage-sum% - Cumulative load on all cores
+;   %percentage-cores% - load percentage for each core
+;   %percentage-core[1-9]% - load percentage for specific core
+label = %percentage%%
+label-foreground = #ffffff
+
+; Spacing between individual per-core ramps
+ramp-coreload-spacing = 1
+ramp-coreload-0 = ▁
+ramp-coreload-0-foreground = #00ff73
+ramp-coreload-1 = ▂
+ramp-coreload-1-foreground = #00ff15
+ramp-coreload-2 = ▃
+ramp-coreload-2-foreground = #3cff00
+ramp-coreload-3 = ▄
+ramp-coreload-3-foreground = #88ff00
+ramp-coreload-4 = ▅
+ramp-coreload-4-foreground = #f2ff00
+ramp-coreload-5 = ▆
+ramp-coreload-5-foreground = #f2ff00
+ramp-coreload-6 = ▇
+ramp-coreload-6-foreground = #ff9500
+ramp-coreload-7 = █
+ramp-coreload-7-foreground = #ff0000
+
+[module/kbd]
+type = custom/text
+click-left = ~/bin/kbd_switch
+content = 
+content-foreground = #ffffff
+
+[module/pkg]
+type = custom/script
+exec = ~/.config/polybar/updates.sh
+interval = 600
+tail = true
+label = %output%
+label-foreground = #c58dd6
+format-prefix = ""
+format-prefix-foreground = #c58dd6
+format-prefix-margin-right = 1
+
+[module/memory]
+type = internal/memory
+interval = 2
+format = <label>
+format-prefix = " "
+format-prefix-foreground = #7a7171
+;format-underline = #4bffdc
+label = %gb_used%
+label-foreground = #ffffff
+
+[module/clock]
+type = internal/date
+interval = 5
+
+time = %H:%M
+
+label =  %time%
+label-foreground = #ffffff
+
+[module/date]
+type = internal/date
+interval = 1.0
+format = <label>
+format-foreground = #ffffff
+enable-click = true
+date = "%d.%m.%y"
+
+label =  %date%
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
+; If not, uses default sink
+sink = alsa_output.pci-0000_12_00.3.analog-stereo
+
+; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
+; Default: true
+use-ui-max = true
+
+; Interval for volume increase/decrease (in percent points)
+; Default: 5
+interval = 5
+
+format-volume = <ramp-volume> <label-volume> 
+label-volume = %percentage%%
+label-volume-foreground = #ffffff
+
+label-muted=  muted
+label-muted-foreground = #404240
+
+; Only applies if <ramp-volume> is used
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-foreground = #ffffff
+
+[module/battery]
+type = internal/battery
+battery = BAT1
+adapter = AC
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+label-charging-foreground = #ffffff
+;format-charging-underline = #ffb52a
+
+label-discharging = %percentage%% (%time%)
+label-discharging-foreground = #ffffff
+format-discharging = <ramp-capacity> <label-discharging>
+;format-discharging-underline = ${self.format-charging-underline}
+
+format-full-prefix = " "
+;format-full-underline = ${self.format-charging-underline}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-0-foreground = #063b01
+ramp-capacity-1-foreground = #0b6b03
+ramp-capacity-2-foreground = #0fad03
+ramp-capacity-3-foreground = #0fe300
+ramp-capacity-4-foreground = #00ff1e
+
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-0-foreground = #063b01
+animation-charging-1-foreground = #0b6b03
+animation-charging-2-foreground = #0fad03
+animation-charging-3-foreground = #0fe300
+animation-charging-4-foreground = #00ff1e
+animation-charging-framerate = 400
+
+; Default: 5
+poll-interval = 1
+
+[module/temperature]
+
+type = custom/script
+exec = for i in $(/bin/ls /sys/class/hwmon/); do [ "$(/bin/cat /sys/class/hwmon/$i/name)" = "k10temp" ] && break; done; expr $(cat /sys/class/hwmon/$i/temp1_input) / 1000
+; type = internal/temperature
+; thermal-zone = 0
+; warn-temperature = 60
+
+; format = <ramp> <label>
+;format-underline = #f50a4d
+; format-warn = <ramp> <label-warn>
+
+;format-warn-underline = ${self.format-underline}
+
+; label = %temperature-c%
+
+label = %output%°C
+label-foreground = #ffffff
+format-prefix = ""
+format-prefix-foreground = #ff0000
+format-prefix-margin-right = 1
+
+; label-warn = %temperature-c%
+; label-foreground = #ffffff
+; 
+; ramp-0 = 
+; ramp-0-foreground = #00e1ff
+; ramp-1 = 
+; ramp-1-foreground = #00e1ff
+; ramp-2 = 
+; ramp-2-foreground = #ff0000
+
+[module/powermenu]
+type = custom/menu
+expand-right = true
+
+format-spacing = 1
+
+label-open = 
+label-open-foreground = #ff0000
+label-close =  cancel
+label-close-foreground = #ff0000
+label-separator = |
+label-separator-foreground = #ff0000
+
+menu-0-0 = lock
+menu-0-0-exec = menu-open-1
+menu-0-1 = reboot
+menu-0-1-exec = menu-open-2
+menu-0-2 = power off
+menu-0-2-exec = menu-open-3
+
+menu-1-0 = lock
+menu-1-0-exec = slock
+menu-1-1 = cancel
+menu-1-1-exec = menu-open-0
+
+menu-2-0 = reboot
+menu-2-0-exec = systemctl reboot
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+menu-3-0 = cancel
+menu-3-0-exec = menu-open-0
+menu-3-1 = power off
+menu-3-1-exec = systemctl poweroff
+
+
+# click-left = $(echo -e "slock\nsystemctl suspend\nsystemctl hibernate\ni3-msg exit\nsystemctl poweroff" | dmenu -l 5)
+#

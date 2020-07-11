@@ -1,0 +1,33 @@
+[global_config]
+  title_hide_sizetext = True
+  title_transmit_bg_color = "#000000"
+  title_inactive_bg_color = "#2e3436"
+[keybindings]
+  reset = None
+  group_all = None
+  group_all_toggle = <Super>g
+  new_window = None
+  new_terminator = None
+  edit_tab_title = <Primary><Alt>t
+  edit_terminal_title = <Primary><Shift><Alt>t
+  layout_launcher = None
+  help = None
+[profiles]
+  [[default]]
+    background_darkness = 0.9
+    background_type = transparent
+    cursor_color = "#aaaaaa"
+    font = UbuntuMono Nerd Font Mono 12
+    show_titlebar = False
+    scrollback_lines = 30000
+    use_system_font = False
+    copy_on_selection = True
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]

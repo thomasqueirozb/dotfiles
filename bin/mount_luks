@@ -1,0 +1,3 @@
+#!/bin/sh
+sudo cryptsetup luksOpen /dev/sda1 hdd_luks
+sudo mount /dev/mapper/hdd_luks /mnt
