@@ -113,10 +113,9 @@ int main(int argc, char *argv[]) {
         // file_path_git is guaranteed to exist
         if (!std::filesystem::exists(file_path_sys))
             files_to_create.push_back(pair); // use emplace_back?
-
-        if ((std::filesystem::file_size(file_path_git) !=
-             std::filesystem::file_size(file_path_sys)) ||
-            (!equal_files(file_path_git, file_path_sys))) {
+        else if ((std::filesystem::file_size(file_path_git) !=
+                  std::filesystem::file_size(file_path_sys)) ||
+                 (!equal_files(file_path_git, file_path_sys))) {
             // File does not exist or has different size or different content
             files_to_update.push_back(pair); // use emplace_back?
         }
