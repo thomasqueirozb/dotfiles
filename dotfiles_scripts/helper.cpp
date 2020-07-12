@@ -82,7 +82,10 @@ const std::filesystem::path git_root() {
     // for (auto c : user_input) {
     //     std::cout << "C: " << static_cast<unsigned int>(c) << "\n";
     // }
-    if (std::cin.eof()) std::exit(1);
+    if (std::cin.eof()) {
+        std::putchar('\n');
+        std::exit(1);
+    }
 
     if (!user_input.compare("y") || !user_input.compare("yes")) return true;
     if (!user_input.compare("n") || !user_input.compare("no")) return false;

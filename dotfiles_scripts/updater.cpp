@@ -121,6 +121,10 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    const std::filesystem::copy_options copy_options =
+        std::filesystem::copy_options::overwrite_existing |
+        std::filesystem::copy_options::copy_symlinks;
+
     if (action == LOCAL_TO_GIT) {
         if (files_to_update.empty()) {
             std::cout << "No files to update\n";
@@ -135,12 +139,15 @@ int main(int argc, char *argv[]) {
         for (auto pair : files_to_update) {
             const std::filesystem::path file_path_sys = pair.first;
             const std::filesystem::path file_path_git = pair.second;
-            std::filesystem::copy_file(
-                file_path_sys, file_path_git,
-                std::filesystem::copy_options{std::filesystem::copy_options::overwrite_existing});
+            std::filesystem::copy(file_path_sys, file_path_git, copy_options);
         }
 
     } else {
+        if (files_to_update.empty() && files_to_create.empty()) {
+            std::cout << "No files to update\n";
+            return 0;
+        }
+
         for (auto pair : files_to_create)
             std::cout << pair.first << "\n";
         for (auto pair : files_to_update)
@@ -151,16 +158,14 @@ int main(int argc, char *argv[]) {
         for (auto pair : files_to_update) {
             const std::filesystem::path file_path_sys = pair.first;
             const std::filesystem::path file_path_git = pair.second;
-            std::filesystem::copy_file(
-                file_path_git, file_path_sys,
-                std::filesystem::copy_options{std::filesystem::copy_options::overwrite_existing});
+            std::filesystem::copy(file_path_git, file_path_sys, copy_options);
         }
 
         for (auto pair : files_to_create) {
             const std::filesystem::path file_path_sys = pair.first;
             const std::filesystem::path file_path_git = pair.second;
             std::filesystem::create_directories(file_path_sys.parent_path());
-            std::filesystem::copy_file(file_path_git, file_path_sys);
+            std::filesystem::copy(file_path_git, file_path_sys, copy_options);
         }
     }
 
