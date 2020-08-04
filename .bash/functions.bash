@@ -511,8 +511,32 @@ rawurlencode() {
   echo "${encoded}"    # You can either set a return variable (FASTER) 
   REPLY="${encoded}"   #+or echo the result (EASIER)... or both... :p
 }
-yt(){
+
+yt() {
     str="$*"
     encoded=$(rawurlencode "$str")
-    chromium "https://www.youtube.com/results?search_query=$encoded&page=&utm_source=opensearch"
+    xdg-open "https://www.youtube.com/results?search_query=$encoded&page=&utm_source=opensearch"
+}
+
+
+# dragon-drag-and-drop
+drag() {
+    # shellcheck disable=2068
+    dragon-drag-and-drop -a -x $@
+}
+
+drop() {
+    url="$(dragon-drag-and-drop -t -x)"
+    filename="$(echo "$url" | sed 's/^.*\///')" # Crappy code
+    if [ -e "$filename" ]; then
+        local n=1
+        local new_name="$filename ($n)"
+        while [ -e "$new_name" ]; do
+            (( n += 1 ))
+            new_name="$filename ($n)"
+        done
+        filename="$new_name"
+    fi
+    echo "Saving file as $filename"
+    curl -o "$filename" "$url" --silent
 }

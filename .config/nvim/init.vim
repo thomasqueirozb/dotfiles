@@ -46,33 +46,44 @@ set foldlevel=1
 " Plugins {{{
 " Plugged {{{
 call plug#begin('~/.local/share/nvim/plugged')
-" On-demand loading
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+" Unused {{{
+" " On-demand loading
+" Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
-" Status line
+" Plug 'dracula/vim', { 'as': 'dracula' } " Dracula
+" Plug 'gruvbox-community/gruvbox' " Gruvbox
+" }}}
+
+" Status line {{{
 " Plug 'itchyny/lightline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+" }}}
 
-" Plug 'tell-k/vim-autopep8'
-Plug 'dense-analysis/ale'
-" Plug 'ycm-core/YouCompleteMe', { 'do': './install.py --ts-completer' }
+" Linters/Fixers {{{
+Plug 'dense-analysis/ale' " I use this mostly for fixing
+" Plug 'ycm-core/YouCompleteMe', { 'do': './install.py --ts-completer' } " Hell to configure
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'maksimr/vim-jsbeautify'
+Plug 'editorconfig/editorconfig-vim'
+" }}}
 
-" Latex
+" Folds {{{
+Plug 'Konfekt/FastFold'
+Plug 'kalekundert/vim-coiled-snake' " Python fold
+" }}}
+
+" Latex {{{
 Plug 'lervag/vimtex' " TODO
+" }}}
 
-" Fugitive - git
+" Fugitive - git {{{
 Plug 'tpope/vim-fugitive'
+" }}}
 
-" Colorschemes
-
-" " Dracula
-" Plug 'dracula/vim', { 'as': 'dracula' }
-" " Gruvbox
-" Plug 'gruvbox-community/gruvbox'
-Plug 'danilo-augusto/vim-afterglow'
+" Colorschemes {{{
+Plug 'danilo-augusto/vim-afterglow' " Afterglow
+" }}}
 call plug#end()
 " }}}
 
@@ -82,8 +93,9 @@ let g:ale_linters = {
     \'c': [],
     \'cpp': [],
     \'javascript': [],
+    \'rust': [],
     \'typescript': ['eslint', 'tsserver', 'prettier'],
-    \'python': ['flake8', 'mypy', 'pylint'],
+    \'python': ['pylint'],
     \}
 "     \'c': ['gcc'],
 "     \'cpp': ['g++'],
@@ -100,6 +112,7 @@ let g:ale_fixers = {
     \'typescript': ['eslint'],
     \'markdown': ['prettier'],
     \'python': ['black'],
+    \'rust': ['rustfmt'],
     \}
 let g:ale_fix_on_save=1
 
@@ -168,6 +181,35 @@ nmap <Leader>gh :diffget //2<CR>
 nmap <Leader>gl :diffget //3<CR>
 
 nmap <Leader>gs :G<CR>
+" }}}
+" EditorConfig{{{
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+"}}}
+" {{{ Coiled Snake - Python fold
+function! g:CoiledSnakeConfigureFold(fold)
+
+    " Don't fold nested classes.
+    if a:fold.type == 'class'
+        let a:fold.max_level = 1
+
+    " Don't fold nested functions, but do fold methods (i.e. functions nested inside a class).
+    elseif a:fold.type == 'function'
+        let a:fold.max_level = 1
+        if get(a:fold.parent, 'type', '') == 'class'
+            let a:fold.max_level = 2
+        endif
+
+    " Only fold imports if there are 3 or more of them.
+    elseif a:fold.type == 'import'
+        let a:fold.min_lines = 3
+    endif
+
+    " Don't fold anything if the whole program is shorter than 30 lines.
+    if line('$') < 30
+        let a:fold.ignore = 1
+    endif
+
+endfunction
 " }}}
 " }}}
 

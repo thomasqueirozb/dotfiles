@@ -251,22 +251,23 @@ bindsym $mod+Mod1+l workspace next
 
 # }}}
 
-############################################################
-##############     Reload configs           ################
-############################################################
-
+# {{{ Reload i3/configs
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $Mod+Shift+r restart
 
 # reload the configuration file
 bindsym $Mod+Shift+c reload
-
+# }}}
 
 # Container/Window control {{{
 
 # Floating {{{
 bindsym $Mod+Shift+space floating toggle
 floating_modifier  Mod1
+# }}}
+
+# Sticky {{{
+bindsym $Mod+s sticky toggle
 # }}}
 
 # Scratchpad {{{
@@ -346,7 +347,7 @@ bindsym $Mod+n border normal
 bindsym $Mod+y border 1pixel
 bindsym $Mod+u border none
 
-# change gaps
+# Change gaps {{{
 bindsym $Mod+plus                gaps inner current plus  5
 bindsym $Mod+minus               gaps inner current minus 5
 bindsym $Mod+Shift+plus          gaps outer current plus  5
@@ -355,6 +356,7 @@ bindsym $Mod+Control+plus        gaps inner all     plus  5
 bindsym $Mod+Control+minus       gaps inner all     minus 5
 bindsym $Mod+Control+Shift+plus  gaps outer all     plus  5
 bindsym $Mod+Control+Shift+minus gaps outer all     minus 5
+# }}}
 
 ###################################################
 ############    application settings   ############

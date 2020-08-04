@@ -1,0 +1,57 @@
+#!/bin/bash
+extension="${1##*\.}"
+extension="${extension,,}"
+
+open_text="nvim" # whole command goes here only for text
+open_pdf="zathura"
+open_md="mdpdf"
+open_image="sxiv"
+open_image_svg="display"
+open_video="celluloid"
+open_audio="celluloid"
+open_ica="/opt/Citrix/ICAClient/wfica"
+
+default_open() {
+    $1 "$2" 1>/dev/null 2>&1 &
+    disown $!
+    echo "Opening in $1..."
+}
+
+case "$extension" in
+    "ica")
+        default_open $open_ica "$1"
+        ;;
+    "md")
+        default_open $open_md "$1"
+        ;;
+    "pdf")
+        default_open $open_pdf "$1"
+        ;;
+    "mp4" | "mkv" | "m4v" | "avi" | "vid")
+        default_open $open_video "$1"
+        ;;
+    "mp3" | "wav")
+        default_open $open_audio "$1"
+        ;;
+    "png" | "jpg" | "jpeg")
+        default_open $open_image "$1"
+        ;;
+    "svg")
+        default_open $open_image_svg "$1"
+        ;;
+    "Makefile" | "c" | "cpp" | "h" | "hpp" | "sh" | "js" | "ts" | "pl" | "py" | \
+    "Dockerfile" | "json" | "rs" | "toml" | "yaml" | "txt" | "tex" | "css")
+        $open_text "$1"
+        ;;
+    *)
+        echo "No matching extension: $extension"
+        echo -n "Would you like to open it as a text file? [Y/n] "
+        read -r -n1 res
+        if [ "${res,,}" = "n" ]; then
+            echo
+            exit 0
+        fi
+        $open_text "$1"
+        ;;
+esac
+
