@@ -522,7 +522,7 @@ yt() {
 # dragon-drag-and-drop
 drag() {
     # shellcheck disable=2068
-    dragon-drag-and-drop -a -x $@
+    dragon-drag-and-drop -a -x "$@"
 }
 
 drop() {

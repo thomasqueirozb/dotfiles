@@ -54,10 +54,15 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Plug 'gruvbox-community/gruvbox' " Gruvbox
 " }}}
 
+" Themes {{{
 " Status line {{{
 " Plug 'itchyny/lightline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+" }}}
+" Colorschemes {{{
+Plug 'danilo-augusto/vim-afterglow' " Afterglow
+" }}}
 " }}}
 
 " Linters/Fixers {{{
@@ -81,9 +86,6 @@ Plug 'lervag/vimtex' " TODO
 Plug 'tpope/vim-fugitive'
 " }}}
 
-" Colorschemes {{{
-Plug 'danilo-augusto/vim-afterglow' " Afterglow
-" }}}
 call plug#end()
 " }}}
 
@@ -204,12 +206,15 @@ function! g:CoiledSnakeConfigureFold(fold)
         let a:fold.min_lines = 3
     endif
 
-    " Don't fold anything if the whole program is shorter than 30 lines.
-    if line('$') < 30
-        let a:fold.ignore = 1
-    endif
+    " " Don't fold anything if the whole program is shorter than 30 lines.
+    " if line('$') < 30
+    "     let a:fold.ignore = 1
+    " endif
 
 endfunction
+" }}}
+" vimtex {{{
+let g:tex_flavor = 'latex'
 " }}}
 " }}}
 
