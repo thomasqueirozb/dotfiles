@@ -86,6 +86,10 @@ Plug 'lervag/vimtex' " TODO
 Plug 'tpope/vim-fugitive'
 " }}}
 
+" Other {{{
+Plug 'tpope/vim-commentary'
+Plug 'cespare/vim-toml'
+" }}}
 call plug#end()
 " }}}
 
@@ -95,9 +99,11 @@ let g:ale_linters = {
     \'c': [],
     \'cpp': [],
     \'javascript': [],
+    \'vue': ['eslint'],
     \'rust': [],
     \'typescript': ['eslint', 'tsserver', 'prettier'],
     \'python': ['pylint'],
+    \'sh': [],
     \}
 "     \'c': ['gcc'],
 "     \'cpp': ['g++'],
@@ -110,11 +116,13 @@ let g:ale_fixers = {
     \'c': ['clang-format'],
     \'cpp': ['clang-format'],
     \'javascript': ['prettier'],
+    \'vue': ['eslint'],
     \'json': ['prettier'],
     \'typescript': ['eslint'],
     \'markdown': ['prettier'],
     \'python': ['black'],
     \'rust': ['rustfmt'],
+    \'sh': [],
     \}
 let g:ale_fix_on_save=1
 
@@ -146,6 +154,12 @@ let g:ale_c_clangformat_options='--style="{' . g:clang_format_options . '}"'
 " :CocInstall coc-marketplace
 " To have :CocList marketplace
 " Learn more @ github.com/fannheyward/coc-marketplace
+" coc-tsserver
+" coc-rust-analyzer
+" coc-python
+" coc-json
+" coc-html
+" coc-diagnostic
 
 function! s:check_back_space() abort
     let col = col('.') - 1
@@ -216,6 +230,28 @@ endfunction
 " vimtex {{{
 let g:tex_flavor = 'latex'
 " }}}
+" Commentary {{{
+function CommentInsert()
+    let col = col('.')
+    let line = line('.')
+    let size = strwidth(getline('.'))
+    Commentary
+    " This does not work when comments change the the end of the line (html)
+    let moved_length = strwidth(getline('.')) - size
+    let new_col = col + moved_length
+    if new_col < 0
+        let new_col = 0
+    endif
+    call cursor(line, new_col)
+endfunction
+
+autocmd FileType vue setlocal commentstring=<!--%s-->
+autocmd FileType vhdl setlocal commentstring=--%s
+
+imap <C-_> <C-o>:call CommentInsert()<CR>
+nmap <C-_> <Plug>CommentaryLine
+vmap <C-_> <Plug>Commentarygv
+" }}}
 " }}}
 
 " Colorscheme {{{
@@ -273,6 +309,18 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 3
 " }}}
 " Autocmd {{{
+" Highlight keywords {{{
+function! SetMyTodos()
+    syntax keyword myTodo TODO CRITICAL WARNING OPTIMIZE containedin=ALL
+
+    hi def link myTodo Todo
+endfunction
+autocmd bufenter * :call SetMyTodos()
+autocmd filetype * :call SetMyTodos()
+
+" autocmd Syntax * syntax keyword myTodo WARNING NOTES containedin=ALL | highlight def link myTodo TODO
+
+" }}}
 
 " Reload changes if file changed outside of vim requires autoread {{{
 augroup load_changed_file

@@ -6,6 +6,12 @@ Print
 {super + d}
     dmenu_run -fn 'UbuntuMono Nerd Font Regular-17'
 
+{super + x}
+    DISPLAY=:0 xkill
+
+{super + shift + x}
+    pkill xkill
+
 # Terminator
 super + Return
     terminator

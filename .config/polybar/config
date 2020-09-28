@@ -26,6 +26,7 @@ secondary = #e60053
 alert = #bf0000
 
 [bar/bar]
+monitor = ${env:MONITOR:}
 width = 100%
 radius = 0
 fixed-center = true
@@ -126,14 +127,14 @@ label-mode-background = #e60053
 ; pin-workspaces = true
 
 ; focused = Active workspace on focused monitor
-label-focused = %index% %icon% 
+label-focused = %index% %icon%
 label-focused-background = #2f332f
 label-focused-foreground = #ff0000
 label-focused-underline = #c2220a
 label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
-label-unfocused = %index% %icon% 
+label-unfocused = %index% %icon%
 label-unfocused-foreground = #ffffff
 label-unfocused-padding = 2
 label-unfocused-background = #2f332f
@@ -277,7 +278,7 @@ use-ui-max = true
 ; Default: 5
 interval = 5
 
-format-volume = <ramp-volume> <label-volume> 
+format-volume = <ramp-volume> <label-volume>
 label-volume = %percentage%%
 label-volume-foreground = #ffffff
 
@@ -359,7 +360,7 @@ format-prefix-margin-right = 1
 
 ; label-warn = %temperature-c%
 ; label-foreground = #ffffff
-; 
+;
 ; ramp-0 = 
 ; ramp-0-foreground = #00e1ff
 ; ramp-1 = 

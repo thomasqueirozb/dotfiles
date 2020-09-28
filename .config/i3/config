@@ -6,7 +6,7 @@
 # Check monitor setup #
 #######################
 
-# Color {{{
+# Color & borders {{{
 # Xresources      var      value       fallback
 set_from_resource $bg      background  #19043C
 set_from_resource $fg      foreground  #F1F1F1
@@ -425,3 +425,8 @@ assign [class="Wfica"] → $WS9
 #for_window [title="<b> Microsoft Teams - Preview:</b> Microsoft Teams Notification"] floating enable
 #for_window [instance="microsoft teams - preview"] floating enable
 for_window [instance="<b> Microsoft Teams - Preview:</b> Microsoft Teams Notification"] floating enable
+
+# for window [_NET_WM_WINDOW_TYPE(ATOM)="_NET_WM_WINDOW_TYPE_NOTIFICATION"] floating enable
+for_window [window_type="_NET_WM_WINDOW_TYPE_NOTIFICATION"] floating enable
+# for_window [class="albert" && name="albert"] border pixel 0
+for_window [class="albert" title="albert — Albert"] border pixel 0

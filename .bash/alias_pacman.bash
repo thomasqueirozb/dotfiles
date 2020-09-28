@@ -37,15 +37,25 @@ alias pacrcdns='sudo pacman -Rcdns'
 
 alias pacsi='pacman -Si'
 alias pacSi='pacman -Si'
-alias pacinfo='pacman -Si'
+
+alias pacq='pacman -Q'
+alias pacQ='pacman -Q'
+
+alias pacqi='pacman -Qi'
+alias pacQi='pacman -Qi'
+
+alias pacqg='pacman -Q | grep -i'
+alias pacQg='pacman -Q | grep -i'
+
+# Find owner
+alias pacqo='pacman -Qo'
+alias pacQo='pacman -Qo'
+alias find-owner='pacman -Qo'
 
 
 
-
-# alias pup='sudo pacman -Syyu' # update
-# alias pin='sudo pacman -S'    # install
-# alias pun='sudo pacman -Rs'   # remove
 alias pcc='sudo pacman -Scc'  # clear cache
 # alias pls='pacman -Ql'        # list files
+# alias pun='sudo pacman -Rs'   # remove
 # alias prm='sudo pacman -Rnsc' # really remove, configs and all
 alias remove-orphans='sudo pacman -Rcdns $(pacman -Qtdq)'

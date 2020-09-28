@@ -1,4 +1,2 @@
-#!/bin/bash
-
-UPD=$(checkupdates | wc -l)
-echo $UPD Updates
+#!/bin/sh
+echo "$(checkupdates | wc -l) Updates"
