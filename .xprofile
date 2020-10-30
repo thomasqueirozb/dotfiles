@@ -20,6 +20,7 @@ PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin:$XDG_DATA_HOME/cargo/bin/:$HOME/.yarn/bin/
 export PATH
 
 
+export MOZ_USE_XINPUT2=1
 
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonstartup.py"
 export PYLINTHOME="$XDG_CACHE_HOME/pylint"
@@ -38,7 +39,7 @@ export GOPATH="$XDG_DATA_HOME/go"
 
 export LESSHISTFILE="-"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+# export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 
 export ANDROID_SDK_HOME="$XDG_CONFIG_HOME/android"
 export ADB_VENDOR_KEY="$XDG_CONFIG_HOME/android"

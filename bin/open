@@ -13,11 +13,14 @@ open_audio="celluloid"
 open_ica="/opt/Citrix/ICAClient/wfica"
 
 default_open() {
-    $1 "$2" 1>/dev/null 2>&1 &
-    disown $!
+    nohup $1 "$2" 1>/dev/null 2>&1 &
     echo "Opening in $1..."
 }
 
+[ -f "$1" ] || {
+    >&2 echo "$1 is not a file"
+    exit 2
+}
 case "$extension" in
     "ica")
         default_open $open_ica "$1"
@@ -51,8 +54,8 @@ case "$extension" in
         echo "No matching extension: $extension"
         echo -n "Would you like to open it as a text file? [Y/n] "
         read -r -n1 res
+        echo
         if [ "${res,,}" = "n" ]; then
-            echo
             exit 0
         fi
         $open_text "$1"
