@@ -14,8 +14,9 @@ export XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local
 
 PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin:$XDG_DATA_HOME/cargo/bin/:$HOME/.yarn/bin/"
 
-# ensure ~/bin is on the path
+# ensure ~/bin and ~/.local/bin is in PATH
 [[ $PATH =~ ~/bin ]] || PATH="$PATH:$HOME/bin"
+[[ $PATH =~ ~/.local/bin ]] || "$PATH:$HOME/.local/bin"
 
 export PATH
 

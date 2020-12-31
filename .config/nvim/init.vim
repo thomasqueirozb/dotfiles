@@ -29,6 +29,7 @@ set relativenumber     " enable relative line numbers
 set confirm            " ask confirmation like save before quit.
 set wildmenu           " Tab completion menu when using command mode
 set expandtab          " Tab key inserts spaces not tabs
+set tabstop=4          " Width used for tabs
 set softtabstop=4      " spaces to enter for each tab
 set shiftwidth=4       " amount of spaces for indentation
 set shortmess+=aAcIws  " Hide or shorten certain messages
@@ -78,17 +79,21 @@ Plug 'Konfekt/FastFold'
 Plug 'kalekundert/vim-coiled-snake' " Python fold
 " }}}
 
-" Latex {{{
-Plug 'lervag/vimtex' " TODO
-" }}}
-
 " Fugitive - git {{{
 Plug 'tpope/vim-fugitive'
 " }}}
 
+" Language support {{{
+Plug 'lervag/vimtex' " TODO
+
+Plug 'rust-lang/rust.vim'
+Plug 'cespare/vim-toml'
+
+Plug 'tomlion/vim-solidity'
+" }}}
+
 " Other {{{
 Plug 'tpope/vim-commentary'
-Plug 'cespare/vim-toml'
 " }}}
 call plug#end()
 " }}}
@@ -96,6 +101,7 @@ call plug#end()
 " ALE {{{
     "\'c': ['gcc', 'clang'],
 let g:ale_linters = {
+    \'asm': [],
     \'c': [],
     \'cpp': [],
     \'javascript': [],
@@ -116,12 +122,13 @@ let g:ale_fixers = {
     \'c': ['clang-format'],
     \'cpp': ['clang-format'],
     \'javascript': ['prettier'],
+    \'css': ['prettier'],
     \'vue': ['eslint'],
     \'json': ['prettier'],
     \'typescript': ['eslint'],
     \'markdown': ['prettier'],
     \'python': ['black'],
-    \'rust': ['rustfmt'],
+    \'rust': [],
     \'sh': [],
     \}
 let g:ale_fix_on_save=1
@@ -230,6 +237,12 @@ endfunction
 " vimtex {{{
 let g:tex_flavor = 'latex'
 " }}}
+" Rust {{{
+let g:rustfmt_autosave = 1
+let g:rustfmt_emit_files = 1
+let g:rustfmt_fail_silently = 0
+let g:rust_clip_command = 'xclip -selection clipboard'
+" }}}
 " Commentary {{{
 function CommentInsert()
     let col = col('.')
@@ -247,6 +260,7 @@ endfunction
 
 autocmd FileType vue setlocal commentstring=<!--%s-->
 autocmd FileType vhdl setlocal commentstring=--%s
+"autocmd FileType asm setlocal commentstring=\;%s
 
 imap <C-_> <C-o>:call CommentInsert()<CR>
 nmap <C-_> <Plug>CommentaryLine
