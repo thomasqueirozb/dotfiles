@@ -5,37 +5,31 @@
 
 # better ls and cd
 unalias ls >/dev/null 2>&1
-ls()
-{
+ls() {
     command ls --color=auto -F "$@"
 }
 
 unalias cd >/dev/null 2>&1
-cd()
-{
+cd() {
     builtin cd "$@" && command ls --color=auto -F
 }
 
-src()
-{
+src() {
     . ~/.bashrc 2>/dev/null
 }
 
-por()
-{
+por() {
     local orphans
     orphans="$(pacman -Qtdq 2>/dev/null)"
     [[ -z $orphans ]] && printf "System has no orphaned packages\n" || sudo pacman -Rns $orphans
 }
 
-pss()
-{
+pss() {
     PS3=$'\n'"Enter a package number to install, Ctrl-C to exit"$'\n\n'">> "
     select pkg in $(pacman -Ssq "$1"); do sudo pacman -S $pkg; break; done
 }
 
-pacsearch()
-{
+pacsearch() {
     echo -e "$(pacman -Ss "$@" | sed \
         -e 's#core/.*#\\033[1;31m&\\033[0;37m#g' \
         -e 's#extra/.*#\\033[0;32m&\\033[0;37m#g' \
@@ -43,8 +37,7 @@ pacsearch()
         -e 's#^.*/.* [0-9].*#\\033[0;36m&\\033[0;37m#g')"
 }
 
-mir()
-{
+mir() {
     if hash reflector >/dev/null 2>&1; then
         su -c 'reflector --score 100 -l 50 -f 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose'
     else
@@ -55,8 +48,7 @@ mir()
     fi
 }
 
-tmuxx()
-{
+tmuxx() {
     session="${1:-main}"
     if ! grep -q "$session" <<< "$(tmux ls 2>/dev/null | awk -F':' '{print $1}')"; then
         tmux new -d -s "$session"
@@ -72,8 +64,7 @@ tmuxx()
     fi
 }
 
-surfs()
-{
+surfs() {
     if ! hash surf-open tabbed surf >/dev/null 2>&1; then
         local reqs="tabbed, surf, surf-open (shell script provided with surf)"
         printf "error: this requires the following installed\n\n\t%s\n" "$reqs"
@@ -105,32 +96,27 @@ surfs()
     ) & disown
 }
 
-flac_to_mp3()
-{
+flac_to_mp3() {
     for i in "${1:-.}"/*.flac; do
         [[ -e "${1:-.}/$(basename "$i" | sed 's/.flac/.mp3/g')" ]] || ffmpeg -i "$i" -qscale:a 0 "${i/%flac/mp3}"
     done
 }
 
-deadsym()
-{
+deadsym() {
     for i in **/*; do [[ -h $i && ! -e $(readlink -fn "$i") ]] && rm -rfv "$i"; done
 }
 
-gitpr()
-{
+gitpr() {
     github="pull/$1/head:$2"
     _fetchpr $github $2 $3
 }
 
-bitpr()
-{
+bitpr() {
     bitbucket="refs/pull-requests/$1/from:$2"
     _fetchpr $bitbucket $2 $3
 }
 
-_fetchpr()
-{
+_fetchpr() {
     # shellcheck disable=2154
     [[ $ZSH_VERSION ]] && program=${funcstack#_fetchpr} || program='_fetchpr'
     if (( $# != 2 && $# != 3 )); then
@@ -148,8 +134,7 @@ _fetchpr()
     fi
 }
 
-sloc()
-{
+sloc() {
     [[ $# -eq 1 && -r $1 ]] || { printf "Usage: sloc <file>"; return 1; }
     if [[ $1 == *.vim ]]; then
         awk '!/^[[:blank:]]*("|^$)/' "$1" | wc -l
@@ -160,68 +145,55 @@ sloc()
     fi
 }
 
-nh()
-{
+nh() {
     nohup "$@" &>/dev/null &
 }
 
-hex2dec()
-{
+hex2dec() {
     awk 'BEGIN { printf "%d\n",0x$1}'
 }
 
-dec2hex()
-{
+dec2hex() {
     awk 'BEGIN { printf "%x\n",$1}'
 }
 
-ga()
-{
+ga() {
     git add "${1:-.}"
 }
 
-gr()
-{
+gr() {
     git rebase -i HEAD~${1:-10}
 }
 
-mktar()
-{
+mktar() {
     tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"
 }
 
-mkzip()
-{
+mkzip() {
     zip -r "${1%%/}.zip" "$1"
 }
 
-sanitize()
-{
+sanitize() {
     chmod -R u=rwX,g=rX,o= "$@"
 }
 
-mp()
-{
+mp() {
     ps "$@" -u $USER -o pid,%cpu,%mem,bsdtime,command
 }
 
-pp()
-{
+pp() {
     mp f | awk '!/awk/ && $0~var' var=${1:-".*"}
 }
 
-ff()
-{
+ff() {
     find . -type f -iname '*'"$*"'*' -ls
 }
 
-fe()
-{
+fe() {
     find . -type f -iname '*'"${1:-}"'*' -exec ${2:-file} {} \;
 }
 
-ranger()
-{
+ranger() {
     local dir tmpf
     [[ $RANGER_LEVEL && $RANGER_LEVEL -gt 2 ]] && exit 0
     local rcmd="command ranger"
@@ -233,8 +205,7 @@ ranger()
     [[ -z $dir || $dir == "$PWD" ]] || builtin cd "${dir}" || return 0
 }
 
-resize()
-{
+resize() {
     hash convert >/dev/null 2>&1 || { printf "This function requires imagemagick\n"; return 1; }
     local size="$1"; shift
     if [[ $size =~ [1-9]*x[1-9] && $# -ge 1 ]]; then
@@ -257,8 +228,7 @@ resize()
     fi
 }
 
-fstr()
-{
+fstr() {
     OPTIND=1
     local case=""
     local usage='Usage: fstr [-i] "pattern" ["filename pattern"]'
@@ -271,8 +241,8 @@ fstr()
     find . -type f -name "${2:-*}" -print 0 | xargs -0 egrep --color=always -sn ${case} "$1" 2>&- | more
 }
 
-swap()
-{ # Swap 2 filenames around, if they exist
+swap() {
+    # Swap 2 filenames around, if they exist
     local tmpf=tmp.$$
     [[ $# -ne 2 ]] && printf "swap: takes 2 arguments\n" && return 1
     [[ ! -e $1 ]] && printf "swap: %s does not exist\n" "$1" && return 1
@@ -280,14 +250,12 @@ swap()
     mv "$1" $tmpf && mv "$2" "$1" && mv $tmpf "$2"
 }
 
-take()
-{
+take() {
     mkdir -p "$1"
     cd "$1" || return
 }
 
-csrc()
-{
+csrc() {
     [[ $1 ]] || { printf "Missing operand" >&2; return 1; }
     [[ -r $1 ]] || { printf "File %s does not exist or is not readable\n" "$1" >&2; return 1; }
     local out=${TMPDIR:-/tmp}/${1##*/}
@@ -296,16 +264,14 @@ csrc()
     return 0
 }
 
-hr()
-{
-  local start=$'\e(0' end=$'\e(B' line='qqqqqqqqqqqqqqqq'
-  local cols=${COLUMNS:-$(tput cols)}
-  while ((${#line} < cols)); do line+="$line"; done
-  printf '%s%s%s\n' "$start" "${line:0:cols}" "$end"
+hr() {
+    local start=$'\e(0' end=$'\e(B' line='qqqqqqqqqqqqqqqq'
+    local cols=${COLUMNS:-$(tput cols)}
+    while ((${#line} < cols)); do line+="$line"; done
+    printf '%s%s%s\n' "$start" "${line:0:cols}" "$end"
 }
 
-arc()
-{
+arc() {
     arg="$1"; shift
     case $arg in
         -e|--extract)
@@ -344,8 +310,7 @@ arc()
     esac
 }
 
-killp()
-{
+killp() {
     local pid name sig="-TERM"   # default signal
     [[ $# -lt 1 || $# -gt 2 ]] && printf "Usage: killp [-SIGNAL] pattern" && return 1
     [[ $# -eq 2 ]] && sig=$1
@@ -355,8 +320,7 @@ killp()
     done
 }
 
-mdf()
-{
+mdf() {
     local cols
     cols=$(( ${COLUMNS:-$(tput cols)} / 3 ))
     for fs in "$@"; do
@@ -373,16 +337,14 @@ mdf()
     done
 }
 
-mip()
-{
+mip() {
     local ip
     ip=$(/usr/bin/ifconfig "$(ifconfig | awk -F: '/RUNNING/ && !/LOOP/ {print $1}')" |
         awk '/inet/ { print $2 } ' | sed -e s/addr://)
     printf "%s" "${ip:-Not connected}"
 }
 
-ii()
-{
+ii() {
     echo -e "\nYou are logged on \e[1;31m$HOSTNAME"
     echo -e "\n\e[1;31mAdditionnal information:\e[m " ; uname -a
     echo -e "\n\e[1;31mUsers logged on:\e[m "         ; w -hs | awk '{print $1}' | sort | uniq
@@ -395,8 +357,7 @@ ii()
     echo
 }
 
-rep()
-{
+rep() {
     local max=$1
     shift
     for (( i=0; i<max; i++ )); do
@@ -404,8 +365,7 @@ rep()
     done
 }
 
-ask()
-{
+ask() {
     printf "$@" '[y/N] '; read -r ans
     case "$ans" in
         y*|Y*) return 0 ;;
@@ -413,8 +373,7 @@ ask()
     esac
 }
 
-args()
-{
+args() {
     # Bash or ksh93 debugging function for colored display of argv.
     # Optionally set OFD to the desired output file descriptor.
     { BASH_XTRACEFD=3 eval ${BASH_VERSION+"$(</dev/fd/0)"}; } <<-'EOF' 3>/dev/null
@@ -440,8 +399,7 @@ EOF
     fi >&"${OFD:-2}"
 }
 
-fast_chr()
-{
+fast_chr() {
     local __octal
     local __char
     printf -v __octal '%03o' $1
@@ -449,8 +407,7 @@ fast_chr()
     REPLY=$__char
 }
 
-unichr()
-{
+unichr() {
     if [[ $# -lt 1 || $1 =~ (-h|--help) ]]; then
         cat << EOF
 Usage example:
@@ -480,18 +437,25 @@ EOF
     fast_chr $(( t = p | c ))
     echo -n "$REPLY$s"
 }
-# ${PATH//:/}
-#    | grep -v "$/" | sed '/^$/d' | grep -i "$1"
-find_prog(){
+
+find_prog() {
     echo "$PATH" | sed 's/:/ /g' | xargs ls -1 | grep "$*"
 }
 
-find_file(){
-    find / 2>/dev/null | grep -i "$1"
+find_file() {
+    if hash fd; then
+        fd / 2>/dev/null "$1"
+    else
+        find / 2>/dev/null | grep -i "$1"
+    fi
 }
 
-find_here(){
-    find . 2>/dev/null | grep -i "$1"
+find_here() {
+    if hash fd; then
+        fd . 2>/dev/null "$1"
+    else
+        find . 2>/dev/null | grep -i "$1"
+    fi
 }
 
 rawurlencode() {
@@ -508,8 +472,7 @@ rawurlencode() {
      esac
      encoded+="${o}"
   done
-  echo "${encoded}"    # You can either set a return variable (FASTER) 
-  REPLY="${encoded}"   #+or echo the result (EASIER)... or both... :p
+  echo "${encoded}"
 }
 
 yt() {
@@ -527,7 +490,12 @@ drag() {
 
 drop() {
     url="$(dragon-drag-and-drop -t -x)"
-    filename="$(echo "$url" | sed 's/^.*\///')" # Crappy code
+    if [ -n "$1" ]; then
+        filename="$1"
+    else
+        filename="$(echo "$url" | sed 's/^.*\///')" # Crappy code
+    fi
+
     if [ -e "$filename" ]; then
         local n=1
         local new_name="$filename ($n)"
@@ -539,4 +507,17 @@ drop() {
     fi
     echo "Saving file as $filename"
     curl -o "$filename" "$url" --silent
+}
+
+getdumppid() {
+    coredumpctl -q -r --no-pager --no-legend | \
+        awk -v pat="$1" '{IGNORECASE=1;if($10~pat){print $5; exit}}'
+}
+
+seedump() {
+    coredumpctl info "$(getdumppid $1)"
+}
+
+gdbdump() {
+    coredumpctl debug "$(getdumppid $1)"
 }

@@ -9,15 +9,20 @@
 k1="Super_L=Menu"
 xcape -t 667 -e "$k1"
 
-xinput set-prop 'ELN4690:00 04F3:304B Touchpad' 'libinput Tapping Enabled' 1
-xinput set-prop 'ELN4690:00 04F3:304B Touchpad' 'libinput Disable While Typing Enabled' 0
-xinput set-prop 'ELN4690:00 04F3:304B Touchpad' 'libinput Natural Scrolling Enabled' 1
+if [ "$(hostname)" = "thomas-laptop" ]; then
+    xinput set-prop 'ELN4690:00 04F3:304B Touchpad' 'libinput Tapping Enabled' 1
+    xinput set-prop 'ELN4690:00 04F3:304B Touchpad' 'libinput Disable While Typing Enabled' 0
+    xinput set-prop 'ELN4690:00 04F3:304B Touchpad' 'libinput Natural Scrolling Enabled' 1
 
-# Disable middle click emulation
-# xinput set-prop "ELN4690:00 04F3:304B Touchpad" "libinput Middle Emulation Enabled" 1
+    # Disable middle click emulation
+    # xinput set-prop "ELN4690:00 04F3:304B Touchpad" "libinput Middle Emulation Enabled" 1
+else
+    numlockx &
+fi
 
 
 setxkbmap -layout "us,us" -variant "basic,intl" -option grp:shifts_toggle
+xmodmap -e "keysym Scroll_Lock = Multi_key"
 
 export userresources="$HOME/.Xresources"
 export usermodmap="$HOME/.Xmodmap"

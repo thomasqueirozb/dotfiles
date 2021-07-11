@@ -1,6 +1,8 @@
 #!/bin/bash
 # vim:foldmethod=marker
 
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
 # vim {{{
 alias :q='exit'
 alias :q!='exit'

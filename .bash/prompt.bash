@@ -25,7 +25,7 @@ PROMPT_CHROOT_DOCKER_COLOR="$RESET"
 PROMPT_SSH_COLOR="$RESET"
 
 # add some handy history commands, see `history --help`
-PROMPT_COMMAND='export exitcode=$?; history -n; history -w; history -c; history -r;'
+PROMPT_COMMAND='export _exitcode=$?; history -n; history -w; history -c; history -r;'
 PROMPT_COMMAND+='__git_ps1 "$(__title)${PROMPT_ARROW_COLOR}${PROMPT_LNBR1}$(__exitcode) '
 PROMPT_COMMAND+='${PROMPT_USERFMT}${PROMPT_ARROW_COLOR}\w$(__ranger)${RESET}" '
 PROMPT_COMMAND+='" ${PROMPT_MULTILINE}${PROMPT_ARROW_COLOR}${PROMPT_LNBR2}${PROMPT_ARROW}'
@@ -94,8 +94,7 @@ __chroot_docker()
 __exitcode()
 {
     # shellcheck disable=2154
-    # (( exitcode == 0 )) || printf " \e[31m$?"
-    [ $exitcode = "0" ] || printf " \e[31m$exitcode"
+    [ $_exitcode = "0" ] || printf " \e[31m$_exitcode"
 }
 
 # print blue '(r)' when in a nested ranger shell
@@ -256,7 +255,7 @@ __git_ps1 ()
             PS1="$ps1pc_start$ps1pc_end"
             export PS1 ;;
         0|1) printf_format="${1:-$printf_format}" ;;
-        *) return $exitcode ;;
+        *) return $_exitcode ;;
     esac
 
     local ps1_expanded=true
@@ -268,7 +267,7 @@ __git_ps1 ()
         --is-bare-repository --is-inside-work-tree --short HEAD 2>/dev/null)"
     rev_parse_exit_code="$?"
 
-    [[ -z $repo_info ]] && return $exitcode
+    [[ -z $repo_info ]] && return $_exitcode
 
     local short_sha=""
     if [[ $rev_parse_exit_code = "0" ]]; then
@@ -283,7 +282,7 @@ __git_ps1 ()
     local g="${repo_info%$'\n'*}"
 
     if [[ "true" = "$inside_worktree" && -n ${GIT_PS1_HIDE_IF_PWD_IGNORED-} && $(git config --bool bash.hideIfPwdIgnored) != "false" ]] && git check-ignore -q .; then
-        return $exitcode
+        return $_exitcode
     fi
 
     local r b step total
@@ -321,7 +320,7 @@ __git_ps1 ()
             b="$(git symbolic-ref HEAD 2>/dev/null)" # symlink symbolic ref
         else
             local head=""
-            __git_eread "$g/HEAD" head || return $exitcode
+            __git_eread "$g/HEAD" head || return $_exitcode
             # is it a symbolic ref?
             b="${head#ref: }"
             if [[ $head = "$b" ]]; then
@@ -390,7 +389,7 @@ __git_ps1 ()
         printf -- "$printf_format" "$gitstring"
     fi
     export PS1
-    return $exitcode
+    return $_exitcode
 }
 
 # unset $GIT_PS1_SHOWCOLORHINTS $GIT_PS1_SHOWDIRTYSTATE $GIT_PS1_SHOWSTASHSTATE $GIT_PS1_SHOWUNTRACKEDFILES $GIT_PS1_SHOWUPSTREAM

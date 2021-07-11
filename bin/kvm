@@ -1,0 +1,22 @@
+#!/bin/sh
+
+install_if_needed() {
+    to_install=""
+    for pkg in $1; do
+        if ! pacman -Q "$pkg" 1>/dev/null; then
+            to_install="$to_install $pkg"
+        fi
+    done
+    if [ "$to_install" != "" ]; then
+        sudo pacman -S --needed $to_install
+    fi
+
+}
+
+main() {
+    install_if_needed "qemu libvirt virt-manager bridge-utils dnsmasq ebtables"
+    sudo systemctl start libvirtd
+    sudo virsh net-start default
+}
+
+main

@@ -1,0 +1,102 @@
+#!/bin/bash
+# vim:foldmethod=marker
+# shellcheck disable=SC2139
+
+[ "$bash_path_env_set" = 1 ] && return
+
+# XDG dirs {{{
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_DATA_DIRS="/usr/local/share/:/usr/share/"
+
+export XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
+# }}}
+
+
+# Configure PATH {{{
+paths=(
+    "$HOME/.local/bin"
+    "$HOME/bin"
+    "$XDG_DATA_HOME/cargo/bin"
+)
+
+[ -d "$XDG_DATA_HOME/gem/ruby" ] && {
+    newest_ruby="$(/bin/ls -1 "$XDG_DATA_HOME/gem/ruby" | sort -r | head -1)"
+    [ "$newest_ruby" = "" ] || paths+=("$newest_ruby/bin")
+}
+
+for path in "${paths[@]}"; do
+    [ -d "$path" ] && [[ $PATH =~ "$path" ]] || export PATH="$PATH:$path"
+done
+# }}}
+
+
+# Set the rest of the environment {{{
+
+# Redlecare commands {{{
+svn_cmd="$(which svn)"
+unalias svn >/dev/null 2>&1
+svn() {
+    "$svn_cmd" --config-dir "$XDG_CONFIG_HOME/subversion" "$@"
+}
+
+yarn_cmd="$(which yarn)"
+unalias yarn >/dev/null 2>&1
+yarn() {
+    "$yarn_cmd" --use-yarnrc "$XDG_CONFIG_HOME/yarn/config" "$@"
+}
+
+gpg2_cmd="$(which gpg2)"
+unalias gpg2 >/dev/null 2>&1
+gpg2() {
+    "$gpg2_cmd" --homedir "$XDG_DATA_HOME/gnupg" "$@"
+}
+
+nvidia_settings_cmd="$(which nvidia-settings)"
+unalias nvidia-settings >/dev/null 2>&1
+nvidia-settings() {
+    "$nvidia_settings_cmd" --config="$XDG_CONFIG_HOME/nvidia/settings" "$@"
+}
+# }}}
+
+# alias gdb="gdb -nh -x \"$XDG_CONFIG_HOME/gdb/init\""
+alias mitmproxy="mitmproxy --set confdir=\"$XDG_CONFIG_HOME/mitmproxy\""
+alias mitmweb="mitmweb --set confdir=\"$XDG_CONFIG_HOME/mitmproxy\""
+
+
+# Export environment variables to make programs comply with the XDG spec {{{
+export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
+
+export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+
+export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonstartup.py"
+export PYLINTHOME="$XDG_CACHE_HOME/pylint"
+export IPYTHONDIR="$XDG_CONFIG_HOME/jupyter"
+export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
+
+export GEM_HOME="$XDG_DATA_HOME/gem"
+export GEM_SPEC_CACHE="$XDG_CACHE_HOME/gem"
+
+export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
+export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
+
+export ANDROID_SDK_HOME="$XDG_CONFIG_HOME/android"
+export ADB_VENDOR_KEY="$XDG_CONFIG_HOME/android"
+
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
+
+export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_repl_history"
+export GOPATH="$XDG_DATA_HOME/go"
+export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+
+# }}}
+
+# }}}
+
+export bash_path_env_set=1

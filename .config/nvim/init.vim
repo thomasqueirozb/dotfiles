@@ -1,4 +1,4 @@
-" vim:fileencoding=utf-8:foldmethod=marker
+" vim:foldmethod=marker
 
 " Fold usage:                More info here: https://vim.fandom.com/wiki/Folding
 "   za     = toggle
@@ -28,15 +28,16 @@ set number             " enable line numbers
 set relativenumber     " enable relative line numbers
 set confirm            " ask confirmation like save before quit.
 set wildmenu           " Tab completion menu when using command mode
-set expandtab          " Tab key inserts spaces not tabs
-set tabstop=4          " Width used for tabs
-set softtabstop=4      " spaces to enter for each tab
-set shiftwidth=4       " amount of spaces for indentation
 set shortmess+=aAcIws  " Hide or shorten certain messages
 set undofile           " Persistent undo
 set hidden             " Change buffer without saving
 set linebreak          " Long line wrapping
 set breakindent        " Indent is the same for wrapped line
+set expandtab          " Tab key inserts spaces not tabs
+set smarttab           " smart tabs
+set tabstop=4          " Width used for tabs
+set softtabstop=4      " spaces to enter for each tab
+set shiftwidth=4       " amount of spaces for indentation
 
 set mouse=a            " enable mouse
 syntax enable          " syntax highlighting
@@ -68,7 +69,6 @@ Plug 'danilo-augusto/vim-afterglow' " Afterglow
 
 " Linters/Fixers {{{
 Plug 'dense-analysis/ale' " I use this mostly for fixing
-" Plug 'ycm-core/YouCompleteMe', { 'do': './install.py --ts-completer' } " Hell to configure
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'maksimr/vim-jsbeautify'
 Plug 'editorconfig/editorconfig-vim'
@@ -88,8 +88,9 @@ Plug 'lervag/vimtex' " TODO
 
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
+Plug 'vim-python/python-syntax'
 
-Plug 'tomlion/vim-solidity'
+" Plug 'tomlion/vim-solidity'
 " }}}
 
 " Other {{{
@@ -99,11 +100,11 @@ call plug#end()
 " }}}
 
 " ALE {{{
-    "\'c': ['gcc', 'clang'],
 let g:ale_linters = {
     \'asm': [],
     \'c': [],
     \'cpp': [],
+    \'cuda': ['clangd'],
     \'javascript': [],
     \'vue': ['eslint'],
     \'rust': [],
@@ -111,17 +112,12 @@ let g:ale_linters = {
     \'python': ['pylint'],
     \'sh': [],
     \}
-"     \'c': ['gcc'],
-"     \'cpp': ['g++'],
-"     \'javascript': [],
-"     \'typescript': ['eslint', 'tsserver', 'prettier'],
-"     \'python': ['flake8', 'mypy', 'pylint'],
-"     \}
 
 let g:ale_fixers = {
     \'c': ['clang-format'],
     \'cpp': ['clang-format'],
-    \'javascript': ['prettier'],
+    \'cuda': ['clang-format'],
+    \'javascript': ['eslint'],
     \'css': ['prettier'],
     \'vue': ['eslint'],
     \'json': ['prettier'],
@@ -155,6 +151,13 @@ endif
 
 "join(['a', 'b', 'c']) == 'a' . 'b' . 'c'
 let g:ale_c_clangformat_options='--style="{' . g:clang_format_options . '}"'
+let g:ale_cuda_clangformat_options='--style="{' . g:clang_format_options . '}"'
+
+
+let g:ale_cuda_clangd_options="-std=c++11 -x c++"
+
+
+
 " }}}
 " COC {{{
 
@@ -177,18 +180,20 @@ inoremap <silent><expr> <TAB>
             \ pumvisible() ? "\<C-n>" :
             \ <SID>check_back_space() ? "\<TAB>" :
             \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-nmap <leader>gd <Plug>(coc-definition)
-nmap <leader>gy <Plug>(coc-type-definition)
-nmap <leader>gi <Plug>(coc-implementation)
-nmap <leader>gr <Plug>(coc-references)
-nmap <leader>rr <Plug>(coc-rename)
-nmap <leader>g[ <Plug>(coc-diagnostic-prev)
-nmap <leader>g] <Plug>(coc-diagnostic-next)
-nmap <silent> <leader>gp <Plug>(coc-diagnostic-prev)
-nmap <silent> <leader>gn <Plug>(coc-diagnostic-next)
-nnoremap <leader>cr :CocRestart<CR>
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+nmap <Leader>gd <Plug>(coc-definition)
+nmap <Leader>gy <Plug>(coc-type-definition)
+nmap <Leader>gi <Plug>(coc-implementation)
+nmap <Leader>gr <Plug>(coc-references)
+nmap <Leader>rr <Plug>(coc-rename)
+nmap <Leader>g[ <Plug>(coc-diagnostic-prev)
+nmap <Leader>g] <Plug>(coc-diagnostic-next)
+nmap <silent> <Leader>gp <Plug>(coc-diagnostic-prev)
+nmap <silent> <Leader>gn <Plug>(coc-diagnostic-next)
+nnoremap <Leader>cr :CocRestart<CR>
 
 " }}}
 " Airline {{{
@@ -208,6 +213,23 @@ nmap <Leader>gs :G<CR>
 " EditorConfig{{{
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 "}}}
+" {{{ Python syntax
+let g:python_highlight_builtins = 1
+" g:python_highlight_builtin_objs             | Highlight builtin objects only                                 | 0     |
+" g:python_highlight_builtin_types            | Highlight builtin types only                                   | 0     |
+" g:python_highlight_builtin_funcs            | Highlight builtin functions only                               | 0     |
+" g:python_highlight_builtin_funcs_kwarg      | Highlight builtin functions when used as kwarg                 | 1     |
+" g:python_highlight_exceptions               | Highlight standard exceptions                                  | 0     |
+let g:python_highlight_string_formatting = 1
+let g:python_highlight_string_format = 1
+let g:python_highlight_string_templates = 1
+let g:python_highlight_space_errors = 0
+let g:python_highlight_doctests = 1
+let g:python_highlight_func_calls = 1
+let g:python_highlight_class_vars = 1
+" g:python_highlight_operators                | Highlight all operators                                        | 0     |
+let g:python_highlight_file_headers_as_comments = 0
+" }}}
 " {{{ Coiled Snake - Python fold
 function! g:CoiledSnakeConfigureFold(fold)
 
@@ -244,26 +266,33 @@ let g:rustfmt_fail_silently = 0
 let g:rust_clip_command = 'xclip -selection clipboard'
 " }}}
 " Commentary {{{
-function CommentInsert()
-    let col = col('.')
-    let line = line('.')
-    let size = strwidth(getline('.'))
-    Commentary
-    " This does not work when comments change the the end of the line (html)
-    let moved_length = strwidth(getline('.')) - size
-    let new_col = col + moved_length
-    if new_col < 0
-        let new_col = 0
-    endif
-    call cursor(line, new_col)
-endfunction
-
+autocmd FileType c setlocal commentstring=//%s
+autocmd FileType c++ setlocal commentstring=//%s
+autocmd FileType cuda setlocal commentstring=//%s
 autocmd FileType vue setlocal commentstring=<!--%s-->
 autocmd FileType vhdl setlocal commentstring=--%s
 "autocmd FileType asm setlocal commentstring=\;%s
+"
+function CommentaryWithCursor()
+    let line_number = line('.')
+    let old_col = col('.')
+    let old_size = strwidth(getline('.'))
 
-imap <C-_> <C-o>:call CommentInsert()<CR>
-nmap <C-_> <Plug>CommentaryLine
+    Commentary
+
+    " A space is inserted so + 1 is needed
+    let split_len = strlen(split(&commentstring, "%s")[0]) + 1
+
+    if strlen(getline('.')) > old_size
+        call cursor(line_number, old_col + split_len)
+    else
+        call cursor(line_number, old_col - split_len)
+    endif
+endfunction
+
+inoremap <C-_> <C-o>:call CommentaryWithCursor()<CR>
+" nmap <C-_> <Plug>CommentaryLine
+nnoremap <C-_> :call CommentaryWithCursor()<CR>
 vmap <C-_> <Plug>Commentarygv
 " }}}
 " }}}
@@ -271,6 +300,7 @@ vmap <C-_> <Plug>Commentarygv
 " Colorscheme {{{
 try
     colorscheme afterglow
+    hi Pmenu guibg=#2b2e33 gui=NONE
 catch
     let g:jinx_theme = 'midnight' " midnight, night, or day
     colorscheme jinx
@@ -289,7 +319,7 @@ if $TERM !=? 'linux'
         let &term = 'xterm-256color'
     endif
     if has('multi_byte') && $TERM !=? 'linux'
-        set listchars=tab:»»,trail:•
+        set listchars=tab:»»,trail:• " tabs:	trailing spaces: 
         set fillchars=vert:┃ showbreak=↪
     endif
 endif
@@ -317,6 +347,25 @@ endif
 " }}}
 
 " Additional configuration {{{
+" xdg {{{
+if !has('nvim')
+    set runtimepath^=$XDG_CONFIG_HOME/vim
+    set runtimepath+=$XDG_DATA_HOME/vim
+    set runtimepath+=$XDG_CONFIG_HOME/vim/after
+
+    set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
+    set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
+
+    let g:netrw_home = $XDG_DATA_HOME."/vim"
+    call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
+    set viewdir=$XDG_DATA_HOME/vim/view | call mkdir(&viewdir, 'p')
+
+    set backupdir=$XDG_CACHE_HOME/vim/backup | call mkdir(&backupdir, 'p')
+    set directory=$XDG_CACHE_HOME/vim/swap   | call mkdir(&directory, 'p')
+    set undodir=$XDG_CACHE_HOME/vim/undo     | call mkdir(&undodir,   'p')
+    set viminfofile=$XDG_CACHE_HOME/vim/viminfo
+endif
+" }}}
 " netrw {{{
 let g:netrw_altv = 1
 let g:netrw_liststyle = 3
@@ -324,13 +373,13 @@ let g:netrw_browse_split = 3
 " }}}
 " Autocmd {{{
 " Highlight keywords {{{
-function! SetMyTodos()
-    syntax keyword myTodo TODO CRITICAL WARNING OPTIMIZE containedin=ALL
+function! SetMyHighlights()
+    syntax keyword myTodo TODO CRITICAL WARNING OPTIMIZE FIXME containedin=ALL
 
     hi def link myTodo Todo
 endfunction
-autocmd bufenter * :call SetMyTodos()
-autocmd filetype * :call SetMyTodos()
+autocmd bufenter * :call SetMyHighlights()
+autocmd filetype * :call SetMyHighlights()
 
 " autocmd Syntax * syntax keyword myTodo WARNING NOTES containedin=ALL | highlight def link myTodo TODO
 
@@ -343,7 +392,7 @@ augroup load_changed_file
     autocmd FileChangedShellPost * echo "Changes loaded from source file"
 augroup END
 " }}}
-" when quitting a file, save the cursor position {{{
+" Save the cursor position on file exit {{{
 augroup save_cursor_position
     autocmd!
     autocmd BufReadPost * call setpos(".", getpos("'\""))
@@ -521,7 +570,7 @@ endfunction
 
 " Keyboard maps {{{
 " open ranger as a file chooser
-nnoremap <leader>r :call <SID>ranger()<CR>
+nnoremap <Leader>r :call <SID>ranger()<CR>
 
 " match string to switch buffer
 nnoremap <Leader>b :let b:buf = input('Match: ')<Bar>call <SID>bufferselect(b:buf)<CR>
@@ -544,8 +593,6 @@ nnoremap 0 ^
 nnoremap Y y$
 nnoremap n nzzzv
 nnoremap N Nzzzv
-" This disables <C-i> functionality
-" nnoremap <Tab> ==1j
 " }}}
 " Visual {{{
 " re-visual text after changing indent
@@ -581,11 +628,10 @@ nnoremap <silent> <Leader>- :tabedit <C-R>=expand("%:p:h")<CR><CR>
 nnoremap <silent> <Leader>tt :terminal<CR>
 " Exit from terminal emulator with Esc instead of only with <C-\><C-n>
 tnoremap <Esc> <C-\><C-n>
+
+" No Delay Escape on terminal
+set timeoutlen=1000 ttimeoutlen=0
 " }}}
-
-" " save with C-s
-" nnoremap <C-s> :w<CR>
-
 
 " User
 " autocmd! bufwritepost $MYVIMRC source $MYVIMRC
@@ -593,8 +639,12 @@ nmap <Leader>i :tabnew $MYVIMRC<CR>
 nmap <Leader>v :source $MYVIMRC<CR>
 nmap <Leader>h :nohls<CR>
 
-" No Delay Escape on terminal
-set timeoutlen=1000 ttimeoutlen=0
+" Don't copy text when deleting
+nmap <Leader>x "_x
+nmap <Leader>d "_d
+
+vmap <Leader>x "_x
+vmap <Leader>d "_d
 
 " Latex {{{
 autocmd FileType tex inoremap ç \c c

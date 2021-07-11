@@ -5,6 +5,7 @@ uid=$(id -u)
 username=$(awk -F':' '/:1000:/ {print $1}' /etc/passwd)
 
 # Terminate already running bar instances
+pgrep polybar || sleep 3
 killall -q polybar -u "$username"
 
 # Wait until the processes have been shut down

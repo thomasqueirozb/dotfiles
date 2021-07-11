@@ -4,11 +4,10 @@
 [[ $- == *i* && $BASH_VERSION ]] && SHELL=/bin/bash || return 0
 
 # set some defaults
-export MANWIDTH=90
 # export HISTSIZE=10000
 export HISTSIZE=
 export HISTFILESIZE=
-export HISTCONTROL=ignoreboth
+export HISTCONTROL=ignoreboth:ignoredups:erasedups
 export HISTIGNORE="q:f:v"
 
 # colors in less (manpager)
@@ -21,6 +20,10 @@ export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[01;32m'
 
 set -o vi
+
+bind -m vi-command "Control-l:clear-screen"
+bind -m vi-insert "Control-l:clear-screen"
+
 set -o notify
 
 shopt -s direxpand
@@ -49,6 +52,7 @@ for f in "$HOME/.bash/"*?.bash; do
     # shellcheck source=/dev/null
     . "$f"
 done
+unset f
 
 #al-info
 # neofetch

@@ -8,6 +8,7 @@ import atexit
 import os
 import readline
 
+
 if "XDG_DATA_HOME" in os.environ:
     DIR = os.path.join(os.environ["XDG_DATA_HOME"], "python")
 else:
@@ -22,7 +23,7 @@ del DIR
 try:
     readline.read_history_file(HISTFILE)
     # default history len is -1 (infinite), which may grow unruly
-    readline.set_history_length(-1)
+    readline.set_history_length(10000)
 except FileNotFoundError:
     pass
 

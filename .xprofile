@@ -1,52 +1,12 @@
 #!/bin/bash
 
-export EDITOR=nvim
+. "$HOME/.bash/path_env"
+
 export XENVIRONMENT="$HOME/.Xresources"
 
-# XDG dirs
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_DATA_DIRS="/usr/local/share/:/usr/share/"
-
-export XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
-
-
-PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin:$XDG_DATA_HOME/cargo/bin/:$HOME/.yarn/bin/"
-
-# ensure ~/bin and ~/.local/bin is in PATH
-[[ $PATH =~ ~/bin ]] || PATH="$PATH:$HOME/bin"
-[[ $PATH =~ ~/.local/bin ]] || "$PATH:$HOME/.local/bin"
-
-export PATH
-
-
-export MOZ_USE_XINPUT2=1
-
-export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonstartup.py"
-export PYLINTHOME="$XDG_CACHE_HOME/pylint"
-export IPYTHONDIR="$XDG_CONFIG_HOME/jupyter"
-export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
-
-export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
-export CARGO_HOME="$XDG_DATA_HOME/cargo"
-export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
-export GEM_HOME="$XDG_DATA_HOME/gem"
-export GEM_SPEC_CACHE="$XDG_CACHE_HOME/gem"
-export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
-export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_repl_history"
-export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
-export GOPATH="$XDG_DATA_HOME/go"
-
 export LESSHISTFILE="-"
-export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 # export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 
-export ANDROID_SDK_HOME="$XDG_CONFIG_HOME/android"
-export ADB_VENDOR_KEY="$XDG_CONFIG_HOME/android"
-export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
-export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
-export GNUPGHOME="$XDG_DATA_HOME/gnupg"
-
 export QT_QPA_PLATFORMTHEME="qt5ct"
-export LIBVA_DRIVER_NAME=radeonsi
+export LIBVA_DRIVER_NAME=vdpau
+export VDPAU_DRIVER=nvidia

@@ -85,10 +85,8 @@ set $WS10 "10"
 # Monitors {{{
 set $Mon1 HDMI1
 set $Mon2 HDMI2
-exec --no-startup-id xrandr --output HDMI2 --right-of HDMI1
+exec --no-startup-id ~/.config/screenlayout.sh
 
-# Monitor Setup
-exec_always --no-startup-id ~/.screenlayout/default.sh
 
 # Workspace monitor assignment {{{
 workspace $WS1 output $Mon1
@@ -138,7 +136,9 @@ exec_always --no-startup-id xrdb -load ~/.Xresources
 # }}}
 
 # Run once {{{
-exec --no-startup-id batsignal -c 7 -d 5 -D /home/thomas/bin/sss
+exec --no-startup-id noisetorch -i noechosource -t 75
+# exec --no-startup-id noisetorch -i alsa_output.pci-0000_00_1b.0.iec958-stereo -t 75
+exec --no-startup-id blueman-manager
 exec --no-startup-id flameshot
 exec --no-startup-id nm-applet
 # Notification daemon
@@ -255,6 +255,7 @@ bindsym $mod+Mod1+l workspace next
 # {{{ Reload i3/configs
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $Mod+Shift+r restart
+bindsym $Mod+Control+Shift+r exec --no-startup-id sh -c "~/.config/screenlayout.sh && ~/.config/polybar/launch.sh"
 
 # reload the configuration file
 bindsym $Mod+Shift+c reload
@@ -416,9 +417,11 @@ for_window [instance="Immortal"] floating enable
 
 for_window [class="Microsoft Teams - Preview"] no_focus
 focus_on_window_activation none
-assign [class="discord"] → $WS6
-assign [class="Microsoft Teams - Preview"] → $WS7
-assign [class="Wfica"] → $WS9
+assign [class="discord"] →  $WS6
+assign [class="lightcord"] →  $WS6
+assign [instance="Steam"] →  $WS8
+assign [class="Microsoft Teams - Preview"] →  $WS7
+assign [class="Wfica"] →  $WS9
 
 
 # for_window [WM_NAME(UTF8_STRING)="Microsoft Teams Notification"] floating enable

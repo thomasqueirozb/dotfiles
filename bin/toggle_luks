@@ -1,0 +1,45 @@
+#!/bin/bash
+
+mount_point="/luks"
+luks_device="hdd_luks"
+
+if findmnt "$mount_point" > /dev/null; then
+    echo "Unmounting $mount_point"
+    sudo umount $mount_point
+
+    echo "Closing luks device $luks_device"
+    sudo cryptsetup luksClose "$luks_device"
+else
+    crypto_devices=( $(lsblk -n --list -o NAME,FSTYPE | awk '/crypto_LUKS/ {printf "/dev/"; print $1}') )
+    n_devices="${#crypto_devices[@]}"
+
+    if [ "$n_devices" -eq 0 ]; then
+        >&2 echo "No devices with filesystem crypto_LUKS found"
+        exit 1
+    elif [ "$n_devices" -ne 1 ]; then
+        echo "Multiple devices with filesystem crypto_LUKS found"
+        for (( i=0; i<$n_devices; i++ )); do
+            printf "$i: /dev/"
+            echo "$(lsblk -n --list -o NAME,SIZE ${crypto_devices[$i]})"
+        done
+        read -p "Which device do you want to mount? " device_idx
+
+        if [ -n "$device_idx" ] && [ "$device_idx" -eq "$device_idx" ] 2>/dev/null; then
+            if ! [ "$device_idx" -ge 0 ] || ! [ "$device_idx" -lt "$n_devices" ]; then
+                >&2 echo "Number out of range"
+                exit 2
+            fi
+        else
+            >&2 echo "No number was supplied"
+            exit 2
+        fi
+    else
+        device_idx=0
+    fi
+
+    echo "Creating luks device $luks_device from disk ${crypto_devices[$device_idx]}"
+    sudo cryptsetup luksOpen "${crypto_devices[$device_idx]}" "$luks_device"
+    echo "Mounting /dev/mapper/$luks_device at $mount_point"
+    sudo mount /dev/mapper/"$luks_device" "$mount_point"
+
+fi

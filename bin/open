@@ -4,7 +4,7 @@ extension="${extension,,}"
 
 open_text="nvim" # whole command goes here only for text
 open_office="onlyoffice-desktopeditors"
-open_pdf="zathura"
+open_pdf="xreader"
 open_md="mdpdf"
 open_image="sxiv"
 open_image_svg="display"
@@ -13,14 +13,11 @@ open_audio="celluloid"
 open_ica="/opt/Citrix/ICAClient/wfica"
 
 default_open() {
-    nohup $1 "$2" 1>/dev/null 2>&1 &
+    $1 "$2" 1>/dev/null 2>&1 &
+    disown $!
     echo "Opening in $1..."
 }
 
-[ -f "$1" ] || {
-    >&2 echo "$1 is not a file"
-    exit 2
-}
 case "$extension" in
     "ica")
         default_open $open_ica "$1"
@@ -31,7 +28,7 @@ case "$extension" in
     "pdf")
         default_open $open_pdf "$1"
         ;;
-    "mp4" | "mkv" | "m4v" | "avi" | "mov" | "vid")
+    "mp4" | "mkv" | "m4v" | "avi" | "mov" | "vid" | "webm")
         default_open $open_video "$1"
         ;;
     "mp3" | "wav")
@@ -54,8 +51,8 @@ case "$extension" in
         echo "No matching extension: $extension"
         echo -n "Would you like to open it as a text file? [Y/n] "
         read -r -n1 res
-        echo
         if [ "${res,,}" = "n" ]; then
+            echo
             exit 0
         fi
         $open_text "$1"

@@ -47,7 +47,7 @@ font-0 = "monospace:pixelsize=12;2"
 font-1 = "Material Icons:size=13;4"
 font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=11;1"
 
-modules-left = i3 memory temperature cpuclock cpu
+modules-left = i3 memory temperature cpu
 modules-center = clock date kbd
 modules-right = pkg pulseaudio backlight battery powermenu
 tray-position = right
@@ -124,7 +124,7 @@ label-mode-padding = 2
 label-mode-background = #e60053
 
 ; Only show workspaces on the same output as the bar
-; pin-workspaces = true
+pin-workspaces = true
 
 ; focused = Active workspace on focused monitor
 label-focused = %index% %icon%
@@ -268,7 +268,7 @@ type = internal/pulseaudio
 
 ; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
 ; If not, uses default sink
-sink = alsa_output.pci-0000_12_00.3.analog-stereo
+sink = 
 
 ; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
 ; Default: true
@@ -337,6 +337,7 @@ animation-charging-framerate = 400
 poll-interval = 1
 
 [module/temperature]
+
 type = custom/script
 exec = for i in $(/bin/ls /sys/class/hwmon/); do [ "$(/bin/cat /sys/class/hwmon/$i/name)" = "k10temp" ] && break; done; expr $(cat /sys/class/hwmon/$i/temp1_input) / 1000
 ; type = internal/temperature
@@ -405,15 +406,3 @@ menu-3-1-exec = systemctl poweroff
 
 # click-left = $(echo -e "slock\nsystemctl suspend\nsystemctl hibernate\ni3-msg exit\nsystemctl poweroff" | dmenu -l 5)
 #
-
-[module/cpuclock]
-type = custom/script
-interval = 0.5
-exec = lscpu | awk '/^CPU MHz:/ {printf "%.1f", $3/1000; exit}'
-
-label = %output% GHz
-label-foreground = #ffffff
-format-prefix = ""
-format-prefix-foreground = #56aaea
-format-prefix-margin-right = 1
-
