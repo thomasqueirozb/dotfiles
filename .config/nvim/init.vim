@@ -130,7 +130,7 @@ let g:ale_fixers = {
 let g:ale_fix_on_save=1
 
 " Black fixes bad-continuation but pylint still warns.
-let g:ale_python_pylint_options='--disable=C0114,C0115,C0116,C0103,bad-continuation --max-line-length=100'
+let g:ale_python_pylint_options='--disable=C0114,C0115,C0116,C0103,bad-continuation,fixme --max-line-length=100'
 let g:ale_python_black_options='--line-length 100'
 " let g:ale_python_autopep8_options='--max-line-length 79' " Does not work
 

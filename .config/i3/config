@@ -255,7 +255,7 @@ bindsym $mod+Mod1+l workspace next
 # {{{ Reload i3/configs
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $Mod+Shift+r restart
-bindsym $Mod+Control+Shift+r exec --no-startup-id sh -c "~/.config/screenlayout.sh && ~/.config/polybar/launch.sh"
+bindsym $Mod+Control+Shift+r exec --no-startup-id sh -c "~/.config/screenlayout.sh && sleep 1 && ~/.config/polybar/launch.sh && nitrogen --restore"
 
 # reload the configuration file
 bindsym $Mod+Shift+c reload
