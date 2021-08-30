@@ -19,6 +19,7 @@ paths=(
     "$HOME/.local/bin"
     "$HOME/bin"
     "$XDG_DATA_HOME/cargo/bin"
+    "$XDG_CONFIG_HOME/emacs/bin"
 )
 
 [ -d "$XDG_DATA_HOME/gem/ruby" ] && {
@@ -34,7 +35,7 @@ done
 
 # Set the rest of the environment {{{
 
-# Redlecare commands {{{
+# Redeclare commands {{{
 svn_cmd="$(which svn)"
 unalias svn >/dev/null 2>&1
 svn() {
@@ -95,6 +96,7 @@ export GOPATH="$XDG_DATA_HOME/go"
 export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 
+export DOOMDIR="$XDG_CONFIG_HOME/doom.d"
 # }}}
 
 # }}}
