@@ -3,12 +3,11 @@
 
 if shopt -q login_shell; then
     export TERM=xterm
+    . "$HOME/.bash/path_env"
     if [[ -t 0 && $(tty) == /dev/tty1 && ! $DISPLAY ]]; then
         # shellcheck source=/dev/null
         . "$HOME/.xprofile"
         exec startx
-    elif [[ ! $DISPLAY ]]; then
-        . "$HOME/.bash/path_env"
     fi
 
     # shellcheck source=/dev/null
