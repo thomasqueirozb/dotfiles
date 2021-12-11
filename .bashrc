@@ -56,5 +56,8 @@ unset f
 
 #al-info
 # neofetch
+if test zoxide; then
+    eval "$(zoxide init bash)"
+fi
 
 ls
