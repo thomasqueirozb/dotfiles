@@ -2,16 +2,12 @@
 
 # Git
 alias u='git add -u'
-alias com='git commit -m'
-alias all='git add *'
-alias status='git status'
-alias stat='git status'
-alias s='git status'
 
 alias gp='git pull'
 alias gf='git fetch'
 alias gc='git clone'
 alias gs='git status'
+alias s='git status'
 alias gd='git diff'
 alias gds='git diff --staged'
 alias gb='git branch'
