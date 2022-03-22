@@ -19,6 +19,7 @@ paths=(
     "$HOME/.local/bin"
     "$HOME/bin"
     "$XDG_DATA_HOME/cargo/bin"
+    "$XDG_DATA_HOME/npm/bin"
     "$XDG_CONFIG_HOME/emacs/bin"
 )
 
@@ -97,6 +98,8 @@ export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 
 export DOOMDIR="$XDG_CONFIG_HOME/doom.d"
+
+export SQLITE_HISTORY="$XDG_DATA_HOME/sqlite_history"
 # }}}
 
 # }}}
