@@ -33,7 +33,7 @@ shopt -s expand_aliases
 shopt -s autocd cdspell
 shopt -s extglob dotglob
 shopt -s no_empty_cmd_completion
-shopt -s autocd cdable_vars cdspell
+shopt -s autocd cdspell # cdable_vars
 shopt -s cmdhist histappend histreedit histverify
 [[ $DISPLAY ]] && shopt -s checkwinsize
 
