@@ -341,7 +341,7 @@ poll-interval = 1
 [module/temperature]
 
 type = custom/script
-exec = for i in $(/bin/ls /sys/class/hwmon/); do [ "$(/bin/cat /sys/class/hwmon/$i/name)" = "k10temp" ] && break; done; expr $(cat /sys/class/hwmon/$i/temp1_input) / 1000
+exec = bash -c 'for i in /sys/class/hwmon/*; do [[ "$(cat "$i/name")" =~ ^(core|k10)temp$ ]] && break; done; echo $(($(cat "$i/temp1_input") / 1000))'
 ; type = internal/temperature
 ; thermal-zone = 0
 ; warn-temperature = 60
