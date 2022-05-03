@@ -44,8 +44,9 @@ module-margin-right = 1
 
 
 font-0 = "monospace:pixelsize=12;2"
-font-1 = "Material Icons:size=13;4"
-font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=11;1"
+font-1 = "Font Awesome 6 Free:style=Solid:pixelsize=11;1"
+font-2 = "Material Icons:size=13;4"
+font-3 = "Material Design Icons:size=13;4"
 
 modules-left = i3 memory temperature cpu
 modules-center = clock date kbd
@@ -197,6 +198,7 @@ format = <label> <ramp-coreload>
 ;   %percentage-core[1-9]% - load percentage for specific core
 label = %percentage%%
 label-foreground = #ffffff
+label-active-font=2
 
 ; Spacing between individual per-core ramps
 ramp-coreload-spacing = 1
@@ -293,7 +295,7 @@ ramp-volume-foreground = #ffffff
 
 [module/battery]
 type = internal/battery
-battery = BAT1
+battery = BAT0
 adapter = AC
 full-at = 98
 
