@@ -1,3 +1,15 @@
 #!/bin/sh
-sudo cryptsetup luksOpen /dev/sda1 hdd_luks
-sudo mount /dev/mapper/hdd_luks /mnt
+device="$(lsblk -o NAME,FSTYPE -l -n | grep crypto_LUKS | head -1 | cut -d' ' -f1)"
+
+[ "$device" = "" ] && {
+    >&2 echo "Cound not find device with FSTYPE crypto_LUKS"
+    exit 1
+}
+
+device="/dev/$device"
+
+echo "Using device $device"
+sudo cryptsetup luksOpen "$device" hdd_luks
+
+[ -d /luks/ ] || sudo mkdir /luks
+sudo mount /dev/mapper/hdd_luks /luks
