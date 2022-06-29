@@ -21,11 +21,15 @@ fi
 setxkbmap -layout "us,us" -variant "basic,intl" -option grp:shifts_toggle
 xmodmap -e "keysym Scroll_Lock = Multi_key"
 
-export userresources="$HOME/.Xresources"
-export usermodmap="$HOME/.Xmodmap"
+# export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export XENVIRONMENT="$XDG_CONFIG_HOME/X11/xdefaults"
+
+export userresources="$XDG_CONFIG_HOME/X11/xresources"
+export usermodmap="$XDG_CONFIG_HOME/X11/xmodmap"
 export sysresources="/etc/X11/xinit/.Xresources"
 export sysmodmap="/etc/X11/xinit/.Xmodmap"
 
+[ -f "$XENVIRONMENT" ]  && xrdb -merge "$XENVIRONMENT"
 [ -f "$userresources" ] && xrdb -merge "$userresources"
 [ -f "$usermodmap" ]    && xmodmap "$usermodmap"
 [ -f "$sysresources" ]  && xrdb -merge "$sysresources"
