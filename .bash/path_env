@@ -108,7 +108,7 @@ export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 export NUGET_PACKAGES="$XDG_CACHE_HOME/NuGetPackages"
 export MINIKUBE_HOME="$XDG_DATA_HOME/minikube"
 
-export DOOMDIR="$XDG_CONFIG_HOME/doom.d"
+export DOOMDIR="$XDG_CONFIG_HOME/doom"
 
 export SQLITE_HISTORY="$XDG_DATA_HOME/sqlite_history"
 # }}}
