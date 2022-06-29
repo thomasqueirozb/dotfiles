@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# shellcheck source=/dev/null
-[ -f "$HOME/.xprofile" ] && source "$HOME/.xprofile"
-
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 # The timeout is a compromise. ymmv.
@@ -41,6 +38,16 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
         [ -x "$f" ] && . "$f"
     done
     unset f
+fi
+
+export QT_QPA_PLATFORMTHEME="qt5ct"
+export QT_PLATFORMTHEME="qt5ct"
+export QT_PLATFORMPLUGIN="qt5ct"
+
+
+if [ "$(hostname)" = "thomas-pc" ]; then
+    export LIBVA_DRIVER_NAME=vdpau
+    export VDPAU_DRIVER=nvidia
 fi
 
 exec i3

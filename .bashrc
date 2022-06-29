@@ -19,6 +19,8 @@ export LESS_TERMCAP_so=$'\e[01;44;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[01;32m'
 
+export LESSHISTFILE="-"
+
 set -o vi
 
 bind -m vi-command "Control-l:clear-screen"
