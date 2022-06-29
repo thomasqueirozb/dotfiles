@@ -8,6 +8,7 @@
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_DATA_DIRS="/usr/local/share/:/usr/share/"
 
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
@@ -60,6 +61,12 @@ unalias nvidia-settings >/dev/null 2>&1
 nvidia-settings() {
     "$nvidia_settings_cmd" --config="$XDG_CONFIG_HOME/nvidia/settings" "$@"
 }
+
+wget_cmd="$(which wget)"
+unalias wget >/dev/null 2>&1
+wget() {
+    "$wget_cmd" --hsts-file="$XDG_DATA_HOME/wget-hsts" "$@"
+}
 # }}}
 
 # alias gdb="gdb -nh -x \"$XDG_CONFIG_HOME/gdb/init\""
@@ -96,6 +103,8 @@ export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_repl_history"
 export GOPATH="$XDG_DATA_HOME/go"
 export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+export NUGET_PACKAGES="$XDG_CACHE_HOME/NuGetPackages"
+export MINIKUBE_HOME="$XDG_DATA_HOME/minikube"
 
 export DOOMDIR="$XDG_CONFIG_HOME/doom.d"
 
