@@ -149,4 +149,12 @@
     ;; (push (concat "-Xbootclasspath/a:" lombok-path) (cdr (last lsp-java-vmargs)))
 )
 
+;; This whole thing is to prevent rust-analyzer from asking to be restarted when quitting
+;; (most likely a bug in persp-mode, since this only happens if *any* workspace was opened)
+(defun empty-fun ())
+(defun before-save-buffers-kill-terminal-a (&rest a)
+    (advice-add #'lsp-mode :override #'empty-fun)
+    (advice-add #'lsp :override #'empty-fun))
+
+(advice-add #'save-buffers-kill-terminal :before #'before-save-buffers-kill-terminal-a)
 ;; (global-whitespace-mode +1)
