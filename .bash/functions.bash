@@ -482,14 +482,13 @@ yt() {
 }
 
 
-# dragon-drag-and-drop
 drag() {
     # shellcheck disable=2068
-    dragon-drag-and-drop -a -x "$@"
+    dragon-drop -a -x "$@"
 }
 
 drop() {
-    url="$(dragon-drag-and-drop -t -x)"
+    url="$(dragon-drop -t -x)"
     if [ -n "$1" ]; then
         filename="$1"
     else
