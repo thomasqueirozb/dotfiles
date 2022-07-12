@@ -18,6 +18,9 @@ export XDG_DATA_DIRS="/usr/local/share/:/usr/share/"
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
 # }}}
 
+# CHECKUPDATES_DB - used by /usr/bin/checkupdates
+# Default is in /tmp. This is so dbs arent created on every reboot
+export CHECKUPDATES_DB="$XDG_CACHE_HOME/checkup-db/"
 
 # Configure PATH {{{
 paths=(
