@@ -50,7 +50,7 @@ PS1='[\u@\h \W]\$ '
 # export PROMPT_USERFMT='\u\[\e[0m\]@\[\e[31m\]\h '
 
 # source shell configs
-for f in "$HOME/.bash/"*?.bash; do
+for f in "$XDG_CONFIG_HOME/bash/"*?.bash; do
     # shellcheck source=/dev/null
     . "$f"
 done

@@ -3,7 +3,7 @@
 
 if shopt -q login_shell; then
     export TERM=xterm
-    . "$HOME/.bash/path_env"
+    . "$HOME/.config/bash/path_env"
     if [[ -t 0 && $(tty) == /dev/tty1 && ! $DISPLAY ]]; then
         exec startx
     fi
