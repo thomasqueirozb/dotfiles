@@ -221,7 +221,7 @@ content-foreground = #ffffff
 
 [module/pkg]
 type = custom/script
-exec = ~/.config/polybar/updates.sh
+exec = echo "$(checkupdates | wc -l) Updates"
 interval = 600
 tail = true
 label = %output%
