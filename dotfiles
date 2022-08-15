@@ -1,0 +1,33 @@
+#!/bin/bash
+print_help() {
+    cat <<EOF
+dotfiles
+
+USAGE:
+    dotfiles <SUBCOMMAND>
+
+OPTIONS:
+    -h, --help    Print help information
+
+SUBCOMMANDS:
+    help      Print this message
+    update    Restow
+    clean     Remove all stow symlinks
+EOF
+}
+
+case $1 in
+    update)
+        stow --no-folding -R . -t ~/
+        ;;
+    clean)
+        stow -D . -t ~/
+        ;;
+    -h | --help | help)
+        print_help
+        ;;
+    *)
+        print_help
+        exit 2
+        ;;
+esac

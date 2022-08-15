@@ -1,5 +1,4 @@
 .git
 .gitignore
-clean
-update
+dotfiles
 dotfiles_system
