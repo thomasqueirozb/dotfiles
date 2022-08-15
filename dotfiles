@@ -19,6 +19,15 @@ EOF
 case $1 in
     update)
         stow --no-folding -R . -t ~/
+
+        git_prompt_location="$HOME/.config/bash/git-prompt.sh"
+        [ -f "$git_prompt_location" ] || {
+            wget -qO "$git_prompt_location" "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh" || {
+                echo >&2 "Failed to fetch git-prompt.sh from github"
+                exit 1
+            }
+            sed -i '1s/^/#!\/bin\/bash\n/' "$git_prompt_location"
+        }
         ;;
     clean)
         stow -D . -t ~/
