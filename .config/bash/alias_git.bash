@@ -4,6 +4,7 @@
 alias u='git add -u'
 
 alias gp='git pull'
+alias gap='git add -p'
 alias gf='git fetch'
 alias gc='git clone'
 alias gs='git status'
