@@ -46,14 +46,12 @@ set foldlevel=1
 " }}}
 
 " Plugins {{{
-" Plugged {{{
+" vim-plug {{{
 call plug#begin('~/.local/share/nvim/plugged')
 " Unused {{{
 " " On-demand loading
 " Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
-" Plug 'dracula/vim', { 'as': 'dracula' } " Dracula
-" Plug 'gruvbox-community/gruvbox' " Gruvbox
 " }}}
 
 " Themes {{{
@@ -64,6 +62,8 @@ Plug 'vim-airline/vim-airline-themes'
 " }}}
 " Colorschemes {{{
 Plug 'danilo-augusto/vim-afterglow' " Afterglow
+" Plug 'dracula/vim', { 'as': 'dracula' } " Dracula
+Plug 'gruvbox-community/gruvbox' " Gruvbox
 " }}}
 " }}}
 
@@ -299,12 +299,17 @@ vmap <C-_> <Plug>Commentarygv
 
 " Colorscheme {{{
 try
+    " let g:gruvbox_contrast_dark = 'hard'
+    colorscheme gruvbox
+catch
+try
     colorscheme afterglow
     hi Pmenu guibg=#2b2e33 gui=NONE
 catch
     let g:jinx_theme = 'midnight' " midnight, night, or day
     colorscheme jinx
     " colorscheme slate
+endtry
 endtry
 " }}}
 
