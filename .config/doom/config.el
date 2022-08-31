@@ -21,6 +21,22 @@
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
+;; (setq doom-font (font-spec :family "UbuntuMono Nerd Font" :size 12 :weight 'semi-light)
+;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
+;; (setq doom-font                (font-spec :family "UbuntuMono Nerd Font" :size 12 :weight 'semi-light)
+;;       doom-variable-pitch-font (font-spec :family "UbuntuMono Nerd Font" :size 15)
+;;       doom-big-font            (font-spec :family "UbuntuMono Nerd Font" :size 24))
+(setq doom-font                (font-spec :family "Fira Code" :size 14 :weight 'medium)
+      doom-variable-pitch-font (font-spec :family "Fira Code" :size 15)
+      doom-big-font            (font-spec :family "Fira Code" :size 24))
+
+
+(after! doom-themes
+    (setq doom-themes-enable-bold t
+          doom-themes-enable-italic t))
+(custom-set-faces!
+    ;; '(font-lock-comment-face :slant italic)
+    '(font-lock-keyword-face :slant italic))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -140,6 +156,7 @@
 
 
 ;; https://www.reddit.com/r/emacs/comments/o04it0/share_your_prettifysymbolsalist/
+
 (setq word-wrap t)
 
 (after! lsp-java
@@ -157,4 +174,20 @@
     (advice-add #'lsp :override #'empty-fun))
 
 (advice-add #'save-buffers-kill-terminal :before #'before-save-buffers-kill-terminal-a)
+
+
+
+
+
+(setq whitespace-mode nil)
 ;; (global-whitespace-mode +1)
+;; (setq-default show-trailing-whitespace t)
+
+;; (setq whitespace-display-mappings '((space-mark 32 [?·])))
+;; (setq whitespace-display-mappings '((tab-mark 32 [?·])))
+;; (setq whitespace-style '(face tabs tab-mark trailing))
+
+;; (setq whitespace-style '(face trailing spaces space-mark))
+;; (add-hook 'font-lock-mode-hook 'hc-highlight-trailing-whitespace)
+
+(setq grip-update-after-change nil)
