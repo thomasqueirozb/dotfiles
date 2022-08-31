@@ -106,30 +106,31 @@ let g:ale_linters = {
     \'cpp': [],
     \'cuda': ['clangd'],
     \'javascript': [],
-    \'vue': ['eslint'],
-    \'rust': [],
-    \'typescript': ['eslint', 'tsserver', 'prettier'],
+    \'markdown': [],
     \'python': ['pylint'],
-    \'sh': [],
+    \'rust': [],
+    \'sh': ['shellcheck'],
+    \'typescript': ['eslint', 'tsserver', 'prettier'],
+    \'vue': ['eslint'],
     \}
 
 let g:ale_fixers = {
     \'c': ['clang-format'],
     \'cpp': ['clang-format'],
+    \'css': ['prettier'],
     \'cuda': ['clang-format'],
     \'javascript': ['eslint'],
-    \'css': ['prettier'],
-    \'vue': ['eslint'],
     \'json': ['prettier'],
-    \'typescript': ['eslint'],
     \'markdown': ['prettier'],
     \'python': ['black'],
     \'rust': [],
     \'sh': [],
+    \'typescript': ['eslint'],
+    \'vue': ['eslint'],
     \}
 let g:ale_fix_on_save=1
 
-let g:ale_python_pylint_options='--disable=C0114,C0115,C0116,C0103,fixme --max-line-length=100'
+let g:ale_python_pylint_options='--disable=C0114,C0115,C0116,fixme'
 let g:ale_python_black_options='--line-length 100'
 " let g:ale_python_autopep8_options='--max-line-length 79' " Does not work
 
@@ -169,19 +170,19 @@ let g:ale_cuda_clangd_options="-std=c++11 -x c++"
 " coc-json
 " coc-html
 " coc-diagnostic
-
+"
 function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
+" Insert <tab> when previous text is space, refresh completion if not.
 inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+  \ coc#pum#visible() ? coc#pum#next(1):
+  \ <SID>check_back_space() ? "\<Tab>" :
+  \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
 
 nmap <Leader>gd <Plug>(coc-definition)
 nmap <Leader>gy <Plug>(coc-type-definition)
