@@ -136,7 +136,7 @@ exec_always --no-startup-id xrdb -load ~/.Xresources
 # }}}
 
 # Run once {{{
-exec --no-startup-id noisetorch -i noechosource -t 75
+# exec --no-startup-id noisetorch -i noechosource -t 75
 # exec --no-startup-id noisetorch -i alsa_output.pci-0000_00_1b.0.iec958-stereo -t 75
 exec --no-startup-id blueman-manager
 exec --no-startup-id flameshot
@@ -295,7 +295,8 @@ bindsym $Mod+Down  focus down
 bindsym $Mod+Up    focus up
 bindsym $Mod+Right focus right
 # }}}
-bindsym $Mod+p focus parent
+# bindsym $Mod+p focus parent
+bindsym $Mod+p focus mode_toggle
 bindsym $Mod+c focus child
 
 # Move focused floating window {{{
