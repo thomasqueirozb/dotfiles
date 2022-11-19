@@ -1,12 +1,10 @@
 #!/bin/sh
 
-# exec_always --no-startup-id ~/.config/polybar/launch.sh
 uid=$(id -u)
-username=$(awk -F':' '/:1000:/ {print $1}' /etc/passwd)
 
 # Terminate already running bar instances
 pgrep polybar || sleep 3
-killall -q polybar -u "$username"
+killall -q polybar -u "$USER"
 
 # Wait until the processes have been shut down
 while pgrep -u "$uid" -x polybar >/dev/null; do sleep 1; done
