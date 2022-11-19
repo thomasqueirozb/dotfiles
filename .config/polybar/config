@@ -216,8 +216,8 @@ ramp-coreload-7-foreground = #ff0000
 [module/kbd]
 type = custom/text
 click-left = ~/bin/kbd_switch
-content = 
-content-foreground = #ffffff
+format = 
+format-foreground = #ffffff
 
 [module/pkg]
 type = custom/script
