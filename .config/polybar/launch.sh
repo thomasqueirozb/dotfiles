@@ -1,23 +1,35 @@
-#!/bin/sh
+#!/bin/bash
 
-uid=$(id -u)
+launch() {
+    monitor="$1"
+
+    if [ -n "$monitor" ]; then
+        log_file="/tmp/polybar-$monitor.log"
+        export MONITOR="$monitor"
+    else
+        log_file="/tmp/polybar.log"
+    fi
+
+    echo "---- LAUNCH ----" >> "$log_file"
+    polybar --log=warning --reload bar >> "$log_file" 2>&1 & disown
+    unset MONITOR
+}
+
 
 # Terminate already running bar instances
-pgrep polybar || sleep 3
-killall -q polybar -u "$USER"
-
-# Wait until the processes have been shut down
-while pgrep -u "$uid" -x polybar >/dev/null; do sleep 1; done
+polybar-msg cmd quit
 
 if command -v "xrandr" 1>/dev/null; then
     monitors=$(xrandr --query | grep " connected")
     main_monitor=$(echo "$monitors" | awk '/ connected primary/ {print $1}')
-    MONITOR=$main_monitor polybar -c ~/.config/polybar/config --reload bar &
+
+    launch "$main_monitor"
+
     sleep 1
 
-    for m in $(echo "$monitors" | grep -v "$main_monitor" | awk '{print $1}'); do
-        MONITOR=$m polybar -c ~/.config/polybar/config --reload bar &
+    for monitor in $(echo "$monitors" | grep -v "$main_monitor" | awk '{print $1}'); do
+        launch "$monitor"
     done
 else
-    polybar -c ~/.config/polybar/config --reload bar &
+    launch
 fi
