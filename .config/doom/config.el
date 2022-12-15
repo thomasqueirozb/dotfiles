@@ -166,6 +166,22 @@
     ;; (push (concat "-Xbootclasspath/a:" lombok-path) (cdr (last lsp-java-vmargs)))
 )
 
+(after! lsp-clangd
+    (setq lsp-clients-clangd-args '("--header-insertion-decorators=0" "-background-index" "--log=error" "--clang-tidy" "--enable-config"))
+    ;; (setq lsp-clangd-binary-path "/usr/bin/clangd")
+    (setq lsp-clangd-version "15.0.6")
+    (setq lsp-clangd-version "https://github.com/clangd/clangd/releases/download/15.0.6/clangd-linux-15.0.6.zip")
+
+    (setq +format-with-lsp nil))
+
+(set-formatter!
+    'clang-format
+    '("clang-format"
+        ("-assume-filename=%S" (or buffer-file-name mode-result "")))
+    :modes
+    '((c-mode ".c")
+      (c++-mode ".cpp")))
+
 ;; This whole thing is to prevent rust-analyzer from asking to be restarted when quitting
 ;; (most likely a bug in persp-mode, since this only happens if *any* workspace was opened)
 (defun empty-fun ())
