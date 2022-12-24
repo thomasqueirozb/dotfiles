@@ -84,6 +84,8 @@ alias mitmweb="mitmweb --set confdir=\"$XDG_CONFIG_HOME/mitmproxy\""
 
 
 # Export environment variables to make programs comply with the XDG spec {{{
+export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
+
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
