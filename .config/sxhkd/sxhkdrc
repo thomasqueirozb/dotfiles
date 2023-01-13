@@ -6,10 +6,10 @@ Print
 {super + d}
     dmenu_run -fn 'UbuntuMono Nerd Font Regular-17'
 
-{super + x}
+{super + shift + x}
     DISPLAY=:0 xkill
 
-{super + shift + x}
+{super + x}
     pkill xkill
 
 # Terminator
@@ -18,6 +18,3 @@ super + Return
 
 super + ctrl + space
     kill -s USR1 $(pidof deadd-notification-center)
-
-F9
-    /home/thomas/wps_draw.sh
