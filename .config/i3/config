@@ -439,5 +439,4 @@ for_window [instance="<b> Microsoft Teams - Preview:</b> Microsoft Teams Notific
 
 # for window [_NET_WM_WINDOW_TYPE(ATOM)="_NET_WM_WINDOW_TYPE_NOTIFICATION"] floating enable
 for_window [window_type="_NET_WM_WINDOW_TYPE_NOTIFICATION"] floating enable
-# for_window [class="albert" && name="albert"] border pixel 0
-for_window [class="albert" title="albert — Albert"] border pixel 0
+for_window [class="albert" instance="albert"] border none
