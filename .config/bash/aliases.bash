@@ -39,7 +39,9 @@ alias :wq!='exit'
 # }}}
 
 # Typos {{{
+alias cdc='cd'
 alias cta='cat'
+alias car='cat'
 alias gerp='grep'
 alias sl='ls'
 alias gti='git'
