@@ -41,6 +41,11 @@ for path in "${paths[@]}"; do
         [[ "$PATH" == *"$path"* ]] || export PATH="$PATH:$path"
     fi
 done
+
+if [ -d "/opt/clang-format-static" ]; then
+    export PATH="/opt/clang-format-static:$PATH"
+fi
+#
 # }}}
 
 
