@@ -1,6 +1,9 @@
 #!/bin/bash
 
 # Git
+
+alias gti='git'
+
 alias u='git add -u'
 
 alias gp='git pull'
