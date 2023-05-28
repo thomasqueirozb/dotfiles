@@ -207,16 +207,16 @@ bindsym $Mod+0 workspace $WS10
 # }}}
 
 # Switch to workspace - Numpad Alternatives {{{
-bindsym $mod+Mod2+KP_1 workspace $WS1
-bindsym $mod+Mod2+KP_2 workspace $WS2
-bindsym $mod+Mod2+KP_3 workspace $WS3
-bindsym $mod+Mod2+KP_4 workspace $WS4
-bindsym $mod+Mod2+KP_5 workspace $WS5
-bindsym $mod+Mod2+KP_6 workspace $WS6
-bindsym $mod+Mod2+KP_7 workspace $WS7
-bindsym $mod+Mod2+KP_8 workspace $WS8
-bindsym $mod+Mod2+KP_9 workspace $WS9
-bindsym $mod+Mod2+KP_0 workspace $WS10
+bindsym $Mod+Mod2+KP_1 workspace $WS1
+bindsym $Mod+Mod2+KP_2 workspace $WS2
+bindsym $Mod+Mod2+KP_3 workspace $WS3
+bindsym $Mod+Mod2+KP_4 workspace $WS4
+bindsym $Mod+Mod2+KP_5 workspace $WS5
+bindsym $Mod+Mod2+KP_6 workspace $WS6
+bindsym $Mod+Mod2+KP_7 workspace $WS7
+bindsym $Mod+Mod2+KP_8 workspace $WS8
+bindsym $Mod+Mod2+KP_9 workspace $WS9
+bindsym $Mod+Mod2+KP_0 workspace $WS10
 # }}}
 # }}}
 
@@ -249,11 +249,11 @@ bindsym $Mod+Shift+Mod2+KP_Insert move container to workspace $WS10
 # }}}
 
 # Switch to next or previous workspace {{{
-bindsym $mod+Mod1+Left workspace prev
-bindsym $mod+Mod1+Right workspace next
+bindsym $Mod+Mod1+Left workspace prev
+bindsym $Mod+Mod1+Right workspace next
 
-bindsym $mod+Mod1+h workspace prev
-bindsym $mod+Mod1+l workspace next
+bindsym $Mod+Mod1+h workspace prev
+bindsym $Mod+Mod1+l workspace next
 # }}}
 
 # }}}
@@ -411,11 +411,11 @@ smart_borders on
 # exec_always --no-startup-id xfce4-power-manager
 
 # DEPEND
-bindsym $mod+r exec redshift
-bindsym $mod+Shift+w exec pkill redshift
+bindsym $Mod+r exec redshift
+bindsym $Mod+Shift+w exec pkill redshift
 
 
-bindsym $mod+Shift+f fullscreen toggle
+bindsym $Mod+Shift+f fullscreen toggle
 
 # # ARandR layout
 # exec_always --no-startup-id /home/thomas/.screenlayout/default_layout.sh
