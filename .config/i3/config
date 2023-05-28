@@ -271,7 +271,7 @@ bindsym $Mod+Shift+c reload
 
 # Floating {{{
 bindsym $Mod+Shift+space floating toggle
-floating_modifier  Mod1
+floating_modifier $Mod
 # }}}
 
 # Sticky {{{
@@ -313,10 +313,10 @@ bindsym $Mod+Shift+Right move right 10px
 # }}}
 
 # Resize {{{
-bindsym Mod1+Up    resize shrink height 10 px or 1 ppt
-bindsym Mod1+Down  resize grow   height 10 px or 1 ppt
-bindsym Mod1+Left  resize shrink width  10 px or 1 ppt
-bindsym Mod1+Right resize grow   width  10 px or 1 ppt
+bindsym Control+$Mod+Up    resize shrink height 10 px or 1 ppt
+bindsym Control+$Mod+Down  resize grow   height 10 px or 1 ppt
+bindsym Control+$Mod+Left  resize shrink width  10 px or 1 ppt
+bindsym Control+$Mod+Right resize grow   width  10 px or 1 ppt
 # }}}
 
 # }}}
