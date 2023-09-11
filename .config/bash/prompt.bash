@@ -87,7 +87,7 @@ __chroot_docker()
     if [ -f /.dockerenv ]; then
         printf "${PROMPT_CHROOT_DOCKER_COLOR}(docker) "
     else
-        [ "$(/bin/ls -di /)" = "2 /" ] || printf "${PROMPT_CHROOT_DOCKER_COLOR}(chroot) "
+        [ "$(/usr/bin/env ls -di /)" = "2 /" ] || printf "${PROMPT_CHROOT_DOCKER_COLOR}(chroot) "
     fi
 }
 

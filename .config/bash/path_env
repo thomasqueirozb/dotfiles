@@ -32,7 +32,7 @@ paths=(
 )
 
 [ -d "$XDG_DATA_HOME/gem/ruby" ] && {
-    newest_ruby="$(/bin/ls -1 "$XDG_DATA_HOME/gem/ruby" | sort -r | head -1)"
+    newest_ruby="$(/usr/bin/env ls -1 "$XDG_DATA_HOME/gem/ruby" | sort -r | head -1)"
     [ "$newest_ruby" = "" ] || paths+=("$newest_ruby/bin")
 }
 
