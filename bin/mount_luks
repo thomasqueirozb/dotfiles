@@ -1,15 +1,32 @@
 #!/bin/sh
-device="$(lsblk -o NAME,FSTYPE -l -n | grep crypto_LUKS | head -1 | cut -d' ' -f1)"
+devices="$(lsblk -o NAME,FSTYPE -l -n | grep crypto_LUKS | cut -d' ' -f1)"
 
-[ "$device" = "" ] && {
-    >&2 echo "Cound not find device with FSTYPE crypto_LUKS"
-    exit 1
-}
+devices_count=$(echo "$devices" | wc -l)
+
+case $devices_count in
+    0)
+        >&2 echo "Cound not find device with FSTYPE crypto_LUKS"
+        exit 1
+        ;;
+    1)
+        device="$devices"
+        ;;
+    *)
+        if command -v fzf > /dev/null; then
+            device="$(echo "$devices" | fzf)"
+        else
+            echo "$devices" | nl
+            printf "\nChoose a device: "
+            read -r device_num
+            device="$(echo "$devices" | awk "NR == $device_num")"
+        fi
+        ;;
+esac
 
 device="/dev/$device"
 
 echo "Using device $device"
-sudo cryptsetup luksOpen "$device" hdd_luks
+sudo cryptsetup luksOpen "$device" mluks
 
 [ -d /luks/ ] || sudo mkdir /luks
-sudo mount /dev/mapper/hdd_luks /luks
+sudo mount /dev/mapper/mluks /luks
