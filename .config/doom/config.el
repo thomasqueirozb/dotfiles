@@ -117,7 +117,7 @@
 (after! rustic
     (setq rustic-lsp-server 'rust-analyzer))
 (setq lsp-rust-analyzer-server-display-inlay-hints t)
-;; (setq lsp-rust-analyzer-proc-macro-enable t) ;; Could be dangerous, don't care
+(setq lsp-rust-analyzer-proc-macro-enable t) ;; Could be dangerous, don't care
 ;; (funcall custom-set-variables)
 
 (after! hl-todo
@@ -137,7 +137,9 @@
 
 (defun my/addpylint () (flycheck-add-next-checker 'lsp '(warning . python-pylint) 'append))
 (add-hook! python-mode
-    (add-hook 'lsp-after-initialize-hook #'my/addpylint))
+    (add-hook 'lsp-after-initialize-hook #'my/addpylint)
+    (add-to-list 'flycheck-disabled-checkers 'python-mypy))
+
 
 (add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1)))
 
@@ -185,13 +187,14 @@
 ;; This whole thing is to prevent rust-analyzer from asking to be restarted when quitting
 ;; (most likely a bug in persp-mode, since this only happens if *any* workspace was opened)
 (defun empty-fun ())
-(defun before-save-buffers-kill-terminal-a (&rest a)
+(defun before-save-buffers-kill-terminal-a (&rest _a)
     (advice-add #'lsp-mode :override #'empty-fun)
     (advice-add #'lsp :override #'empty-fun))
 
 (advice-add #'save-buffers-kill-terminal :before #'before-save-buffers-kill-terminal-a)
 
 
+(after! vc-git (setq vc-git-use-literal-pathspecs nil))
 
 
 
