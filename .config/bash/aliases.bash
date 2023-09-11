@@ -2,7 +2,7 @@
 # vim:foldmethod=marker
 
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-
+export MANROFFOPT="-c"
 
 # vim {{{
 if hash nvim >/dev/null 2>&1; then
