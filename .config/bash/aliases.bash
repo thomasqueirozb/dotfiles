@@ -84,6 +84,7 @@ alias pingd='ping -c 5 www.duckduckgo.com'
 
 # Config files {{{
 alias i3conf='$EDITOR ~/.config/i3/config'
+alias hyprconf='$EDITOR ~/.config/hypr/hyprland.conf'
 alias vimconf='$EDITOR ~/.config/nvim/init.vim'
 # }}}
 
