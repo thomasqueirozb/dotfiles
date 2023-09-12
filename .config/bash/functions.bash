@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # shell helper functions
 # mostly written by Nathaniel Maia, some pilfered from around the web

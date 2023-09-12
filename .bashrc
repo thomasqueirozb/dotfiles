@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # catch non-bash and non-interactive shells
-[[ $- == *i* && $BASH_VERSION ]] && SHELL=/bin/bash || return 0
+[[ $- == *i* && $BASH_VERSION ]] && SHELL=bash || return 0
 
 # set some defaults
 # export HISTSIZE=10000

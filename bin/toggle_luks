@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 mount_point="/luks"
 luks_device="hdd_luks"

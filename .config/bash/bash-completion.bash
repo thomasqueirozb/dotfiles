@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #   bash_completion - programmable completion functions for bash 4.1+
 #

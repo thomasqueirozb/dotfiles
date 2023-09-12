@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/usr/bin/env bash
 fusermount -u /tmp/phone && echo "Unmounted!" || echo "Failed"
 

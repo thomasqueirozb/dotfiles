@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # vim:foldmethod=marker
 # shellcheck disable=SC2139
 
