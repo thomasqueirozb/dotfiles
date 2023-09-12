@@ -38,7 +38,7 @@ pacsearch() {
 }
 
 mir() {
-    if hash reflector >/dev/null 2>&1; then
+    if command -v reflector >/dev/null 2>&1; then
         su -c 'reflector --score 100 -l 50 -f 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose'
     else
         local pg="https://www.archlinux.org/mirrorlist/?country=US&country=CA&use_mirror_status=on"
@@ -65,7 +65,7 @@ tmuxx() {
 }
 
 surfs() {
-    if ! hash surf-open tabbed surf >/dev/null 2>&1; then
+    if ! command -v surf-open tabbed surf >/dev/null 2>&1; then
         local reqs="tabbed, surf, surf-open (shell script provided with surf)"
         printf "error: this requires the following installed\n\n\t%s\n" "$reqs"
         return 1
@@ -206,7 +206,7 @@ ranger() {
 }
 
 resize() {
-    hash convert >/dev/null 2>&1 || { printf "This function requires imagemagick\n"; return 1; }
+    command -v convert >/dev/null 2>&1 || { printf "This function requires imagemagick\n"; return 1; }
     local size="$1"; shift
     if [[ $size =~ [1-9]*x[1-9] && $# -ge 1 ]]; then
         if [[ $# -gt 1 || -d "$1" ]]; then
@@ -443,7 +443,7 @@ find_prog() {
 }
 
 find_file() {
-    if hash fd; then
+    if command -v fd >/dev/null 2>&1; then
         fd / 2>/dev/null "$1"
     else
         find / 2>/dev/null | grep -i "$1"
@@ -451,7 +451,7 @@ find_file() {
 }
 
 find_here() {
-    if hash fd; then
+    if command -v fd >/dev/null 2>&1; then
         fd . 2>/dev/null "$1"
     else
         find . 2>/dev/null | grep -i "$1"

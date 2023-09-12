@@ -5,7 +5,7 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export MANROFFOPT="-c"
 
 # vim {{{
-if hash nvim >/dev/null 2>&1; then
+if command -v nvim >/dev/null 2>&1; then
     export EDITOR=nvim
     alias bim='nvim'
     alias vim='nvim'
