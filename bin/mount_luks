@@ -12,7 +12,7 @@ case $devices_count in
         device="$devices"
         ;;
     *)
-        if command -v fzf > /dev/null; then
+        if command -v fzf >/dev/null 2>&1; then
             device="$(echo "$devices" | fzf)"
         else
             echo "$devices" | nl
