@@ -668,3 +668,9 @@ autocmd FileType c noremap <buffer> <F5> :w! \| !make<CR>
 autocmd FileType cpp noremap <buffer> <F5> :w! \| !make<CR>
 " }}}
 " }}}
+
+if exists("g:neovide")
+    " Put anything you want to happen only in Neovide here
+    set guifont=UbuntuMono\ Nerd\ Font\ Mono:h12
+    let g:neovide_cursor_animate_command_line = v:false
+endif
