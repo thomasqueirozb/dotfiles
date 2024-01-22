@@ -28,7 +28,7 @@ case "$extension" in
     "pdf")
         default_open $open_pdf "$1"
         ;;
-    "mp4" | "mkv" | "m4v" | "avi" | "mov" | "vid" | "webm")
+    "mp4" | "mkv" | "m4v" | "avi" | "mov" | "vid" | "webm" | "gif")
         default_open "$open_video" "$1"
         ;;
     "mp3" | "wav")
