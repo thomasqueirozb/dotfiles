@@ -27,6 +27,7 @@ paths=(
     "$HOME/.local/bin"
     "$HOME/bin"
     "$XDG_DATA_HOME/cargo/bin"
+    "$XDG_DATA_HOME/go/bin"
     "$XDG_DATA_HOME/npm/bin"
     "$XDG_CONFIG_HOME/emacs/bin"
 )
