@@ -21,20 +21,15 @@ scriptencoding utf8
 " system clipboard (requires +clipboard)
 set clipboard^=unnamed,unnamedplus
 
-set nocompatible       " Don't simulate vi
-set hlsearch           " highlight search items
-set incsearch          " searches are performed as you type
 set number             " enable line numbers
 set relativenumber     " enable relative line numbers
 set confirm            " ask confirmation like save before quit.
-set wildmenu           " Tab completion menu when using command mode
 set shortmess+=aAcIws  " Hide or shorten certain messages
 set undofile           " Persistent undo
 set hidden             " Change buffer without saving
 set linebreak          " Long line wrapping
 set breakindent        " Indent is the same for wrapped line
 set expandtab          " Tab key inserts spaces not tabs
-set smarttab           " smart tabs
 set tabstop=4          " Width used for tabs
 set softtabstop=4      " spaces to enter for each tab
 set shiftwidth=4       " amount of spaces for indentation
