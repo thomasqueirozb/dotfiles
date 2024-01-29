@@ -637,7 +637,7 @@ set timeoutlen=1000 ttimeoutlen=0
 " autocmd! bufwritepost $MYVIMRC source $MYVIMRC
 nmap <Leader>i :tabnew $MYVIMRC<CR>
 nmap <Leader>v :source $MYVIMRC<CR>
-nmap <Leader>h :nohls<CR>
+nmap <Leader>h :noh<CR>
 
 " Don't copy text when deleting
 nmap <Leader>x "_x
