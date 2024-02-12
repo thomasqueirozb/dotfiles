@@ -5,8 +5,10 @@
 [ "$bash_path_env_set" = 1 ] && return
 
 
-# Set LS_COLORS
-eval "$(dircolors -b)"
+if command -v dircolors >/dev/null 2>&1; then
+    # Set LS_COLORS
+    eval "$(dircolors -b)"
+fi
 
 # XDG dirs {{{
 export XDG_CONFIG_HOME="$HOME/.config"
