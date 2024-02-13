@@ -28,14 +28,14 @@ bind -m vi-insert "Control-l:clear-screen"
 
 set -o notify
 
-shopt -s direxpand
+shopt -s direxpand 2>/dev/null
 shopt -s checkhash
 shopt -s sourcepath
 shopt -s expand_aliases
-shopt -s autocd cdspell
 shopt -s extglob dotglob
 shopt -s no_empty_cmd_completion
-shopt -s autocd cdspell # cdable_vars
+shopt -s autocd 2>/dev/null
+shopt -s cdspell
 shopt -s cmdhist histappend histreedit histverify
 [[ $DISPLAY ]] && shopt -s checkwinsize
 
