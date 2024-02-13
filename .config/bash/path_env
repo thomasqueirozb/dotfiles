@@ -5,9 +5,11 @@
 [ "$bash_path_env_set" = 1 ] && return
 
 
+# Set LS_COLORS
 if command -v dircolors >/dev/null 2>&1; then
-    # Set LS_COLORS
     eval "$(dircolors -b)"
+elif command -v gdircolors >/dev/null 2>&1; then
+    eval "$(gdircolors -b)"
 fi
 
 # XDG dirs {{{
