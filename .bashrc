@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
-
 # catch non-bash and non-interactive shells
 [[ $- == *i* && $BASH_VERSION ]] && SHELL=bash || return 0
 
-# Remove annoying deprecation message
-(uname -s | grep -q Darwin) && export BASH_SILENCE_DEPRECATION_WARNING=1
+(uname -s | grep -q Darwin) && {
+    # Remove annoying deprecation message
+    export BASH_SILENCE_DEPRECATION_WARNING=1
+    unset POSIXLY_CORRECT
+}
+
+. ~/.config/bash/path_env
+
 
 # set some defaults
 # export HISTSIZE=10000
