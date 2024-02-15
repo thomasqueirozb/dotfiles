@@ -27,19 +27,29 @@ check_deps() {
     fi
 }
 
+download_file() {
+    location="$1"
+    url="$2"
+    [ -f "$location" ] || {
+        curl -sL "$url" -o "$location" || {
+            echo >&2 "Failed to fetch $url"
+            exit 1
+        }
+    }
+}
+
 case $1 in
     update)
         check_deps
         stow --no-folding -R . -t ~/
 
-        git_prompt_location="$HOME/.config/bash/git-prompt.sh"
-        [ -f "$git_prompt_location" ] || {
-            curl -sL "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh" -o "$git_prompt_location" || {
-                echo >&2 "Failed to fetch git-prompt.sh from github"
-                exit 1
-            }
-            sed -i '1s/^/#!\/bin\/bash\n/' "$git_prompt_location"
-        }
+        base="$HOME/.config/bash"
+        git_prompt_location="$base/git-prompt.sh"
+        download_file "$git_prompt_location" "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh"
+        # sed -i '1s/^/#!\/bin\/bash\n/' "$git_prompt_location"
+        download_file "$base/fzf-completion.bash" "https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.bash"
+        download_file "$base/fzf-key-bindings.bash" "https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.bash"
+        download_file "$base/bash-completion.bash" "https://raw.githubusercontent.com/scop/bash-completion/master/bash_completion"
         ;;
     clean)
         check_deps
