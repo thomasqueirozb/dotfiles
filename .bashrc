@@ -62,6 +62,19 @@ for f in "$XDG_CONFIG_HOME/bash/"*?.bash; do
     # shellcheck source=/dev/null
     . "$f"
 done
+
+if command -v brew >/dev/null 2>&1; then
+    prefix="$(brew --prefix)"
+    # shellcheck source=/dev/null
+    if [ -d "$prefix/etc/bash_completion.d/" ]; then
+        # shellcheck source=/dev/null
+        for f in "$prefix/etc/bash_completion.d/"*; do
+            # shellcheck source=/dev/null
+            . "$f"
+        done
+    fi
+    unset prefix
+fi
 unset f
 
 #al-info
