@@ -1,2 +1,3 @@
-dotfiles_scripts/.ccls-cache/
-dotfiles_scripts/updater
+.config/bash/bash-completion.bash
+.config/bash/fzf-completion.bash
+.config/bash/fzf-key-bindings.bash
