@@ -54,5 +54,25 @@ vim.api.nvim_set_keymap('n', '<leader>bb', ':Buffers<CR>', {})
 -- Comments
 vim.api.nvim_set_keymap('n', '<C-_>', 'gcc', {})
 vim.api.nvim_set_keymap('v', '<C-_>', 'gcgv', {})
+-- For MacOS
+vim.api.nvim_set_keymap('n', '<M-_>', 'gcc', {})
+vim.api.nvim_set_keymap('v', '<M-_>', 'gcgv', {})
+
 vim.api.nvim_set_keymap('n', '<C-\\>', 'gbc', {})
 vim.api.nvim_set_keymap('v', '<C-\\>', 'gbgv', {})
+
+
+-- Other functions
+function Strip_trailing_whitespace()
+    local current_pos = vim.fn.getpos('.')
+    local current_search = vim.fn.getreg('/')
+
+    vim.cmd([[%s/\s\+$//e]])
+
+    vim.fn.setreg('/', current_search) -- Restore previous search
+    vim.fn.setpos('.', current_pos)    -- Restore cursor position
+end
+
+vim.cmd([[command! SS lua Strip_trailing_whitespace()]])
+vim.cmd([[command! StripTrailingWhitespace lua Strip_trailing_whitespace()]])
+vim.api.nvim_set_keymap('n', '<Leader>ss', ':lua Strip_trailing_whitespace()<CR>', { silent = true })

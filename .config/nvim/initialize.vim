@@ -315,17 +315,17 @@ command! W execute 'silent w !sudo tee % >/dev/null' | edit!
 " }}}
 " Advanced Maps {{{
 
-" Strip trailing whitespace, ss (strip space) {{{
-nnoremap <silent> <Leader>ss
-    \ :let b:_p = getpos(".") <Bar>
-    \  let b:_s = (@/ != '') ? @/ : '' <Bar>
-    \  %s/\s\+$//e <Bar>
-    \  let @/ = b:_s <Bar>
-    \  nohlsearch <Bar>
-    \  unlet b:_s <Bar>
-    \  call setpos('.', b:_p) <Bar>
-    \  unlet b:_p <CR>
-" }}}
+" " Strip trailing whitespace, ss (strip space) {{{
+" nnoremap <silent> <Leader>ss
+"     \ :let b:_p = getpos(".") <Bar>
+"     \  let b:_s = (@/ != '') ? @/ : '' <Bar>
+"     \  %s/\s\+$//e <Bar>
+"     \  let @/ = b:_s <Bar>
+"     \  nohlsearch <Bar>
+"     \  unlet b:_s <Bar>
+"     \  call setpos('.', b:_p) <Bar>
+"     \  unlet b:_p <CR>
+" " }}}
 " Global replace, sw {{{
 vnoremap <Leader>sw "hy
     \ :let b:sub = input('global replacement: ') <Bar>
