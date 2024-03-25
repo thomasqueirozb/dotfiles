@@ -311,7 +311,6 @@ command! D Explore
 command! R call <SID>ranger()
 command! Q call <SID>quitbuffer()
 command! -nargs=1 B :call <SID>bufferselect("<args>")
-command! W execute 'silent w !sudo tee % >/dev/null' | edit!
 " }}}
 " Advanced Maps {{{
 
@@ -486,11 +485,6 @@ nmap <buffer><silent><expr>k v:count ? 'k' : 'gk'
 
 
 " Tabs {{{
-nnoremap <silent> <M-h> :tabprevious<CR>
-nnoremap <silent> <M-j> :tabmove -1<CR>
-nnoremap <silent> <M-k> :tabmove +1<CR>
-nnoremap <silent> <M-l> :tabnext<CR>
-
 " close current buffer and/or tab
 nnoremap <silent> <Leader>q :B<CR>:silent tabclose<CR>gT
 

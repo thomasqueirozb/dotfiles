@@ -31,6 +31,11 @@ vim.api.nvim_set_keymap('n', '<leader>tn', ':tabnext<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<leader>tf', ':tabfirst<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<leader>tp', ':tabprevious<CR>', { silent = true })
 
+vim.api.nvim_set_keymap('n', '<M-h>', ':tabprevious<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<M-j>', ':tabmove -1<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<M-k>', ':tabmove +1<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<M-l>', ':tabnext<CR>', { silent = true })
+
 --vim.api.nvim_set_keymap('n', '<up>', ':resize +5<CR>', {})
 --vim.api.nvim_set_keymap('n', '<down>', ':resize -5<CR>', {})
 --vim.api.nvim_set_keymap('n', '<left>', ':vertical resize -5<CR>', {})
@@ -47,6 +52,9 @@ vim.api.nvim_set_keymap('n', '<leader>e', ':edit ', {})
 
 -- Plugin maps
 vim.api.nvim_set_keymap('n', '<leader><space>', ':Files<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>.', ':Files .<CR>', {})
+
+-- nnoremap <silent> <Leader>- :tabedit <C-R>=expand("%:p:h")<CR><CR>
 vim.api.nvim_set_keymap('n', '<leader>/', ':Rg<CR>', {})
 vim.api.nvim_set_keymap('n', '<leader>bb', ':Buffers<CR>', {})
 
