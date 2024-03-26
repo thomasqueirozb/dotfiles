@@ -158,7 +158,11 @@ dec2hex() {
 }
 
 ga() {
-    git add "${1:-.}"
+    if [ $# -eq 0 ]; then
+        git add .
+    else
+        git add "$@"
+    fi
 }
 
 gr() {
