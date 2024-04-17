@@ -12,6 +12,16 @@ open_video="celluloid --new-window"
 open_audio="celluloid --new-window"
 open_ica="/opt/Citrix/ICAClient/wfica"
 
+[ -z "$1" ] && {
+    >&2 echo "usage: open [FILE]"
+    exit 2
+}
+
+[ -e "$1" ] || {
+    >&2 echo "open: $1: No such file or directory"
+    exit 1
+}
+
 default_open() {
     $1 "$2" 1>/dev/null 2>&1 &
     disown $!
@@ -48,7 +58,7 @@ case "$extension" in
         $open_text "$1"
         ;;
     *)
-        echo "No matching extension: $original_extension"
+        >&2 echo "No matching extension: $original_extension"
         echo -n "Would you like to open it as a text file? [Y/n] "
         read -r -n1 res
         if [ "${res,,}" = "n" ]; then
