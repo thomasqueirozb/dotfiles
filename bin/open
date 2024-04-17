@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-extension="${1##*\.}"
-extension="${extension,,}"
+original_extension="${1##*\.}"
+extension="${original_extension,,}"
 
 open_text="nvim" # whole command goes here only for text
 open_office="onlyoffice-desktopeditors"
@@ -48,7 +48,7 @@ case "$extension" in
         $open_text "$1"
         ;;
     *)
-        echo "No matching extension: $extension"
+        echo "No matching extension: $original_extension"
         echo -n "Would you like to open it as a text file? [Y/n] "
         read -r -n1 res
         if [ "${res,,}" = "n" ]; then
