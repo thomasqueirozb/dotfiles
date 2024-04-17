@@ -485,14 +485,34 @@ yt() {
     xdg-open "https://www.youtube.com/results?search_query=$encoded&page=&utm_source=opensearch"
 }
 
+dragon_command() {
+    if command -v dragon &>/dev/null; then
+        echo "dragon"
+    elif command -v dragon-drop &>/dev/null; then
+        echo "dragon-drop"
+    else
+        >&2 echo "dragon or dragon-drop: command not found"
+        return 1
+    fi
+}
 
 drag() {
+    cmd="$(dragon_command)"
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+
     # shellcheck disable=2068
-    dragon-drop -a -x "$@"
+    "$cmd" -a -x "$@"
 }
 
 drop() {
-    url="$(dragon-drop -t -x)"
+    cmd="$(dragon_command)"
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+
+    url="$("$cmd" -t -x)"
     if [ -n "$1" ]; then
         filename="$1"
     else
