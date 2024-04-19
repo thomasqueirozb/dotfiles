@@ -21,6 +21,16 @@ WHITE='\[\e[37m\]'    GRAY='\[\e[38m\]'
 BRIGHT_RED='\[\e[39m\]' LIME='\[\e[40m\]'
 # BRIGHT_YELLOW='\[\e[41m\]' LIME='\[\e[40m\]'
 
+if [ $IN_ZSH = 1 ]; then
+    RESET='%{%f%b%}'     BOLD='%{%B%}'
+    BLACK='%{%F{black}%}'
+    RED='%{%F{red}%}' GREEN='%{%F{green}%}'
+    YELLOW='%{%F{yellow}%}' BLUE='%{%F{blue}%}'
+    MAGENTA='%{%F{magenta}%}' CYAN='%{%F{cyan}%}'
+    WHITE='%{%F{white}%}' GRAY='%{%F{white}%}'
+    BRIGHT_RED='%{%F{red}%}' LIME='%{%F{black}%}'
+fi
+
 PROMPT_ARROW_COLOR="$GREEN"
 PROMPT_CHROOT_DOCKER_COLOR="$RESET"
 PROMPT_SSH_COLOR="$RESET"
@@ -41,9 +51,37 @@ PS2='==> '
 PS3='choose: '
 PS4='|${BASH_SOURCE} ${LINENO}${FUNCNAME[0]:+ ${FUNCNAME[0]}()}|  '
 
+if [ $IN_ZSH = 1 ]; then
+    precmd() {
+        # history -n
+        # history -r
+
+        # __title
+        code="$(print -P %?)"
+        exitcode=""
+        [ "$code" = "0" ] || exitcode=" $RED%?"
+
+        ranger=""
+        if [[ $RANGER_LEVEL ]]; then
+            (( RANGER_LEVEL == 1 )) && ranger=" $BLUE(ranger)" || ranger=" $BLUE(ranger:$RANGER_LEVEL)"
+        fi
+        PROMPT="${PROMPT_ARROW_COLOR}${PROMPT_LNBR1}$exitcode "
+        PROMPT+="${PROMPT_USERFMT}${PROMPT_ARROW_COLOR}%~${ranger}${RESET}$(__git_ps1)"
+        PROMPT+=$'\n'
+        PROMPT+="${PROMPT_ARROW_COLOR}${PROMPT_LNBR2}${PROMPT_ARROW} "
+
+        if [[ $(whoami) == 'root' ]]; then
+            PROMPT+="$(__ssh)$(__chroot_docker)${PROMPT_USERCOL}#${RESET} "
+        else
+            PROMPT+="$(__ssh)$(__chroot_docker)${PROMPT_USERCOL}\$${RESET} "
+        fi
+    }
+
+fi
+
 ## ----------------------------------------------------------- ##
 
-shopt -q promptvars || shopt promptvars >/dev/null 2>&1
+shopt -s promptvars || shopt promptvars >/dev/null 2>&1
 
 # basic settings
 

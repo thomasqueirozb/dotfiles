@@ -49,6 +49,10 @@ case $1 in
         download_file "$base/fzf-completion.bash" "https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.bash"
         download_file "$base/fzf-key-bindings.bash" "https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.bash"
         download_file "$base/bash-completion.bash" "https://raw.githubusercontent.com/scop/bash-completion/master/bash_completion"
+
+
+        download_file "$base/fzf-completion.zsh" "https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh"
+        download_file "$base/fzf-key-bindings.zsh" "https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh"
         ;;
     clean)
         check_deps

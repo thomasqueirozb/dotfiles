@@ -45,23 +45,48 @@ export LESS_TERMCAP_us=$'\e[01;32m'
 
 export LESSHISTFILE="-"
 
-set -o vi
+if [ $IN_BASH = 1 ]; then
+    set -o vi
 
-bind -m vi-command "Control-l:clear-screen"
-bind -m vi-insert "Control-l:clear-screen"
+    bind -m vi-command "Control-l:clear-screen"
+    bind -m vi-insert "Control-l:clear-screen"
 
-set -o notify
+    set -o notify
 
-shopt -s direxpand 2>/dev/null
-shopt -s checkhash
-shopt -s sourcepath
-shopt -s expand_aliases
-shopt -s extglob dotglob
-shopt -s no_empty_cmd_completion
-shopt -s autocd 2>/dev/null
-shopt -s cdspell
-shopt -s cmdhist histappend histreedit histverify
-[[ $DISPLAY ]] && shopt -s checkwinsize
+    shopt -s direxpand 2>/dev/null
+    shopt -s checkhash
+    shopt -s sourcepath
+    shopt -s expand_aliases
+    shopt -s extglob dotglob
+    shopt -s no_empty_cmd_completion
+    shopt -s autocd 2>/dev/null
+    shopt -s cdspell
+    shopt -s cmdhist histappend histreedit histverify
+    [[ $DISPLAY ]] && shopt -s checkwinsize
+elif [ $IN_ZSH = 1 ]; then
+    bindkey -v
+    bindkey '^L' clear-screen
+
+    setopt notify
+
+    setopt direxpand 2>/dev/null
+    setopt hashcmds
+    setopt aliases
+    setopt extended_glob dot_glob
+    unsetopt correct_all
+    setopt autocd 2>/dev/null
+    setopt correct
+    setopt hist_ignore_space hist_find_no_dups hist_ignore_all_dups hist_ignore_dups
+
+    # bash polyfills. They cannot be empty otherwise bash thinks this is a syntax error
+    complete() {
+        true
+    }
+
+    shopt() {
+        true
+    }
+fi
 
 # prompt if file sourcing below fails
 PS1='[\u@\h \W]\$ '
