@@ -1,6 +1,22 @@
 #!/usr/bin/env bash
 # catch non-bash and non-interactive shells
-[[ $- == *i* && $BASH_VERSION ]] && SHELL=bash || return 0
+[[ $- == *i* ]] || return 0
+
+IN_BASH=1
+IN_ZSH=0
+
+current_shell="$(ps -p $$ -o comm='')"
+[ "$current_shell" = "bash" ] && {
+    IN_BASH=1
+    IN_ZSH=0
+}
+
+[ "$current_shell" = "zsh" ] && {
+    IN_ZSH=1
+    IN_BASH=0
+}
+
+[[ $IN_BASH = 0 && $IN_ZSH = 0 ]] && return 0
 
 (uname -s | grep -q Darwin) && {
     # Remove annoying deprecation message
@@ -58,10 +74,17 @@ PS1='[\u@\h \W]\$ '
 # export PROMPT_USERFMT='\u\[\e[0m\]@\[\e[31m\]\h '
 
 # source shell configs
-for f in "$XDG_CONFIG_HOME/bash/"*?.bash; do
+for f in "$XDG_CONFIG_HOME/bash/"*?.sh; do
     # shellcheck source=/dev/null
     . "$f"
 done
+
+if [ $IN_BASH = 1 ]; then
+    for f in "$XDG_CONFIG_HOME/bash/"*?.bash; do
+        # shellcheck source=/dev/null
+        . "$f"
+    done
+fi
 
 if command -v brew >/dev/null 2>&1; then
     prefix="$(brew --prefix)"

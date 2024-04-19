@@ -44,9 +44,8 @@ case $1 in
         stow --no-folding -R . -t ~/
 
         base="$HOME/.config/bash"
-        git_prompt_location="$base/git-prompt.sh"
-        download_file "$git_prompt_location" "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh"
-        # sed -i '1s/^/#!\/bin\/bash\n/' "$git_prompt_location"
+        download_file "$base/git-prompt.sh" "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh"
+
         download_file "$base/fzf-completion.bash" "https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.bash"
         download_file "$base/fzf-key-bindings.bash" "https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.bash"
         download_file "$base/bash-completion.bash" "https://raw.githubusercontent.com/scop/bash-completion/master/bash_completion"
