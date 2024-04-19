@@ -41,9 +41,10 @@ paths=(
     [ "$newest_ruby" = "" ] || paths+=("$newest_ruby/bin")
 }
 
-for path in "${paths[@]}"; do
-    if [ -d "$path" ]; then
-        [[ "$PATH" == *"$path"* ]] || export PATH="$PATH:$path"
+# zsh uses both $PATH and $path. Local variable has to have a different name
+for path_ in "${paths[@]}"; do
+    if [ -d "$path_" ]; then
+        [[ "$PATH" == *"$path_"* ]] || export PATH="$PATH:$path_"
     fi
 done
 
