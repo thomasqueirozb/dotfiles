@@ -6,12 +6,12 @@ IN_BASH=1
 IN_ZSH=0
 
 current_shell="$(ps -p $$ -o comm='')"
-[ "$current_shell" = "bash" ] && {
+[[ "$current_shell" == *bash ]] && {
     IN_BASH=1
     IN_ZSH=0
 }
 
-[ "$current_shell" = "zsh" ] && {
+[[ "$current_shell" == *zsh ]] && {
     IN_ZSH=1
     IN_BASH=0
 }
@@ -78,6 +78,10 @@ elif [ $IN_ZSH = 1 ]; then
     setopt correct
     setopt hist_ignore_space hist_find_no_dups hist_ignore_all_dups hist_ignore_dups
 
+    # zsh specific
+    bindkey "^[[1;5C" forward-word
+    bindkey "^[[1;5D" backward-word
+
     # bash polyfills. They cannot be empty otherwise bash thinks this is a syntax error
     complete() {
         true
@@ -106,6 +110,11 @@ done
 
 if [ $IN_BASH = 1 ]; then
     for f in "$XDG_CONFIG_HOME/bash/"*?.bash; do
+        # shellcheck source=/dev/null
+        . "$f"
+    done
+elif [ $IN_ZSH = 1 ]; then
+    for f in "$XDG_CONFIG_HOME/bash/"*?.zsh; do
         # shellcheck source=/dev/null
         . "$f"
     done
