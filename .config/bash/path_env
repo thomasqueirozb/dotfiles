@@ -66,14 +66,6 @@ if command -v svn >/dev/null 2>&1; then
     }
 fi
 
-if command -v yarn >/dev/null 2>&1; then
-    yarn_cmd="$(which yarn)"
-    unalias yarn >/dev/null 2>&1
-    yarn() {
-        "$yarn_cmd" --use-yarnrc "$XDG_CONFIG_HOME/yarn/config" "$@"
-    }
-fi
-
 if command -v gpg2 >/dev/null 2>&1; then
     gpg2_cmd="$(which gpg2)"
     unalias gpg2 >/dev/null 2>&1
