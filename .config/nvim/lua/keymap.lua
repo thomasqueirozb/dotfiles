@@ -52,7 +52,7 @@ vim.api.nvim_set_keymap('n', '<leader>e', ':edit ', {})
 
 -- Plugin maps
 vim.api.nvim_set_keymap('n', '<leader><space>', ':Files<CR>', {})
-vim.api.nvim_set_keymap('n', '<leader>.', ':Files .<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>.', ':Files %:h<CR>', {})
 
 -- nnoremap <silent> <Leader>- :tabedit <C-R>=expand("%:p:h")<CR><CR>
 vim.api.nvim_set_keymap('n', '<leader>/', ':Rg<CR>', {})
