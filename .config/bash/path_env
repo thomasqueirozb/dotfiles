@@ -17,7 +17,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
-export XDG_DATA_DIRS="/usr/local/share/:/usr/share/"
+export XDG_DATA_DIRS="$XDG_DATA_DIRS:/usr/local/share/:/usr/share/"
 
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
 # }}}
@@ -54,6 +54,10 @@ fi
 #
 # }}}
 
+if command -v nixos-version >/dev/null 2>&1; then
+    export NIX_LD=$(nix --extra-experimental-features nix-command eval --impure --raw --expr '
+    let pkgs = import <nixpkgs> {}; NIX_LD = pkgs.lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker"; in NIX_LD')
+fi
 
 # Set the rest of the environment {{{
 
