@@ -29,8 +29,6 @@ current_shell="$(ps -p $$ -o comm='')"
 
 # set some defaults
 # export HISTSIZE=10000
-export HISTSIZE=
-export HISTFILESIZE=
 export HISTCONTROL=ignoreboth:ignoredups:erasedups
 export HISTIGNORE="q:f:v"
 
@@ -46,6 +44,9 @@ export LESS_TERMCAP_us=$'\e[01;32m'
 export LESSHISTFILE="-"
 
 if [ $IN_BASH = 1 ]; then
+    export HISTSIZE=
+    export HISTFILESIZE=
+
     set -o vi
 
     bind -m vi-command "Control-l:clear-screen"
