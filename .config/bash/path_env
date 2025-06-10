@@ -34,6 +34,7 @@ paths=(
     "$XDG_DATA_HOME/go/bin"
     "$XDG_DATA_HOME/npm/bin"
     "$XDG_CONFIG_HOME/emacs/bin"
+    "/opt/homebrew/bin"
 )
 
 [ -d "$XDG_DATA_HOME/gem/ruby" ] && {
