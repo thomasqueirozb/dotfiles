@@ -68,10 +68,6 @@ vim.o.softtabstop = 4      -- spaces to enter for each tab
 vim.o.shiftwidth = 4       -- amount of spaces for indentation
 
 vim.o.mouse = 'a'          -- Enable mouse
-if vim.fn.has('mouse_sgr') then
-    vim.o.ttymouse = "sgr" -- sgr mouse is better but not every term supports it
-end
-
 
 -- Folds: (:h fold-commands)
 --   za, zA = toggle,     toggle local
