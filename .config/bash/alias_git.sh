@@ -24,4 +24,4 @@ alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
 
 alias gcan='git commit --amend --no-edit'
 alias gpo='git push origin'
-alias gpob='git rev-parse --abbrev-ref HEAD | xargs -r git push origin'
+alias gpob='git rev-parse --abbrev-ref HEAD | xargs -r git push origin -u'
