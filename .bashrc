@@ -123,17 +123,26 @@ fi
 
 if command -v brew >/dev/null 2>&1; then
     prefix="$(brew --prefix)"
-    # shellcheck source=/dev/null
-    if [ -d "$prefix/etc/bash_completion.d/" ]; then
+
+    if [ $IN_BASH = 1 ]; then
         # shellcheck source=/dev/null
-        for f in "$prefix/etc/bash_completion.d/"*; do
+        if [ -d "$prefix/etc/bash_completion.d/" ]; then
             # shellcheck source=/dev/null
-            . "$f"
-        done
+            for f in "$prefix/etc/bash_completion.d/"*; do
+                # shellcheck source=/dev/null
+                . "$f"
+            done
+        fi
+        unset prefix
+        unset f
+    elif [ $IN_ZSH = 1 ]; then
+        fpath+="$prefix/share/zsh/site-functions"
+
+        # Initialize Zsh completion
+        autoload -Uz compinit
+        compinit
     fi
-    unset prefix
 fi
-unset f
 
 #al-info
 # neofetch
