@@ -26,6 +26,18 @@ export XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local
 # Default is in /tmp. This is so dbs arent created on every reboot
 export CHECKUPDATES_DB="$XDG_CACHE_HOME/checkup-db/"
 
+command_or_default() {
+    default="$1"
+    shift
+    result="$($@ 2>/dev/null)"
+
+    if [ $? = 0 ]; then
+        echo "$result"
+    else
+        echo "$default"
+    fi
+}
+
 # Configure PATH {{{
 paths=(
     "$HOME/.local/bin"
@@ -34,7 +46,8 @@ paths=(
     "$XDG_DATA_HOME/go/bin"
     "$XDG_DATA_HOME/npm/bin"
     "$XDG_CONFIG_HOME/emacs/bin"
-    "/opt/homebrew/bin"
+    "$(command_or_default /opt/homebrew brew --prefix)/bin"
+    "$(command_or_default "$XDG_DATA_HOME/aquaproj-aqua" aqua root-dir)/bin"
 )
 
 [ -d "$XDG_DATA_HOME/gem/ruby" ] && {
