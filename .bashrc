@@ -79,6 +79,8 @@ elif [ $IN_ZSH = 1 ]; then
     setopt correct
     setopt hist_ignore_space hist_find_no_dups hist_ignore_all_dups hist_ignore_dups
 
+    unsetopt LIST_BEEP
+
     # zsh specific
     bindkey "^[[1;5C" forward-word
     bindkey "^[[1;5D" backward-word
@@ -137,11 +139,18 @@ if command -v brew >/dev/null 2>&1; then
         unset f
     elif [ $IN_ZSH = 1 ]; then
         fpath+="$prefix/share/zsh/site-functions"
-
-        # Initialize Zsh completion
-        autoload -Uz compinit
-        compinit
     fi
+fi
+
+if [ $IN_ZSH = 1 ]; then
+    # Initialize Zsh completion
+    autoload -Uz compinit
+    compinit
+
+    zstyle ':completion:*' menu select
+    zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
+
+    setopt menu_complete
 fi
 
 #al-info
