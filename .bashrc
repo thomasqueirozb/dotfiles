@@ -153,10 +153,14 @@ if [ $IN_ZSH = 1 ]; then
     setopt menu_complete
 fi
 
-#al-info
-# neofetch
 if command -v zoxide >/dev/null 2>&1; then
-    eval "$(zoxide init bash)"
+    if [ $IN_BASH = 1 ]; then
+        shell_name="bash"
+    elif [ $IN_ZSH = 1 ]; then
+        shell_name="zsh"
+    fi
+
+    eval "$(zoxide init $shell_name)"
 fi
 
 ls
