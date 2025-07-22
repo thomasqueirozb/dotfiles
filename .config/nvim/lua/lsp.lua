@@ -45,107 +45,124 @@ vim.api.nvim_create_autocmd('LspAttach', {
 local capabilities_with_completion = require('cmp_nvim_lsp').default_capabilities()
 capabilities_with_completion.textDocument.completion.completionItem.snippetSupport = true
 
+vim.lsp.config('rust_analyzer', {
+    cmd = { "rust-analyzer" },
+    capabilities = capabilities_with_completion,
+    settings = {
+        ["rust-analyzer"] = {
+            check = { command = "check" },
+            cargo = { allFeatures = false },
+            diagnostics = {
+                enable = true,
+                -- enableExperimental = true,
+            },
+        },
+    },
+})
+
+vim.lsp.enable('rust_analyzer')
+
+
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
+vim.lsp.config('lua_ls', {
+    capabilities = capabilities_with_completion,
+
+    settings = {
+        Lua = {
+            workspace = { checkThirdParty = false, library = vim.api.nvim_get_runtime_file("", true) },
+            runtime = {
+                version = 'LuaJIT',
+                path = runtime_path,
+            },
+            telemetry = {
+                enable = false,
+            },
+        }
+    }
+})
+
+-- local util = require('lspconfig.util')
+vim.filetype.add({
+    pattern = {
+        ['.*/%.github[%w/]+workflows[%w/]+.*%.ya?ml'] = 'yaml.github',
+    },
+})
+
+vim.lsp.config('gh_actions_ls', {
+    -- capabilities = capabilities_with_completion,
+
+    filetypes = { 'yaml.github' },
+
+    -- root_dir = util.root_pattern('.github'),
+    single_file_support = true,
+    capabilities = {
+        workspace = {
+            didChangeWorkspaceFolders = {
+                dynamicRegistration = true,
+            },
+        },
+    },
+})
+
 require("mason").setup()
-require("mason-lspconfig").setup()
+require("mason-lspconfig").setup({
+    automatic_enable = {
+        exclude = { "rust_analyzer" } -- Managed by rustup
+    }
+})
 
-require("mason-lspconfig").setup_handlers {
-    -- default setup for unconfigured servers
-    function(server_name)
-        require("lspconfig")[server_name].setup {}
-    end,
-    ["rust_analyzer"] = function()
-        require('lspconfig')['rust_analyzer'].setup {
-            automatic_installation = false,
-            capabilities = capabilities_with_completion,
-            -- settings = {
-            --     rust_analyzer = {
-            --         schemas = {
-            --             ["http://json.schemastore.org/github-action"] = ".github/workflows/*",
-            --         }
-            --     }
-            -- }
-        }
-    end,
-    ["yamlls"] = function()
-        require('lspconfig')['yamlls'].setup {
-            capabilities = capabilities_with_completion,
-            settings = {
-                yaml = {
-                    schemas = {
-                        ["http://json.schemastore.org/github-action"] = ".github/workflows/*",
-                    }
-                }
-            }
-        }
-    end,
-    -- Go configuration
-    ["gopls"] = function()
-        require('lspconfig')['gopls'].setup {
-            cmd = { 'gopls' },
-            capabilities = capabilities_with_completion,
-            settings = {
-                gopls = {
-                    experimentalPostfixCompletions = true,
-                    analyses = {
-                        unusedparams = true,
-                        shadow = true,
-                        fieldalignment = true,
-                        nilness = true,
-                        unusedwrite = true,
-                    },
-                    staticcheck = true,
-                    codelenses = {
-                        tidy = true
-                    },
-                },
-            },
-            init_options = {
-                usePlaceholders = true,
-            }
-        }
-    end,
-    -- lua config
-    ["lua_ls"] = function()
-        local runtime_path = vim.split(package.path, ';')
-        table.insert(runtime_path, "lua/?.lua")
-        table.insert(runtime_path, "lua/?/init.lua")
-
-        require 'lspconfig'.lua_ls.setup {
-            settings = {
-                Lua = {
-                    runtime = {
-                        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                        version = 'LuaJIT',
-                        -- Setup your lua path
-                        path = runtime_path,
-                    },
-                    diagnostics = {
-                        -- Get the language server to recognize the `vim` global
-                        globals = { 'vim' },
-                    },
-                    workspace = {
-                        -- Make the server aware of Neovim runtime files
-                        library = vim.api.nvim_get_runtime_file("", true),
-                        checkThirdParty = false,
-                    },
-                    -- Do not send telemetry data containing a randomized but unique identifier
-                    telemetry = {
-                        enable = false,
-                    },
-                    format = {
-                        enable = true,
-                    },
-                },
-            },
-        }
-    end,
-    -- typescirpt config
-    ["tsserver"] = function()
-        require 'lspconfig'.tsserver.setup {
-            settings = { documentFormatting = true }
-        }
-    end,
-}
+--require("mason-lspconfig").setup_handlers {
+--    -- default setup for unconfigured servers
+--    function(server_name)
+--        require("lspconfig")[server_name].setup {}
+--    end,
+--    ["yamlls"] = function()
+--        require('lspconfig')['yamlls'].setup {
+--            capabilities = capabilities_with_completion,
+--            settings = {
+--                yaml = {
+--                    schemas = {
+--                        ["http://json.schemastore.org/github-action"] = ".github/workflows/*",
+--                    }
+--                }
+--            }
+--        }
+--    end,
+--    -- Go configuration
+--    ["gopls"] = function()
+--        require('lspconfig')['gopls'].setup {
+--            cmd = { 'gopls' },
+--            capabilities = capabilities_with_completion,
+--            settings = {
+--                gopls = {
+--                    experimentalPostfixCompletions = true,
+--                    analyses = {
+--                        unusedparams = true,
+--                        shadow = true,
+--                        fieldalignment = true,
+--                        nilness = true,
+--                        unusedwrite = true,
+--                    },
+--                    staticcheck = true,
+--                    codelenses = {
+--                        tidy = true
+--                    },
+--                },
+--            },
+--            init_options = {
+--                usePlaceholders = true,
+--            }
+--        }
+--    end,
+--    -- typescript config
+--    ["tsserver"] = function()
+--        require 'lspconfig'.tsserver.setup {
+--            settings = { documentFormatting = true }
+--        }
+--    end,
+--}
 
 require("conform").setup({
     format_on_save = function(bufnr)
