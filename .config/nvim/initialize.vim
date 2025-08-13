@@ -268,19 +268,6 @@
 
 " Additional configuration {{{
 " Autocmd {{{
-" Highlight keywords {{{
-function! SetMyHighlights()
-    syntax keyword myTodo TODO CRITICAL WARNING OPTIMIZE FIXME containedin=ALL
-
-    hi def link myTodo Todo
-endfunction
-autocmd bufenter * :call SetMyHighlights()
-autocmd filetype * :call SetMyHighlights()
-
-" autocmd Syntax * syntax keyword myTodo WARNING NOTES containedin=ALL | highlight def link myTodo TODO
-
-" }}}
-
 " Reload changes if file changed outside of vim requires autoread {{{
 augroup load_changed_file
     autocmd!

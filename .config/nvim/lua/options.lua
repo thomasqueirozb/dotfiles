@@ -80,3 +80,16 @@ vim.o.mouse = 'a'          -- Enable mouse
 vim.o.foldmethod = "expr"
 vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 vim.o.foldlevel = 1
+
+-- Highlight keywords
+local function set_my_highlights()
+    vim.cmd([[
+        syntax keyword customTodo TODO CRITICAL WARNING OPTIMIZE FIXME containedin=ALL
+        highlight default link customTodo Todo
+    ]])
+end
+
+vim.api.nvim_create_autocmd({ "BufEnter", "FileType" }, {
+    pattern = "*",
+    callback = set_my_highlights,
+})
