@@ -115,7 +115,7 @@ fi
 __ssh()
 {
     if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-        printf "${PROMPT_SSH_COLOR}(ssh) "
+        echo -ne "${PROMPT_SSH_COLOR}(ssh) "
     fi
 }
 
@@ -123,9 +123,9 @@ __ssh()
 __chroot_docker()
 {
     if [ -f /.dockerenv ]; then
-        printf "${PROMPT_CHROOT_DOCKER_COLOR}(docker) "
+        echo -ne "${PROMPT_CHROOT_DOCKER_COLOR}(docker) "
     else
-        [ "$(/usr/bin/env ls -di /)" = "2 /" ] || printf "${PROMPT_CHROOT_DOCKER_COLOR}(chroot) "
+        [ "$(/usr/bin/env ls -di /)" = "2 /" ] || echo -ne "${PROMPT_CHROOT_DOCKER_COLOR}(chroot) "
     fi
 }
 
@@ -140,7 +140,7 @@ __exitcode()
 __ranger()
 {
     if [[ $RANGER_LEVEL ]]; then
-        (( RANGER_LEVEL == 1 )) && printf " $BLUE(ranger)" || printf " $BLUE(ranger:$RANGER_LEVEL)"
+        (( RANGER_LEVEL == 1 )) && echo -ne " $BLUE(ranger)" || echo -ne " $BLUE(ranger:$RANGER_LEVEL)"
     fi
 }
 
