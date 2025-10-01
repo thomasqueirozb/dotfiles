@@ -153,7 +153,8 @@ __title()
     fi
 
     # [[ $TERM =~ (xterm|rxvt|st) ]] && printf "%s" '\[\033]0;$USER: $(basename $SHELL) - \w\007\]'
-    [[ $TERM =~ (xterm|rxvt|st) ]] && printf "%s" "\[\033]0;$title\007\]"
+    [[ $TERM =~ (xterm|rxvt|st) ]] && echo -e "\033];$title\007"
+
     return 0
 }
 
