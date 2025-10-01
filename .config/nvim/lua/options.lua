@@ -81,6 +81,25 @@ vim.o.foldmethod = "expr"
 vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 vim.o.foldlevel = 1
 
+-- Save deleted text to ydc registers
+local group = vim.api.nvim_create_augroup("my-yank-autocmds", {})
+vim.api.nvim_create_autocmd("TextYankPost", {
+    group = group,
+    callback = function()
+        -- Do not do anything if a register is manually specified.
+        if vim.v.event.regname ~= "" then
+            return
+        end
+        if vim.v.event.operator == "y" then
+            vim.fn.setreg("y", vim.v.event.regcontents, vim.fn.getregtype('"'))
+        elseif vim.v.event.operator == "d" then -- also includes the `x` operator in visual mode
+            vim.fn.setreg("d", vim.v.event.regcontents, vim.fn.getregtype('"'))
+        elseif vim.v.event.operator == "c" then -- also includes the `s` operator in visual mode
+            vim.fn.setreg("c", vim.v.event.regcontents, vim.fn.getregtype('"'))
+        end
+    end,
+})
+
 -- Highlight keywords
 local function set_my_highlights()
     vim.cmd([[
