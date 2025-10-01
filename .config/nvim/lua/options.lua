@@ -101,14 +101,15 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- Highlight keywords
+local todo_group = vim.api.nvim_create_augroup("custom-todo-syntax", { clear = true })
+
 local function set_my_highlights()
-    vim.cmd([[
-        syntax keyword customTodo TODO CRITICAL WARNING OPTIMIZE FIXME containedin=ALL
-        highlight default link customTodo Todo
-    ]])
+    vim.cmd("silent! syntax keyword customTodo TODO CRITICAL WARNING OPTIMIZE FIXME containedin=ALL")
+    vim.api.nvim_set_hl(0, "customTodo", { link = "Todo", default = true })
 end
 
 vim.api.nvim_create_autocmd({ "BufEnter", "FileType" }, {
+    group = todo_group,
     pattern = "*",
     callback = set_my_highlights,
 })
