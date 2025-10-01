@@ -56,18 +56,18 @@ vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
 -- set leader
 vim.g.mapleader = " "
 
-vim.o.confirm = true       -- Ask confirmation like save before quit.
+vim.o.confirm = true     -- Ask confirmation like save before quit.
 -- set shortmess+=aAcIws    " Hide or shorten certain messages
-vim.o.undofile = true      -- Persistent undo
-vim.o.linebreak = true     -- Long line wrapping
-vim.o.breakindent = true   -- Indent is the same for wrapped line
+vim.o.undofile = true    -- Persistent undo
+vim.o.linebreak = true   -- Long line wrapping
+vim.o.breakindent = true -- Indent is the same for wrapped line
 -- Tabs
-vim.o.expandtab = true     -- Tab key inserts spaces not tabs
-vim.o.tabstop = 4          -- Width used for tabs
-vim.o.softtabstop = 4      -- spaces to enter for each tab
-vim.o.shiftwidth = 4       -- amount of spaces for indentation
+vim.o.expandtab = true   -- Tab key inserts spaces not tabs
+vim.o.tabstop = 4        -- Width used for tabs
+vim.o.softtabstop = 4    -- spaces to enter for each tab
+vim.o.shiftwidth = 4     -- amount of spaces for indentation
 
-vim.o.mouse = 'a'          -- Enable mouse
+vim.o.mouse = 'a'        -- Enable mouse
 
 -- Folds: (:h fold-commands)
 --   za, zA = toggle,     toggle local

@@ -42,4 +42,4 @@ require("lazy").setup({
     "numToStr/Comment.nvim",
 })
 
-require('Comment').setup()
+require("Comment").setup()
