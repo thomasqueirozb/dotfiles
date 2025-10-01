@@ -55,7 +55,15 @@ vim.api.nvim_set_keymap('n', '<leader><space>', ':Files<CR>', {})
 vim.api.nvim_set_keymap('n', '<leader>.', ':Files %:h<CR>', {})
 
 -- nnoremap <silent> <Leader>- :tabedit <C-R>=expand("%:p:h")<CR><CR>
-vim.api.nvim_set_keymap('n', '<leader>/', ':Rg<CR>', {})
+
+-- Add hidden Rg definitions
+-- Modified from https://github.com/junegunn/fzf.vim/blob/master/plugin/fzf.vim
+vim.cmd([[
+command! -bang -nargs=* RgH call  fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case --hidden -- ".fzf#shellescape(<q-args>), fzf#vim#with_preview(), <bang>0)
+command! -bang -nargs=* RGH call fzf#vim#grep2("rg --column --line-number --no-heading --color=always --smart-case --hidden -- ", <q-args>, fzf#vim#with_preview(), <bang>0)
+]])
+vim.api.nvim_set_keymap('n', '<leader>/', ':RgH<CR>', {})
+
 vim.api.nvim_set_keymap('n', '<leader>bb', ':Buffers<CR>', {})
 
 
