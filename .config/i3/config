@@ -147,7 +147,7 @@ exec --no-startup-id deadd-notification-center
 
 exec --no-startup-id sxhkd
 
-exec --no-startup-id emacs --daemon
+# exec --no-startup-id emacs --daemon
 
 # needed for super to launch rofi through ksuperkey, see ~/.xprofile
 # DEPEND
