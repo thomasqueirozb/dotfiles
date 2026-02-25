@@ -1,7 +1,4 @@
 [global_config]
-  title_hide_sizetext = True
-  title_transmit_bg_color = "#000000"
-  title_inactive_bg_color = "#2e3436"
   case_sensitive = False
 [keybindings]
   reset = None
@@ -17,7 +14,6 @@
   [[default]]
     background_darkness = 0.9
     background_type = transparent
-    cursor_color = "#aaaaaa"
     font = UbuntuMono Nerd Font Mono 12
     show_titlebar = False
     scrollback_lines = 30000
