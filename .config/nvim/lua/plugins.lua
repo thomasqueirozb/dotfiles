@@ -30,6 +30,9 @@ require("lazy").setup({
     "onsails/lspkind.nvim",
     "simrat39/rust-tools.nvim",
 
+    "nvim-tree/nvim-web-devicons",
+    "nvim-tree/nvim-tree.lua",
+
     "folke/tokyonight.nvim",
     "ellisonleao/gruvbox.nvim",
 
@@ -42,4 +45,12 @@ require("lazy").setup({
     "numToStr/Comment.nvim",
 })
 
-require("Comment").setup()
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+
+require('nvim-tree').setup()
+require('Comment').setup()
