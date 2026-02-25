@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+dpms="$1"
+
+if command -v uwsm >/dev/null && uwsm check is-active; then
+    if ! pidof swaylock 1>/dev/null; then
+        swaylock -c 000000 -e -l &
+        if ! [ "$dpms" = "false" ]; then
+            sleep 1 && hyprctl dispatch dpms off
+        fi
+    fi
+else
+    slock &
+    if ! [ "$dpms" = "false" ]; then
+        sleep 1 && xset dpms force off
+    fi
+fi
+
+

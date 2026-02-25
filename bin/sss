@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
-if command -v uwsm >/dev/null && uwsm check is-active; then
-    # rm -f /tmp/.sss
-    # touch /tmp/.sss
-    # exec 3< /tmp/.sss
-    # swaylock -c 000000 -e -l -R 3 &
-    swaylock -c 000000 -e -l &
-    sleep 1
-else
-    slock &
-    sleep 1
-fi
+# if command -v uwsm >/dev/null && uwsm check is-active; then
+#     # rm -f /tmp/.sss
+#     # touch /tmp/.sss
+#     # exec 3< /tmp/.sss
+#     # swaylock -c 000000 -e -l -R 3 &
+#     swaylock -c 000000 -e -l &
+#     sleep 1
+# else
+#     slock &
+#     sleep 1
+# fi
+lock false
 
 
 systemctl suspend
