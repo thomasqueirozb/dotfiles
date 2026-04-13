@@ -1,6 +1,6 @@
 -- Boilerplate from nvim-lspconfig
 -- Global mappings.
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '<space>g', vim.diagnostic.open_float)
 vim.keymap.set('n', 'g[', function() vim.diagnostic.jump({ count = -1, float = true }) end)
 vim.keymap.set('n', 'g]', function() vim.diagnostic.jump({ count = 1, float = true }) end)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
