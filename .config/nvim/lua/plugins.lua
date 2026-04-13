@@ -42,7 +42,20 @@ require("lazy").setup({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     "https://github.com/stevearc/conform.nvim",
 
+    {
+        "dk949/file_line.nvim",
+        lazy = false,
+        opts = {
+            enable_gf = true,
+        },
+    },
     "numToStr/Comment.nvim",
+    { "akinsho/git-conflict.nvim", version = "*", config = true },
+    {
+        'nvim-telescope/telescope.nvim',
+        branch = '0.1.x',
+        dependencies = { 'nvim-lua/plenary.nvim' }
+    },
 })
 
 -- disable netrw at the very start of your init.lua
