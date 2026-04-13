@@ -113,3 +113,17 @@ vim.api.nvim_create_autocmd({ "BufEnter", "FileType" }, {
     pattern = "*",
     callback = set_my_highlights,
 })
+
+
+-- Stop automatic line breaking in toml files (breaks long lists)
+vim.api.nvim_create_augroup("toml_no_auto_wrap", { clear = true })
+
+vim.api.nvim_create_autocmd("FileType", {
+    group = "toml_no_auto_wrap",
+    pattern = "toml",
+    callback = function()
+        vim.opt_local.formatoptions:remove("t")
+        -- optional: also prevent any wrapping via textwidth
+        -- vim.opt_local.textwidth = 0
+    end,
+})
