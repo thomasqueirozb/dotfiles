@@ -73,6 +73,12 @@ vim.lsp.config('rust_analyzer', {
 
 vim.lsp.enable('rust_analyzer')
 
+-- TypeScript configuration
+vim.lsp.config('ts_ls', {
+    cmd = { "typescript-language-server", "--stdio" },
+})
+vim.lsp.enable('ts_ls')
+
 
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
