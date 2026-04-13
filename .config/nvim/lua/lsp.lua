@@ -39,6 +39,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<space>F', function()
             vim.lsp.buf.format { async = true }
         end, opts)
+
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
+        if client and client:supports_method('textDocument/inlayHint') then
+            vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
+        end
     end,
 })
 --capabilities
@@ -50,11 +55,17 @@ vim.lsp.config('rust_analyzer', {
     capabilities = capabilities_with_completion,
     settings = {
         ["rust-analyzer"] = {
-            check = { command = "check" },
+            check = { command = "clippy" },
             cargo = { allFeatures = false },
             diagnostics = {
                 enable = true,
                 -- enableExperimental = true,
+            },
+
+            inlayHints = {
+                parameterHints = { enable = true },
+                typeHints = { enable = true },
+                chainingHints = { enable = true },
             },
         },
     },
