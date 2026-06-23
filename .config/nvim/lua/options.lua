@@ -78,7 +78,7 @@ vim.o.mouse = 'a'        -- Enable mouse
 --   Global foldlevel
 --   zr, zm = +1, -1
 vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.o.foldlevel = 1
 
 -- Save deleted text to ydc registers

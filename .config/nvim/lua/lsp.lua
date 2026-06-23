@@ -122,6 +122,7 @@ vim.lsp.config('gh_actions_ls', {
         },
     },
 })
+vim.lsp.enable('gh_actions_ls')
 
 require("mason").setup()
 require("mason-lspconfig").setup({
@@ -187,7 +188,7 @@ require("conform").setup({
         if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
             return
         end
-        return { timeout_ms = 500, lsp_fallback = true }
+        return { timeout_ms = 500, lsp_format = "fallback" }
     end,
 })
 vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
