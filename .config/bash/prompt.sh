@@ -56,7 +56,7 @@ if [ $IN_ZSH = 1 ]; then
         # history -n
         # history -r
 
-        # __title
+        __title
         code="$(print -P %?)"
         exitcode=""
         [ "$code" = "0" ] || exitcode=" $RED%?"
@@ -147,13 +147,17 @@ __ranger()
 # set the terminal title
 __title()
 {
-    title="\W"
+    if [ $IN_ZSH = 1 ]; then
+        title="$(print -P %~)"
+    else
+        title="\w"
+    fi
+
     if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
         title="$USER@$(cat /etc/hostname) - ${title}"
     fi
 
-    # [[ $TERM =~ (xterm|rxvt|st) ]] && printf "%s" '\[\033]0;$USER: $(basename $SHELL) - \w\007\]'
-    [[ $TERM =~ (xterm|rxvt|st) ]] && echo -e "\033];$title\007"
+    [[ $TERM =~ (xterm|rxvt|st) ]] && echo -e "\033]0;${title}\007"
 
     return 0
 }

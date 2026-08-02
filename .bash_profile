@@ -16,8 +16,8 @@ if is_login; then
     if [[ -t 0 && ( $(tty) == /dev/tty1 || $(tty) == /dev/tty7 ) && ! $DISPLAY ]]; then
         # if command -v uwsm && uwsm check may-start && uwsm select; then
         if command -v uwsm >/dev/null && uwsm check may-start; then
-            # exec uwsm start default
-            exec uwsm start hyprland
+            exec uwsm start default
+            # exec uwsm start hyprland
         else
             exec startx
         fi
