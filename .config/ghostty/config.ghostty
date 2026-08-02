@@ -1,0 +1,20 @@
+background = 050505
+copy-on-select = clipboard
+
+# app-notifications = clipboard-copy,config-reload
+app-notifications = false
+
+
+font-family = UbuntuMono Nerd Font Mono
+background-opacity = 0.9
+
+cursor-color = FFFFFF
+# cursor-style = underline
+cursor-style = block
+cursor-style-blink = true
+window-theme = dark
+
+shell-integration-features = no-cursor
+
+
+theme = terminator-ish
