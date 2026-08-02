@@ -101,7 +101,7 @@ fi
 if [[ $PROMPT_MULTILINE ]]; then
     : "${PROMPT_LNBR1="┌"}"  # ┌ ┏ ╓ ╒
     : "${PROMPT_LNBR2="└"}"  # └ ┗ ╙ ╘
-    : "${PROMPT_ARROW=">"}"  # ➜ ➤ ► ▻ ▸ ▹ ❯
+    : "${PROMPT_ARROW="➤"}"  # ▶ ➜ ➤ ► ▻ ▸ ▹ ❯
 fi
 
 # git settings
