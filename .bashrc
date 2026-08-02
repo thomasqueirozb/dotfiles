@@ -77,7 +77,7 @@ elif [ $IN_ZSH = 1 ]; then
     unsetopt correct_all
     setopt autocd 2>/dev/null
     setopt correct
-    setopt hist_ignore_space hist_find_no_dups hist_ignore_all_dups hist_ignore_dups
+    setopt hist_ignore_space hist_verify hist_find_no_dups hist_ignore_all_dups hist_ignore_dups
 
     unsetopt LIST_BEEP
 
