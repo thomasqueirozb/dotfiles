@@ -56,10 +56,12 @@ if [ $IN_ZSH = 1 ]; then
         # history -n
         # history -r
 
+        # capture the previous command's exit status before anything else
+        # runs, otherwise the __title call below would clobber $? to 0
+        local code=$?
         __title
-        code="$(print -P %?)"
         exitcode=""
-        [ "$code" = "0" ] || exitcode=" $RED%?"
+        [ "$code" = "0" ] || exitcode=" $RED$code"
 
         ranger=""
         if [[ $RANGER_LEVEL ]]; then
@@ -157,7 +159,9 @@ __title()
         title="$USER@$(cat /etc/hostname) - ${title}"
     fi
 
-    [[ $TERM =~ (xterm|rxvt|st) ]] && echo -e "\033]0;${title}\007"
+    # printf (not echo): echo appends a trailing newline which, when emitted
+    # from precmd/PROMPT_COMMAND, adds a stray blank line after pressing Enter
+    [[ $TERM =~ (xterm|rxvt|st) ]] && printf '\033]0;%s\007' "$title"
 
     return 0
 }
