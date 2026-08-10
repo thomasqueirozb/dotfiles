@@ -68,7 +68,13 @@ if [ $IN_ZSH = 1 ]; then
             (( RANGER_LEVEL == 1 )) && ranger=" $BLUE(ranger)" || ranger=" $BLUE(ranger:$RANGER_LEVEL)"
         fi
         PROMPT="${PROMPT_ARROW_COLOR}${PROMPT_LNBR1}$exitcode "
-        PROMPT+="${PROMPT_USERFMT}${PROMPT_ARROW_COLOR}%~${ranger}${RESET}$(__git_ps1)"
+        # git status: zsh uses the async placeholder (filled in by
+        # async-git-prompt.zsh); non-zsh uses __git_ps1 synchronously.
+        if [ $IN_ZSH = 1 ]; then
+            PROMPT+="${PROMPT_USERFMT}${PROMPT_ARROW_COLOR}%~${ranger}${RESET}\${_async_git_result}"
+        else
+            PROMPT+="${PROMPT_USERFMT}${PROMPT_ARROW_COLOR}%~${ranger}${RESET}$(__git_ps1)"
+        fi
         PROMPT+=$'\n'
         PROMPT+="${PROMPT_ARROW_COLOR}${PROMPT_LNBR2}${PROMPT_ARROW} "
 
@@ -76,6 +82,11 @@ if [ $IN_ZSH = 1 ]; then
             PROMPT+="$(__ssh)$(__chroot_docker)${PROMPT_USERCOL}#${RESET} "
         else
             PROMPT+="$(__ssh)$(__chroot_docker)${PROMPT_USERCOL}\$${RESET} "
+        fi
+
+        # kick off the async git status computation (zsh only)
+        if [ $IN_ZSH = 1 ]; then
+            (( $+functions[_async_git_start] )) && _async_git_start
         fi
     }
 
