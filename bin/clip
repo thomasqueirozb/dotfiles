@@ -1,2 +1,7 @@
 #!/usr/bin/env bash
-xclip -selection clipboard "$@"
+
+if [ -n "$WAYLAND_DISPLAY" ]; then
+    wl-copy "$@"
+else
+    xclip -selection clipboard "$@"
+fi
