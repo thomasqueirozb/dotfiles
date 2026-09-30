@@ -117,10 +117,15 @@ if [ $IN_BASH = 1 ]; then
         . "$f"
     done
 elif [ $IN_ZSH = 1 ]; then
-    for f in "$XDG_CONFIG_HOME/bash/"*?.zsh; do
-        # shellcheck source=/dev/null
-        . "$f"
-    done
+    # The *.zsh configs (fzf, async-git-prompt) are ZLE-dependent; skip them
+    # in non-PTY shells (where ZLE isn't usable) to avoid "can't change
+    # option: zle" errors from their setopt snapshots.
+    if [[ -t 0 ]]; then
+        for f in "$XDG_CONFIG_HOME/bash/"*?.zsh; do
+            # shellcheck source=/dev/null
+            . "$f"
+        done
+    fi
 fi
 
 if command -v brew >/dev/null 2>&1; then
@@ -163,4 +168,5 @@ if command -v zoxide >/dev/null 2>&1; then
     eval "$(zoxide init $shell_name)"
 fi
 
-ls
+# Only show the directory listing on a real terminal, not non-PTY shells.
+[[ -t 0 ]] && ls
